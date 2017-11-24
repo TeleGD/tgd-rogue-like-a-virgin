@@ -13,6 +13,8 @@ import entity.Entity;
 
 public abstract class Case {
 	
+	protected int niveau;
+	
 	protected Shape hitbox;
 	protected int x;
 	protected int y;
@@ -34,6 +36,11 @@ public abstract class Case {
 		deplacementPossible=true;
 		this.x=x;
 		this.y=y;
+	}
+	
+	public Case(int x, int y, int difficulte){
+		this(x,y);
+		niveau = difficulte;
 	}
 	
 	public boolean getDeplacementPossible(){
@@ -59,5 +66,20 @@ public abstract class Case {
 	public void setHitbox(Shape hitbox) {
 		this.hitbox = hitbox;
 	};
+	
+	protected String getCouleur(){
+		switch(niveau){
+		case 0:
+			return "Green";
+		case 1:
+			return "";
+		case 2:
+			return "Blue";
+		case 3:
+			return "Yellow";
+		default:
+			return "Red";
+		}
+	}
 	
 }

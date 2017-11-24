@@ -8,11 +8,11 @@ import general.World;
 
 public class Piques extends Case {
 
-	public Piques(int x, int y){
-		super(x,y);
+	public Piques(int x, int y,int difficulte){
+		super(x,y,difficulte);
 		deplacementPossible=false;
 		try {
-			sprite = new Image(World.DIRECTORY_IMAGES+"pique.png");
+			sprite = new Image(World.DIRECTORY_IMAGES+"pick"+getCouleur()+".png");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
