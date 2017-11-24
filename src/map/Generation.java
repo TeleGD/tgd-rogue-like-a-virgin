@@ -12,9 +12,9 @@ public class Generation {
 				int a = r.nextInt(100);
 				Case c;
 				if (a<90) {
-					c=new CaseVide();
+					c=new CaseVide(j,i);
 				} else {
-					c = new Mur();
+					c = new Mur(j,i);
 				}
 				map[i][j]=c;
 			}

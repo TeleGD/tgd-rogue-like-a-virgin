@@ -2,7 +2,8 @@ package map;
 
 public class Mur extends Case {
 	
-	public Mur() {
+	public Mur(int x, int y) {
+		super(x,y);
 		deplacementPossible=false;
 	}
 
