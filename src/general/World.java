@@ -94,12 +94,12 @@ public class World extends BasicGameState {
 	}
 	
 	public void keyReleased(int key, char c) {
-		
+		player.keyReleased(key,c);
 	}
 
 
 	public void keyPressed(int key, char c) {
-		
+		player.keyPressed(key,c);
 	}
 
 	public int getID() {

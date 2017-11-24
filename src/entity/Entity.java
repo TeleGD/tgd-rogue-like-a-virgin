@@ -12,7 +12,7 @@ import general.Main;
 public abstract class Entity {
 	float x,y;
 	int width,height,dirX,dirY,hp,atk,def;
-	float speedX,speedY;//Inutile?
+	double speedX,speedY;
 	boolean alreadyDead;
 	Shape hitbox;
 	Image sprite;
@@ -33,11 +33,11 @@ public abstract class Entity {
 		return dirY;
 	}
 	
-	public float getSpeedX(){
+	public double getSpeedX(){
 		return speedX;
 	}
 	
-	public float getSpeedY(){
+	public double  getSpeedY(){
 		return speedY;
 	}
 	
@@ -138,8 +138,8 @@ public abstract class Entity {
 	}
 
 	public void move(int dt){
-		x += dirX*speedX*dt;
-		y += dirY*speedY*dt;
+		x += speedX*dt;
+		y += speedY*dt;
 		hitbox.setLocation((float)x, (float)y);
 		if(x > Main.longueur || y > Main.hauteur || x < 0 || y < 0){
 			alreadyDead = true;
