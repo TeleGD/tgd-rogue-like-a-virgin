@@ -11,7 +11,7 @@ import general.Main;
 
 public abstract class Entity {
 	float x,y;
-	int width,height,dirX,dirY,hp;
+	int width,height,dirX,dirY,hp,atk,def;
 	float speedX,speedY;//Inutile?
 	boolean alreadyDead;
 	Shape hitbox;
@@ -51,6 +51,14 @@ public abstract class Entity {
 	
 	public int getHP(){
 		return hp;
+	}
+	
+	public int getAtk(){
+		return atk;
+	}
+	
+	public int getDef(){
+		return def;
 	}
 	
 	public boolean isAlreadyDead(){
@@ -93,7 +101,7 @@ public abstract class Entity {
 		this.dirY = dirY;
 	}
 
-	public void setHp(int hp) {
+	public void setHP(int hp) {
 		this.hp = hp;
 	}
 
@@ -108,11 +116,23 @@ public abstract class Entity {
 	public void setAlreadyDead(boolean alreadyDead) {
 		this.alreadyDead = alreadyDead;
 	}
+	
+	public void setAtk(int atk){
+		this.atk = atk;
+	}
+	
+	public void setDef(int def){
+		this.def = def;
+	}
 
+	public void setShape(Shape hitbox){
+		this.hitbox = hitbox;
+	}
+	
 	public void setHitbox(Shape hitbox) {
 		this.hitbox = hitbox;
 	}
-
+	
 	public void setSprite(Image sprite) {
 		this.sprite = sprite;
 	}
