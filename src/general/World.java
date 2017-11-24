@@ -16,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+
 import entity.Enemy;
 import entity.Player;
 import entity.Projectile;
@@ -25,6 +26,8 @@ import general.ui.TGDComponent;
 import general.ui.TGDComponent.OnClickListener;
 import general.ui.TextField;
 import general.ui.TextField.EnterActionListener;
+import map.Generation;
+import map.Salle;
 import menus.MainMenu;
 
 public class World extends BasicGameState {
@@ -43,6 +46,7 @@ public class World extends BasicGameState {
 	public static ArrayList<Enemy> enemies,enemiesTmp;
 	public static ArrayList<Projectile> projectiles,projectilesTmp;
 	public static Player player;
+	public static Salle map;
 	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
@@ -54,6 +58,7 @@ public class World extends BasicGameState {
 		projectiles = new ArrayList<Projectile>();
 		projectilesTmp = new ArrayList<Projectile>();
 		player = new Player();
+		map =  Generation.genereSalle(0, 10, 10, 20, 20);
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
@@ -72,6 +77,8 @@ public class World extends BasicGameState {
 			p.render(container, game, g);
 		}
 		
+		map.render(container, game, g);
+		
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -82,6 +89,8 @@ public class World extends BasicGameState {
 		for(int i = 0; i < projectiles.size(); i++){
 			projectiles.get(i).update(container, game, delta);
 		}
+		
+		map.update(container, game, delta);
 	}
 	
 	public void keyReleased(int key, char c) {
