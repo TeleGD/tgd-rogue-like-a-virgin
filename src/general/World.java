@@ -17,6 +17,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import entity.Enemy;
+import entity.Player;
 import entity.Projectile;
 import general.Main;
 import general.ui.Button;
@@ -41,6 +42,7 @@ public class World extends BasicGameState {
 	
 	public static ArrayList<Enemy> enemies;
 	public static ArrayList<Projectile> projectiles;
+	public static Player player;
 	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
