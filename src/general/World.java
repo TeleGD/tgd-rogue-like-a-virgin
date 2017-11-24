@@ -68,6 +68,8 @@ public class World extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setColor(Color.green);
 		g.fillRect(620, 340, 40, 40);
+
+		map.render(container, game, g);
 		
 		player.render(container, game, g);
 		for(Enemy e : enemies){
@@ -76,8 +78,6 @@ public class World extends BasicGameState {
 		for(Projectile p : projectiles){
 			p.render(container, game, g);
 		}
-		
-		map.render(container, game, g);
 		
 	}
 
