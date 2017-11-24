@@ -22,11 +22,13 @@ public class Generation {
 				}
 				else{
 					int a = r.nextInt(100);
-					
-					if (a<90) {
+					if (a<85) {
 						c=new CaseVide(i,j);
+					}
+					else if (a<95) {
+						c=new Mur(i,j);
 					} else {
-						c = new Mur(i,j);
+						c = new Piques(i,j);
 					}
 				}
 				

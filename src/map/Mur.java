@@ -11,7 +11,7 @@ public class Mur extends Case {
 		super(x,y);
 		deplacementPossible=false;
 		try {
-			sprite = new Image(World.DIRECTORY_IMAGES+"wall.png");
+			sprite = new Image(World.DIRECTORY_IMAGES+"wallInterieur.png");
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

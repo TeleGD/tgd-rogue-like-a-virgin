@@ -48,7 +48,9 @@ public abstract class Case {
 		g.drawImage(sprite,(float) x*36,(float) y*36);
 	}
 	
-	public void ArriveSur(Entity e){}
+	public void ArriveSur(Entity e){
+		
+	}
 
 	public Shape getHitbox() {
 		return hitbox;

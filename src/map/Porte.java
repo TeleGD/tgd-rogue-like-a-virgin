@@ -3,6 +3,7 @@ package map;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import entity.Entity;
 import general.World;
 
 public class Porte extends Case {
@@ -16,6 +17,5 @@ public class Porte extends Case {
 			e.printStackTrace();
 		}
 	}
-
 	
 }
