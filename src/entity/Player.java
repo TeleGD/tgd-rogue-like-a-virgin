@@ -2,6 +2,7 @@ package entity;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
 import general.World;
 
@@ -10,6 +11,7 @@ public class Player extends Entity {
 	public Player() throws SlickException{
 		World.player = this;
 		sprite = new Image(World.DIRECTORY_IMAGES+"player.png");
+		hitbox = new Rectangle(x,y,width,height);
 	}
 	
 	@Override
