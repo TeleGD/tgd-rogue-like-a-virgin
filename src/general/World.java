@@ -63,6 +63,7 @@ public class World extends BasicGameState {
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+		Projectile p = new Projectile(10,0,false);
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -94,12 +95,12 @@ public class World extends BasicGameState {
 	}
 	
 	public void keyReleased(int key, char c) {
-		
+		player.keyReleased(key,c);
 	}
 
 
 	public void keyPressed(int key, char c) {
-		
+		player.keyPressed(key,c);
 	}
 
 	public int getID() {
