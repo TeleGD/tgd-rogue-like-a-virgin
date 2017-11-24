@@ -23,7 +23,7 @@ public class Porte extends Case {
 	public void ArriveSur(Entity e) {
 		if(e instanceof Player){ //genere new map
 			Salle s =Generation.genereNewSalle(niveau, x, y);
-			World.changeMap(s);
+			//World.changeMap(s);
 		}
 	}
 	

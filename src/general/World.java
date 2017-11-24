@@ -58,7 +58,7 @@ public class World extends BasicGameState {
 		projectiles = new ArrayList<Projectile>();
 		projectilesTmp = new ArrayList<Projectile>();
 		player = new Player();
-		map =  Generation.genereSalle(0, 10, 10, 20, 20);
+		map =  Generation.genereSalle(0, 20,20 ,0);
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
