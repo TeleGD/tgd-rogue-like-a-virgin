@@ -3,6 +3,7 @@ package map;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
@@ -12,9 +13,10 @@ import entity.Entity;
 
 public abstract class Case {
 	
-	Shape hitbox;
-	int x;
-	int y;
+	protected Shape hitbox;
+	protected int x;
+	protected int y;
+	protected Image sprite;
 	
 	protected boolean deplacementPossible;
 	protected Entity entite;
@@ -43,7 +45,7 @@ public abstract class Case {
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		
+		g.drawImage(sprite,(float) x*36,(float) y*36);
 	}
 	
 	public void ArriveSur(Entity e){};
