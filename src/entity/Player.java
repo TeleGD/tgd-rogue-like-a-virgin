@@ -1,11 +1,15 @@
 package entity;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 import general.World;
 
 public class Player extends Entity {
 
-	public Player(){
+	public Player() throws SlickException{
 		World.player = this;
+		sprite = new Image(World.DIRECTORY_IMAGES+"player.png");
 	}
 	
 	@Override
