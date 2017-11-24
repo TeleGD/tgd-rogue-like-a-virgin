@@ -1,5 +1,5 @@
 package map;
 
-public class CaseVide {
+public class CaseVide extends Case{
 
 }
