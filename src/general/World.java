@@ -1,6 +1,7 @@
 package general;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -15,6 +16,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import entity.Enemy;
+import entity.Projectile;
 import general.Main;
 import general.ui.Button;
 import general.ui.TGDComponent;
@@ -35,6 +38,9 @@ public class World extends BasicGameState {
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
 	
 	private static StateBasedGame game;
+	
+	public static ArrayList<Enemy> enemies;
+	public static ArrayList<Projectile> projectiles;
 	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
