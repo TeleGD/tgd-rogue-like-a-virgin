@@ -40,13 +40,20 @@ public class World extends BasicGameState {
 	
 	private static StateBasedGame game;
 	
-	public static ArrayList<Enemy> enemies;
-	public static ArrayList<Projectile> projectiles;
+	public static ArrayList<Enemy> enemies,enemiesTmp;
+	public static ArrayList<Projectile> projectiles,projectilesTmp;
 	public static Player player;
 	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
 		game=arg1;
+		
+		//Il faudra voir s'il faut bouger ces inits dans enter(...) si ca prend trop de temps
+		enemies = new ArrayList<Enemy>();
+		enemiesTmp = new ArrayList<Enemy>();
+		projectiles = new ArrayList<Projectile>();
+		projectilesTmp = new ArrayList<Projectile>();
+		player = new Player();
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
@@ -56,10 +63,25 @@ public class World extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setColor(Color.green);
 		g.fillRect(620, 340, 40, 40);
+		
+		player.render(container, game, g);
+		for(Enemy e : enemies){
+			e.render(container, game, g);
+		}
+		for(Projectile p : projectiles){
+			p.render(container, game, g);
+		}
+		
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+		player.update(container, game, delta);
+		for(int i = 0; i < enemies.size(); i++){
+			enemies.get(i).update(container, game, delta);
+		}
+		for(int i = 0; i < projectiles.size(); i++){
+			projectiles.get(i).update(container, game, delta);
+		}
 	}
 	
 	public void keyReleased(int key, char c) {
