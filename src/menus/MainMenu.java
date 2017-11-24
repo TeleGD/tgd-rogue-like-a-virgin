@@ -5,7 +5,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 
-//import towerDefense.World;
 
 
 public class MainMenu extends Menu{
@@ -13,10 +12,9 @@ public class MainMenu extends Menu{
 	public static int ID = -3;	
 	
 	public MainMenu(){
-		super.setTitrePrincipal("INSERER TITRE ICI");
-		super.setTitreSecondaire("SOUS TITRE");
-		
-		//super.setItems(World1.GAME_NAME,World2.GAME_NAME,World3.GAME_NAME,"Scores", "Quitter");
+		super.setTitrePrincipal("TGD MULTI-3-GAME");
+		super.setTitreSecondaire("Menu Principal");
+		super.setItems("RogueLike","Multitask", "Quitter");
 
 		super.setEnableClignote(false);
 		super.setCouleurClignote(Color.red);
