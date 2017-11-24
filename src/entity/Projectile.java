@@ -25,7 +25,8 @@ public class Projectile extends Entity{
 		this.y = y;
 		height = 16;
 		width = 16;
-		hitbox = new Rectangle(x,y,width,height);
+		//On reduit la hitbox pour pouvoir passer sans problemes dans des espaces d'une case de large
+		hitbox = new Rectangle(x+4,y+4,width-8,height-8);
 		World.projectiles.add(this);
 		atk = 1;
 		if(friendly){
@@ -90,7 +91,7 @@ public class Projectile extends Entity{
 			for(int deltaJ = -1; deltaJ < 2; deltaJ++){
 				if(!(deltaI == 0 && deltaJ == 0) && tmpI+deltaI >= 0 && tmpJ+deltaJ >= 0 && tmpI+deltaI < c.length && tmpJ+deltaJ < c[tmpI].length){
 					if(c[tmpI+deltaI][tmpJ+deltaJ].getHitbox().intersects(hitbox) && (c[tmpI+deltaI][tmpJ+deltaJ] instanceof Mur || c[tmpI+deltaI][tmpJ+deltaJ] instanceof Bords || c[tmpI+deltaI][tmpJ+deltaJ] instanceof Porte)){
-						die();
+						alreadyDead = true;
 					}
 				}
 			}
