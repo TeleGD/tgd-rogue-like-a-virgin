@@ -55,8 +55,6 @@ public class Enemy1 extends Enemy{
 	}
 	
 	public void move(int delta) {
-		System.out.println("x du player:"+World.player.getX());
-		System.out.println("y du player:"+World.player.getY());
 		
 		if(zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
 			speedX=0;
