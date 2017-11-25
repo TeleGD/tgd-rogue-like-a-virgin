@@ -38,7 +38,6 @@ public class Player extends Entity {
 	private boolean estouest;
 	private int periodeTir;
 	private int attenteTir;
-	private ArrayList<Projectile> playerProjectiles;
 	private boolean tir;
 	private double projSpeed;
 	private double projSpeedX;
@@ -50,13 +49,14 @@ public class Player extends Entity {
 	private boolean collision = false;
 	private Case c[][];
 	private int aTouchePique;
+	private int coin;
 	
 	
 
 	public Player() throws SlickException{
 		World.player = this;
-		x=40;
-		y=40;
+		x=342;
+		y=342;
 		spriteU = new Image(World.DIRECTORY_IMAGES+"playerHaut.png");
 		spriteR = new Image(World.DIRECTORY_IMAGES+"playerDroite.png");
 		spriteD = new Image(World.DIRECTORY_IMAGES+"playerBas.png");
@@ -67,7 +67,6 @@ public class Player extends Entity {
 		speed=0.2;
 		direction=2;
 		sprite=spriteD;
-		playerProjectiles=new ArrayList<Projectile>();
 		periodeTir=50;
 		attenteTir=0;
 		tir=false;
@@ -75,6 +74,7 @@ public class Player extends Entity {
 		hp = 5;
 		c = World.map.getCases();
 		aTouchePique=0;
+		coin = 0;
 	}
 	
 	@Override
@@ -155,28 +155,33 @@ public class Player extends Entity {
 			}
 		}
 		if(World.item != null){
-			if(hitbox.intersects(World.item.getShape())){
-				World.item.alreadyDead = true;
-				switch (World.item.type) {
-			        case "SpeedUp":  
-			        	speed *= 1.1;
-			            break;
-			        case "SpeedDown":  
-			        	speed /= 1.1;
-			            break;
-			        case "HpUp":
-			        	if(hp <= 19)
-			        		hp++;
-			        	break;
-			        case "FireRateUp":
-			        	if(periodeTir >= 10)
-			        		periodeTir -= 5;
-			            break;
-			        case "FireRateDown":
-			        	periodeTir += 5;
-			        	break;
+			for (int i = 0; i < World.item.size(); i++ ){
+				if(hitbox.intersects(World.item.get(i).getShape())){
+					switch (World.item.get(i).type) {
+				        case "SpeedUp":  
+				        	speed *= 1.1;
+				            break;
+				        case "SpeedDown":  
+				        	speed /= 1.1;
+				            break;
+				        case "HpUp":
+				        	if(hp <= 19)
+				        		hp++;
+				        	break;
+				        case "FireRateUp":
+				        	if(periodeTir >= 10)
+				        		periodeTir -= 5;
+				            break;
+				        case "FireRateDown":
+				        	periodeTir += 5;
+				        	break;
+				        case "Coin":
+				        	setCoin(getCoin()+1);
+				        	break;
+					}
+					World.item.remove(i);
+					return;
 				}
-				return;
 			}
 		}
 	}
@@ -341,7 +346,7 @@ public class Player extends Entity {
 		}
 		
 		if (tir && attenteTir==0) {
-			playerProjectiles.add(new Projectile(x+10,y+10,true,projSpeedY,projSpeedX));
+			new Projectile(x+10,y+10,true,projSpeedY,projSpeedX);
 			attenteTir=periodeTir;
 		}
 		if (attenteTir>0) {
@@ -375,5 +380,13 @@ public class Player extends Entity {
 		setDir();
 		g.drawImage(sprite,(float) x,(float) y);
 		g.draw(hitbox);
+	}
+
+	public int getCoin() {
+		return coin;
+	}
+
+	public void setCoin(int coin) {
+		this.coin = coin;
 	}
 }

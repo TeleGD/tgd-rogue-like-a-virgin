@@ -2,9 +2,14 @@ package map;
 
 import java.util.Random;
 
+import org.newdawn.slick.SlickException;
+
+import entity.Item;
+import general.World;
+
 public class Generation {
 	
-	private static int difficulte;
+	public static int difficulte;
 	
 	static int hauteur;
 	static int largeur;
@@ -12,7 +17,7 @@ public class Generation {
 	 static int difficulteMax = 5;
 	 
 	
-	public static Salle genereNewSalle(int niveau, int posx, int posy){
+	public static Salle genereNewSalle(int niveau, int posx, int posy) throws SlickException{
 		int fermee = 0;
 		
 		if(posx==0){
@@ -32,12 +37,18 @@ public class Generation {
 			fermee = 1;
 		}
 		
+		World.enemies.clear();
+		World.enemiesTmp.clear();
+		World.projectiles.clear();
+		World.projectilesTmp.clear();
+		World.item.clear();
+		
 		return genereSalle( niveau,  largeur,  hauteur,0);
 	}
 	
 	
 	//porte fermee : 0 rien | 1 : gauche | 2 : droite | 3 : bas | 4 : haut
-	public static Salle genereSalle(int niveau, int plargeur, int phauteur,int porteFermee) {
+	public static Salle genereSalle(int niveau, int plargeur, int phauteur,int porteFermee) throws SlickException {
 		hauteur = phauteur;
 		largeur = plargeur;
 		Case[][] map = new Case[hauteur][largeur];

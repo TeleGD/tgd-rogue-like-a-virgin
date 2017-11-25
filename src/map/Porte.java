@@ -1,11 +1,14 @@
 package map;
 
+import java.util.Random;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import entity.Entity;
+import entity.Item;
 import entity.Player;
 import general.World;
 
@@ -41,7 +44,11 @@ public class Porte extends Case {
 		
 		if(pY == this.y && pX == this.x){
 			World.changeMap(Generation.genereNewSalle(niveau, y, x));
-			World.newItem();
+			
+			Random r = new Random();
+			int prob = r.nextInt(3);
+			if(prob == 0)
+				new Item();
 			
 			
 		if(pX == 0)
