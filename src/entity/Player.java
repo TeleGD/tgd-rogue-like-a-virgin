@@ -15,7 +15,8 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import general.World;
-
+import entity.enemies.*;
+ 
 public class Player extends Entity {
 	
 	private boolean up;
@@ -137,7 +138,7 @@ public class Player extends Entity {
 				}
 			}
 		}
-		for(Enemy e : World.enemies){
+		for(entity.enemies.Enemy e : World.enemies){
 			if(hitbox.intersects(e.getShape())){
 				this.setHP(hp-Math.max(e.getAtk()-def, 0));
 				if(hp <= 0) alreadyDead = true;

@@ -19,6 +19,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 
 import entity.enemies.Enemy;
+import entity.enemies.Enemy1;
 import entity.Player;
 import entity.Projectile;
 import entity.Item;
@@ -66,7 +67,7 @@ public class World extends BasicGameState {
 		map =  Generation.genereSalle(-1, 20,20 ,0);
 		player = new Player();
 		item = new Item();
-		Nico=new Enemy();
+		Nico=new Enemy1(100,100);
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
