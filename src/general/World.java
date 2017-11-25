@@ -83,10 +83,10 @@ public class World extends BasicGameState {
 		g.fillRect(620, 340, 40, 40);
 
 		map.render(container, game, g);
+		if (item != null) item.render(container, game, g);
 		
 		player.render(container, game, g);
-		if (item != null)
-			item.render(container, game, g);
+		
 		for(Enemy e : enemies){
 			e.render(container, game, g);
 		}
