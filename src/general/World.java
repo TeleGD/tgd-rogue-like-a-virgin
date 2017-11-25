@@ -63,9 +63,9 @@ public class World extends BasicGameState {
 		enemiesTmp = new ArrayList<Enemy>();
 		projectiles = new ArrayList<Projectile>();
 		projectilesTmp = new ArrayList<Projectile>();
+		map =  Generation.genereSalle(-1, 20,20 ,0);
 		player = new Player();
 		item = new Item();
-		map =  Generation.genereSalle(-1, 20,20 ,0);
 		Nico=new Enemy();
 	}
 	
