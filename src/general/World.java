@@ -2,6 +2,7 @@ package general;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -122,7 +123,10 @@ public class World extends BasicGameState {
 	}
 
 	public static void newItem() throws SlickException {
-		item = new Item();
+		Random r = new Random();
+		int prob = r.nextInt(3);
+		if(prob == 0)
+			item = new Item();
 	}
 
 }
