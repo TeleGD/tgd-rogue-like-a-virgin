@@ -1,7 +1,5 @@
 package entity;
 
-import java.util.ArrayList;
-
 import map.Bords;
 import map.Case;
 import map.Mur;
@@ -84,12 +82,15 @@ public class Player extends Entity {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public void setMap(Case[][] c){
+		this.c = c;
+	}
 
 	@Override
 	public void checkForCollision() {
 		int tmpI,tmpJ;
 		boolean accumulateur = false;
-		Case[][] c = World.map.getCases();
 		tmpI = (int) (x+width/2)/width;
 		tmpJ = (int) (y+height/2)/height;
 
