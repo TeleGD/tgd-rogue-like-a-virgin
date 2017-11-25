@@ -49,6 +49,7 @@ public class World extends BasicGameState {
 	public static Player player;
 	public static Item item;
 	public static Salle map;
+	public static Enemy Nico;
 	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
@@ -62,6 +63,7 @@ public class World extends BasicGameState {
 		player = new Player();
 		item = new Item();
 		map =  Generation.genereSalle(-1, 20,20 ,0);
+		Nico=new Enemy();
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
