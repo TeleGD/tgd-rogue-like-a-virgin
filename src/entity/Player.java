@@ -75,6 +75,7 @@ public class Player extends Entity {
 		c = World.map.getCases();
 		aTouchePique=0;
 		coin = 0;
+		atk = 1;
 	}
 
 	@Override
@@ -195,6 +196,14 @@ public class Player extends Entity {
 
 	public void setSpeed(double speed) {
 		this.speed = speed;
+	}
+	
+	public int getAtk() {
+		return atk;
+	}
+
+	public void setAtk(int atk) {
+		this.atk = atk;
 	}
 
 	public int getHp() {
@@ -391,5 +400,10 @@ public class Player extends Entity {
 
 	public void setCoin(int coin) {
 		this.coin = coin;
+	}
+
+	public void setPeriod(int i) {
+		this.periodeTir = i;
+		
 	}
 }
