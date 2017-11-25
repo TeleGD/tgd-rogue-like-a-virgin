@@ -16,9 +16,10 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import general.World;
+import entity.enemies.*;
 
 public class Player extends Entity {
-	
+
 	private boolean up;
 	private boolean down;
 	private boolean updown;
@@ -51,8 +52,8 @@ public class Player extends Entity {
 	private Case c[][];
 	private int aTouchePique;
 	private int coin;
-	
-	
+
+
 
 	public Player() throws SlickException{
 		World.player = this;
@@ -77,11 +78,11 @@ public class Player extends Entity {
 		aTouchePique=0;
 		coin = 0;
 	}
-	
+
 	@Override
 	public void die() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -159,26 +160,26 @@ public class Player extends Entity {
 			for (int i = 0; i < World.item.size(); i++ ){
 				if(hitbox.intersects(World.item.get(i).getShape())){
 					switch (World.item.get(i).type) {
-				        case "SpeedUp":  
-				        	speed *= 1.1;
-				            break;
-				        case "SpeedDown":  
-				        	speed /= 1.1;
-				            break;
-				        case "HpUp":
-				        	if(hp <= 19)
-				        		hp++;
-				        	break;
-				        case "FireRateUp":
-				        	if(periodeTir >= 10)
-				        		periodeTir -= 5;
-				            break;
-				        case "FireRateDown":
-				        	periodeTir += 5;
-				        	break;
-				        case "Coin":
-				        	setCoin(getCoin()+1);
-				        	break;
+					case "SpeedUp":  
+						speed *= 1.1;
+						break;
+					case "SpeedDown":  
+						speed /= 1.1;
+						break;
+					case "HpUp":
+						if(hp <= 19)
+							hp++;
+						break;
+					case "FireRateUp":
+						if(periodeTir >= 10)
+							periodeTir -= 5;
+						break;
+					case "FireRateDown":
+						periodeTir += 5;
+						break;
+					case "Coin":
+						setCoin(getCoin()+1);
+						break;
 					}
 					World.item.remove(i);
 					return;
@@ -186,7 +187,7 @@ public class Player extends Entity {
 			}
 		}
 	}
-	
+
 	public double getSpeed() {
 		return speed;
 	}
@@ -194,7 +195,7 @@ public class Player extends Entity {
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
-	
+
 	public int getHp() {
 		return hp;
 	}
@@ -202,11 +203,11 @@ public class Player extends Entity {
 	public void setHp(int hp) {
 		this.hp = hp;
 	}
-	
+
 	public int getPeriode(){
 		return periodeTir;
 	}
-	
+
 	public double getProj(){
 		return projSpeed;
 	}
@@ -232,8 +233,8 @@ public class Player extends Entity {
 			right=true;
 			rightLeft=true;
 			break;
-			
-			
+
+
 		case Input.KEY_Z:
 			nord = true;
 			nordsud=false;
@@ -274,7 +275,7 @@ public class Player extends Entity {
 		case Input.KEY_DOWN:
 			down=false;
 			break;
-		
+
 		case Input.KEY_Z:
 			nord=false;
 			break;
@@ -289,7 +290,7 @@ public class Player extends Entity {
 			break;
 		}
 	}
-	
+
 	public void move(int dt) {
 		speedX = 0;
 		speedY = 0;
@@ -297,30 +298,30 @@ public class Player extends Entity {
 			speedY=-speed;
 		}
 		if(((down && !up) || (up && down && updown)) && deplacementPossibleBas) {
-				speedY=speed;
+			speedY=speed;
 		}
 		if(((left && !right)|| (left && right && !rightLeft)) && deplacementPossibleGauche) {
 			speedX = -speed;
 		}
 		if(((!left && right)|| (left && right && rightLeft)) && deplacementPossibleDroite) {
-				speedX = speed;
+			speedX = speed;
 		}
 		if (speedX!=0 && speedY!=0) {
 			speedX/=Math.sqrt(2);
 			speedY/=Math.sqrt(2);
 		}
-		
+
 		x+=dt*speedX;
 		y+=dt*speedY;
 	}
-	
+
 	public void setDir() {
 		direction=2;
 		tir=false;
 		sprite=spriteD;
 		projSpeedX=0;
 		projSpeedY=0;
-		
+
 		if((nord && !sud) || (nord && sud && !nordsud)) {
 			direction=0;
 			sprite=spriteU;
@@ -345,7 +346,7 @@ public class Player extends Entity {
 			projSpeedX=projSpeed;
 			tir=true;
 		}
-		
+
 		if (tir && attenteTir==0) {
 			new Projectile(x+width/2-8,y+height/2-8,true,projSpeedX,projSpeedY);
 			attenteTir=periodeTir;
@@ -353,22 +354,22 @@ public class Player extends Entity {
 		if (attenteTir>0) {
 			attenteTir--;
 		}
-		
+
 	}
-	
+
 	public void touchePiques() {
 		if (aTouchePique==0) {
 			for (int i=0;i<20;i++) {
 				for (int j=0;j<20;j++) {
 					if (hitbox.intersects(c[i][j].getHitbox()) && (c[i][j] instanceof Piques)) {
 						aTouchePique=80;
-						 hp--;
+						hp--;
 					}
 				}
 			}
 		}
 	}
-	
+
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
 		hitbox.setX(x+4);
@@ -376,7 +377,7 @@ public class Player extends Entity {
 		touchePiques();
 		if (aTouchePique>0) aTouchePique--;
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		setDir();
 		g.drawImage(sprite,(float) x,(float) y);

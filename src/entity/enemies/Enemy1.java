@@ -1,4 +1,4 @@
-package entity;
+package entity.enemies;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -9,26 +9,22 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import general.World;
-import map.Bords;
 import map.Case;
 import map.Mur;
 
-public class Enemy extends Entity {
+public class Enemy1 extends Enemy{
 
 	private Polygon zoneR,zoneL,zoneT,zoneB;
 	private double speed;
 	
-	public Enemy(){
+	public Enemy1(float x, float y) {
+		super(x, y);
 		hp=1;
-		World.enemies.add(this);
 		try {
 			this.sprite=new Image("images/RogueLike/blobBas.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		zoneL=new Polygon();
-		this.x=100;
-		this.y=100;
 		this.width=36;
 		this.height=36;
 		zoning();
@@ -36,46 +32,32 @@ public class Enemy extends Entity {
 		speed = 0.15;
 	}
 	
-	@Override
-	public void die() {
-		World.enemies.remove(this);
-	}
-
-	@Override
-	public void checkForCollision() {
-		if(hitbox.intersects(World.player.getShape())){
-			//this.setHP(0);
-			//System.out.println("col player1");
-			//this.setHP(hp-Math.max(World.player.getAtk()-def, 0));
-			if(hp <= 0) alreadyDead = true;
-			return;
-		}
-		for(Projectile p : World.projectiles){
-			if(p.getFriendly()){
-				if(hitbox.intersects(p.getShape())){
-					this.setHP(hp-Math.max(p.getAtk()-def, 0));
-					if(hp <= 0) alreadyDead = true;
-					p.die();
-					return;
-				}
-			}
-			
-		}
-	}
 	
-	
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		super.update(container, game, delta);
-		zoning();
-		//move(delta);
-	}
-	
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		super.render(container, game, g);
-		g.draw(hitbox);
+	public void zoning() {
+		// creating the zones used to know the direction to go
+		zoneL=new Polygon();
+		zoneL.addPoint(x+width/2, y+height/2);
+		zoneL.addPoint(x+width/2-1000, y+height/2-1000);
+		zoneL.addPoint(x+width/2-1000, y+height/2+1000);
+		zoneR=new Polygon();
+		zoneR.addPoint(x+width/2, y+height/2);
+		zoneR.addPoint(x+width/2+1000, y+height/2-1000);
+		zoneR.addPoint(x+width/2+1000, y+height/2+1000);
+		zoneT=new Polygon();
+		zoneT.addPoint(x+width/2, y+height/2);
+		zoneT.addPoint(x+width/2-1000, y+height/2-1000);
+		zoneT.addPoint(x+width/2+1000, y+height/2-1000);
+		zoneB=new Polygon();
+		zoneB.addPoint(x+width/2, y+height/2);
+		zoneB.addPoint(x+width/2-1000, y+height/2+1000);
+		zoneB.addPoint(x+width/2+1000, y+height/2+1000);
+		
 	}
 	
 	public void move(int delta) {
+		System.out.println("x du player:"+World.player.getX());
+		System.out.println("y du player:"+World.player.getY());
+		
 		if(zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
 			speedX=0;
 			speedY=-speed;
@@ -159,34 +141,15 @@ public class Enemy extends Entity {
 		hitbox.setY(y);
 	}
 	
-	
-	public void zoning() {
-		// creating the zones used to know the direction to go
-		zoneL=new Polygon();
-		zoneL.addPoint(x+width/2, y+height/2);
-		zoneL.addPoint(x+width/2-1000, y+height/2-1000);
-		zoneL.addPoint(x+width/2-1000, y+height/2+1000);
-		zoneR=new Polygon();
-		zoneR.addPoint(x+width/2, y+height/2);
-		zoneR.addPoint(x+width/2+1000, y+height/2-1000);
-		zoneR.addPoint(x+width/2+1000, y+height/2+1000);
-		zoneT=new Polygon();
-		zoneT.addPoint(x+width/2, y+height/2);
-		zoneT.addPoint(x+width/2-1000, y+height/2-1000);
-		zoneT.addPoint(x+width/2+1000, y+height/2-1000);
-		zoneB=new Polygon();
-		zoneB.addPoint(x+width/2, y+height/2);
-		zoneB.addPoint(x+width/2-1000, y+height/2+1000);
-		zoneB.addPoint(x+width/2+1000, y+height/2+1000);
-		
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		super.update(container, game, delta);
+		zoning();
+		//move(delta);
 	}
-	/*appartition-----
-	 * déplacement	bof
-	 * mort en commentaire mais oui
-	 * tuage de player non
-	 * img non
-	 * 
-	 */
 	
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		super.render(container, game, g);
+		g.draw(hitbox);
+	}
 
 }
