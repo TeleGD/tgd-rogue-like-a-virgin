@@ -18,7 +18,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 
-import entity.Enemy;
+import entity.enemies.Enemy;
 import entity.Player;
 import entity.Projectile;
 import entity.Item;

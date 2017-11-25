@@ -70,10 +70,6 @@ public class Enemy extends Entity {
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
-		/*g.draw(zoneL);
-		g.draw(zoneB);
-		g.draw(zoneR);
-		g.draw(zoneT);*/
 		g.draw(hitbox);
 	}
 	
@@ -183,10 +179,10 @@ public class Enemy extends Entity {
 		
 	}
 	/*appartition-----
-	 * déplacement	
-	 * mort
-	 * tuage de player
-	 * img
+	 * déplacement	bof
+	 * mort en commentaire mais oui
+	 * tuage de player non
+	 * img non
 	 * 
 	 */
 	

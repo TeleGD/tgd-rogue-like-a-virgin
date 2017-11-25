@@ -10,12 +10,12 @@ import org.newdawn.slick.state.StateBasedGame;
 import general.Main;
 
 public abstract class Entity {
-	float x,y;
-	int width,height,dirX,dirY,hp,atk,def;
-	double speedX,speedY;
-	boolean alreadyDead;
-	Shape hitbox;
-	Image sprite;
+	protected float x,y;
+	protected int width,height,dirX,dirY,hp,atk,def;
+	protected double speedX,speedY;
+	protected boolean alreadyDead;
+	protected Shape hitbox;
+	protected Image sprite;
 	
 	public float getX(){
 		return x;
