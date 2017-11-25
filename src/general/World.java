@@ -20,6 +20,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import entity.Enemy;
 import entity.Player;
 import entity.Projectile;
+import entity.Item;
 import general.Main;
 import general.ui.Button;
 import general.ui.TGDComponent;
@@ -46,6 +47,7 @@ public class World extends BasicGameState {
 	public static ArrayList<Enemy> enemies,enemiesTmp;
 	public static ArrayList<Projectile> projectiles,projectilesTmp;
 	public static Player player;
+	public static Item item;
 	public static Salle map;
 	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -58,6 +60,7 @@ public class World extends BasicGameState {
 		projectiles = new ArrayList<Projectile>();
 		projectilesTmp = new ArrayList<Projectile>();
 		player = new Player();
+		item = new Item();
 		map =  Generation.genereSalle(-1, 20,20 ,0);
 	}
 	
@@ -76,6 +79,7 @@ public class World extends BasicGameState {
 		map.render(container, game, g);
 		
 		player.render(container, game, g);
+		item.render(container, game, g);
 		for(Enemy e : enemies){
 			e.render(container, game, g);
 		}
@@ -87,6 +91,7 @@ public class World extends BasicGameState {
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		player.update(container, game, delta);
+		item.update(container, game, delta);
 		for(int i = 0; i < enemies.size(); i++){
 			enemies.get(i).update(container, game, delta);
 		}

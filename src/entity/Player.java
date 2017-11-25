@@ -48,9 +48,9 @@ public class Player extends Entity {
 		spriteR = new Image(World.DIRECTORY_IMAGES+"playerDroite.png");
 		spriteD = new Image(World.DIRECTORY_IMAGES+"playerBas.png");
 		spriteL = new Image(World.DIRECTORY_IMAGES+"playerGauche.png");
-		hitbox = new Rectangle(x,y,width,height);
 		width=36;
 		height=36;
+		hitbox = new Rectangle(x,y,width,height);
 		speed=0.25;
 		direction=2;
 		sprite=spriteD;
@@ -86,6 +86,11 @@ public class Player extends Entity {
 					return;
 				}
 			}
+		}
+		if(hitbox.intersects(World.item.getShape())){
+			System.out.println("Objet touché !\n");
+			World.item.alreadyDead = true;
+			return;
 		}
 	}
 	
@@ -242,9 +247,15 @@ public class Player extends Entity {
 		
 	}
 	
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		super.update(container, game, delta);
+		hitbox.setX(x);
+		hitbox.setY(y);
+	}
+	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		setDir();
 		g.drawImage(sprite,(float) x,(float) y);
-		
+		g.draw(hitbox);
 	}
 }
