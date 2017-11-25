@@ -98,6 +98,17 @@ public class Projectile extends Entity{
 				}
 			}
 		}
+		
+		// pour que les projectiles ne traversent pas les murs
+		for(int deltaI = 1; deltaI > -2; deltaI--){
+			for(int deltaJ = 1; deltaJ > -2; deltaJ--){
+				if(!(deltaI == 0 && deltaJ == 0) && tmpI+1+deltaI >= 0 && tmpJ+1+deltaJ >= 0 && tmpI+1+deltaI < c.length && tmpJ+1+deltaJ < c[tmpI+1].length){
+					if(c[tmpI+1+deltaI][tmpJ+1+deltaJ].getHitbox().intersects(hitbox) && (c[tmpI+1+deltaI][tmpJ+1+deltaJ] instanceof Mur || c[tmpI+1+deltaI][tmpJ+1+deltaJ] instanceof Bords || c[tmpI+1+deltaI][tmpJ+1+deltaJ] instanceof Porte)){
+						alreadyDead = true;
+					}
+				}
+			}
+		}
 	}
 
 }

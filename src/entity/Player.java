@@ -149,7 +149,23 @@ public class Player extends Entity {
 		if(World.item != null){
 			if(hitbox.intersects(World.item.getShape())){
 				World.item.alreadyDead = true;
-				speed *= 1.33;
+				switch (World.item.type) {
+			        case "SpeedUp":  
+			        	speed *= 1.2;
+			            break;
+			        case "SpeedDown":  
+			        	speed /= 1.2;
+			            break;
+			        case "HpUp":
+			        	hp++;
+			        	break;
+			        case "FireRateUp":  
+			        	periodeTir -= 5;
+			            break;
+			        case "FireRateDown":
+			        	periodeTir += 5;
+			        	break;
+				}
 				return;
 			}
 		}
@@ -299,7 +315,7 @@ public class Player extends Entity {
 		}
 		
 		if (tir && attenteTir==0) {
-			playerProjectiles.add(new Projectile(x,y,true,projSpeedY,projSpeedX));
+			playerProjectiles.add(new Projectile(x+10,y+10,true,projSpeedY,projSpeedX));
 			attenteTir=periodeTir;
 		}
 		if (attenteTir>0) {
