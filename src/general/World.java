@@ -58,11 +58,15 @@ public class World extends BasicGameState {
 		projectiles = new ArrayList<Projectile>();
 		projectilesTmp = new ArrayList<Projectile>();
 		player = new Player();
-		map =  Generation.genereSalle(0, 20,20 ,0);
+		map =  Generation.genereSalle(-1, 20,20 ,0);
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+	}
+	
+	public static void changeMap(Salle s){
+		map = s;
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {

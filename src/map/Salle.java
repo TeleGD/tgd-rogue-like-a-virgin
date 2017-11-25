@@ -11,12 +11,12 @@ import entity.Projectile;
 
 public class Salle {
 	private Case cases[][];
-	private int ligne;
-	private int colonne;
+	private int hauteur;
+	private int largeur;
 	
 	public Salle(Case[][] cases,int i,int j) {
-		ligne=i;
-		colonne=j;
+		hauteur=i;
+		largeur=j;
 		this.cases=cases;
 		
 	}
@@ -25,20 +25,21 @@ public class Salle {
 		if (arrivee.getDeplacementPossible()) {
 			arrivee.setEntite(depart.getEntite());
 			depart.setEntite(null);
+			
 		}
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		for(int i =0;i<colonne;i++){
-			for(int j=0;j<ligne;j++){
+		for(int i =0;i<hauteur;i++){
+			for(int j=0;j<largeur;j++){
 				cases[i][j].update(container,game,delta);
 			}
 		}
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		for(int i =0;i<colonne;i++){
-			for(int j=0;j<ligne;j++){
+		for(int i =0;i<hauteur;i++){
+			for(int j=0;j<largeur;j++){
 				cases[i][j].render(container,game,g);
 			}
 		}
@@ -54,19 +55,19 @@ public class Salle {
 	}
 
 	public int getLigne() {
-		return ligne;
+		return hauteur;
 	}
 
 	public void setLigne(int ligne) {
-		this.ligne = ligne;
+		this.hauteur = ligne;
 	}
 
 	public int getColonne() {
-		return colonne;
+		return largeur;
 	}
 
 	public void setColonne(int colonne) {
-		this.colonne = colonne;
+		this.largeur = colonne;
 	}
 	
 	
