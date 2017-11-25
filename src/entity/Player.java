@@ -87,10 +87,12 @@ public class Player extends Entity {
 				}
 			}
 		}
-		if(hitbox.intersects(World.item.getShape())){
-			System.out.println("Objet touché !\n");
-			World.item.alreadyDead = true;
-			return;
+		if(World.item != null){
+			if(hitbox.intersects(World.item.getShape())){
+				System.out.println("Objet touché !\n");
+				World.item.alreadyDead = true;
+				return;
+			}
 		}
 	}
 	

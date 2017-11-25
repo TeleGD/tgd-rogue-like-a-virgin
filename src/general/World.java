@@ -79,7 +79,8 @@ public class World extends BasicGameState {
 		map.render(container, game, g);
 		
 		player.render(container, game, g);
-		item.render(container, game, g);
+		if (item != null)
+			item.render(container, game, g);
 		for(Enemy e : enemies){
 			e.render(container, game, g);
 		}
@@ -91,7 +92,8 @@ public class World extends BasicGameState {
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		player.update(container, game, delta);
-		item.update(container, game, delta);
+		if (item != null)
+			item.update(container, game, delta);
 		for(int i = 0; i < enemies.size(); i++){
 			enemies.get(i).update(container, game, delta);
 		}
