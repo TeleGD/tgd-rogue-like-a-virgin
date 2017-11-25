@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import map.Case;
 import map.Mur;
+import map.Piques;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -47,6 +48,8 @@ public class Player extends Entity {
 	private boolean deplacementPossibleDroite = true;
 	private boolean deplacementPossibleGauche = true;
 	private boolean collision = false;
+	private Case c[][];
+	private int aTouchePique;
 	
 	
 
@@ -70,6 +73,8 @@ public class Player extends Entity {
 		tir=false;
 		projSpeed=0.4;
 		hp = 5;
+		c = World.map.getCases();
+		aTouchePique=0;
 	}
 	
 	@Override
@@ -337,10 +342,25 @@ public class Player extends Entity {
 		
 	}
 	
+	public void touchePiques() {
+		if (aTouchePique==0) {
+			for (int i=0;i<20;i++) {
+				for (int j=0;j<20;j++) {
+					if (hitbox.intersects(c[i][j].getHitbox()) && (c[i][j] instanceof Piques)) {
+						aTouchePique=80;
+						 hp--;
+					}
+				}
+			}
+		}
+	}
+	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
 		hitbox.setX(x);
 		hitbox.setY(y);
+		touchePiques();
+		if (aTouchePique>0) aTouchePique--;
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
