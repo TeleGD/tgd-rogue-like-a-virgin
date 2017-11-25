@@ -64,7 +64,7 @@ public class Player extends Entity {
 		width=36;
 		height=36;
 		hitbox = new Rectangle(x,y,width,height);
-		speed=0.25;
+		speed=0.2;
 		direction=2;
 		sprite=spriteD;
 		playerProjectiles=new ArrayList<Projectile>();
@@ -156,16 +156,18 @@ public class Player extends Entity {
 				World.item.alreadyDead = true;
 				switch (World.item.type) {
 			        case "SpeedUp":  
-			        	speed *= 1.2;
+			        	speed *= 1.1;
 			            break;
 			        case "SpeedDown":  
-			        	speed /= 1.2;
+			        	speed /= 1.1;
 			            break;
 			        case "HpUp":
-			        	hp++;
+			        	if(hp <= 19)
+			        		hp++;
 			        	break;
-			        case "FireRateUp":  
-			        	periodeTir -= 5;
+			        case "FireRateUp":
+			        	if(periodeTir >= 10)
+			        		periodeTir -= 5;
 			            break;
 			        case "FireRateDown":
 			        	periodeTir += 5;
