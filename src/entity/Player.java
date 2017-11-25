@@ -93,7 +93,7 @@ public class Player extends Entity {
 					if(collision && (c[tmpI+deltaI][tmpJ+deltaJ] instanceof Mur)){
 						if (deltaI<0) deplacementPossibleGauche = false;
 						else deplacementPossibleDroite = false;
-						System.out.println("mur");
+						//System.out.println("mur");
 						if (deltaJ<0) deplacementPossibleHaut = false;
 						else deplacementPossibleBas = false;
 					}
@@ -102,7 +102,7 @@ public class Player extends Entity {
 					deplacementPossibleDroite = true;
 					deplacementPossibleHaut = true;
 					deplacementPossibleBas = true;
-					System.out.println("deplacement");
+					//System.out.println("deplacement");
 				}
 
 			}
@@ -115,7 +115,7 @@ public class Player extends Entity {
 					if(collision && (c[tmpI+1+deltaI][tmpJ+1+deltaJ] instanceof Mur)){
 						if (deltaI<0) deplacementPossibleGauche = false;
 						else deplacementPossibleDroite = false;
-						System.out.println("mur");
+						//System.out.println("mur");
 						if (deltaJ<0) deplacementPossibleHaut = false;
 						else deplacementPossibleBas = false;
 					}
@@ -124,7 +124,7 @@ public class Player extends Entity {
 					deplacementPossibleDroite = true;
 					deplacementPossibleHaut = true;
 					deplacementPossibleBas = true;
-					System.out.println("deplacement");
+					//System.out.println("deplacement");
 				}
 
 			}

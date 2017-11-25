@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import general.World;
@@ -24,7 +25,12 @@ public class Enemy extends Entity {
 			e.printStackTrace();
 		}
 		zoneL=new Polygon();
+		this.x=100;
+		this.y=100;
+		this.width=36;
+		this.height=36;
 		zoning();
+		this.hitbox=new Rectangle (x,y,width,height);
 	}
 	
 	@Override
@@ -35,7 +41,9 @@ public class Enemy extends Entity {
 	@Override
 	public void checkForCollision() {
 		if(hitbox.intersects(World.player.getShape())){
-			this.setHP(hp-Math.max(World.player.getAtk()-def, 0));
+			this.setHP(0);
+			
+			//this.setHP(hp-Math.max(World.player.getAtk()-def, 0));
 			if(hp <= 0) alreadyDead = true;
 			return;
 		}
@@ -62,12 +70,30 @@ public class Enemy extends Entity {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
 		g.draw(zoneL);
+		g.draw(zoneB);
+		g.draw(zoneR);
+		g.draw(zoneT);
 	}
 	
 	public void move(int delta) {
+		if(zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+			speedX=0;
+			speedY=-0.2;
+		}else if(zoneB.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+			speedX=0;
+			speedY=0.2;
+		}else if(zoneL.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+			speedX=-0.2;
+			speedY=0;
+		}else {
+			speedX=0.2;
+			speedY=0;
+		}
+		x+=speedX*delta;
+		y+=speedY*delta;
+		
 		/*il faut voir pour les murs et bouger en conséquence
 		 * 
-		 */
 		Case[][] c=World.map.getCases();
 		
 		if (speedX>0){
@@ -93,7 +119,7 @@ public class Enemy extends Entity {
 			
 		}
 		
-		
+		*/
 	}
 	
 	
@@ -103,10 +129,22 @@ public class Enemy extends Entity {
 		zoneL.addPoint(x+width/2, y+height/2);
 		zoneL.addPoint(x+width/2-1000, y+height/2-1000);
 		zoneL.addPoint(x+width/2-1000, y+height/2+1000);
+		zoneR=new Polygon();
+		zoneR.addPoint(x+width/2, y+height/2);
+		zoneR.addPoint(x+width/2+1000, y+height/2-1000);
+		zoneR.addPoint(x+width/2+1000, y+height/2+1000);
+		zoneT=new Polygon();
+		zoneT.addPoint(x+width/2, y+height/2);
+		zoneT.addPoint(x+width/2-1000, y+height/2-1000);
+		zoneT.addPoint(x+width/2+1000, y+height/2-1000);
+		zoneB=new Polygon();
+		zoneB.addPoint(x+width/2, y+height/2);
+		zoneB.addPoint(x+width/2-1000, y+height/2+1000);
+		zoneB.addPoint(x+width/2+1000, y+height/2+1000);
 		
 	}
 	/*appartition-----
-	 * déplacement
+	 * déplacement	
 	 * mort
 	 * tuage de player
 	 * img
