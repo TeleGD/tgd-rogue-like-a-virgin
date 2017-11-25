@@ -196,6 +196,14 @@ public class Player extends Entity {
 	public void setHp(int hp) {
 		this.hp = hp;
 	}
+	
+	public int getPeriode(){
+		return periodeTir;
+	}
+	
+	public double getProj(){
+		return projSpeed;
+	}
 
 	public void keyPressed(int key, char c) {
 		switch (key){

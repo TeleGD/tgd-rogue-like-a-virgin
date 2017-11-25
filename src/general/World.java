@@ -100,6 +100,11 @@ public class World extends BasicGameState {
 				g.drawImage(coeur, 756+(i-10)*50, 86);
 			}
 		}
+		g.setLineWidth(36);
+		g.setColor(Color.white);
+		g.drawString("Vitesse : "+player.getSpeed(), 756, 100+((player.getHp()-1)/10)*50);
+		g.drawString("Cadence de tir : "+player.getPeriode(), 756, 150+((player.getHp()-1)/10)*50);
+		g.drawString("Vitesse de tir : "+player.getProj(), 756, 200+((player.getHp()-1)/10)*50);
 		
 	}
 
