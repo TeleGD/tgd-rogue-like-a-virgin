@@ -18,6 +18,7 @@ public class Enemy extends Entity {
 	private Polygon zoneR,zoneL,zoneT,zoneB;
 	
 	public Enemy(){
+		hp=1;
 		World.enemies.add(this);
 		try {
 			this.sprite=new Image("images/RogueLike/blobBas.png");
@@ -41,8 +42,8 @@ public class Enemy extends Entity {
 	@Override
 	public void checkForCollision() {
 		if(hitbox.intersects(World.player.getShape())){
-			this.setHP(0);
-			System.out.println("col player");
+			//this.setHP(0);
+			//System.out.println("col player1");
 			//this.setHP(hp-Math.max(World.player.getAtk()-def, 0));
 			if(hp <= 0) alreadyDead = true;
 			return;
@@ -90,39 +91,74 @@ public class Enemy extends Entity {
 			speedX=0.2;
 			speedY=0;
 		}
-		x+=speedX*delta;
-		y+=speedY*delta;
-		hitbox.setX(x);
-		hitbox.setY(y);
+		
 		
 		/*il faut voir pour les murs et bouger en conséquence
-		 * 
+		 *
+		 * */
 		Case[][] c=World.map.getCases();
 		
 		if (speedX>0){
 			//going to the right
-			int a= (int) (x+speedX*delta+width)/36; //left border of the hitbox if we continue the movement (number in the grid)
+			int a= (int) (x+speedX*delta+width)/36; //right border of the hitbox if we continue the movement (number in the grid)
 			int b= (int) (y/36); //top border of the hitbox if we continue the movement (number in the grid)
 			int b1= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
-			if((c[a][b] instanceof Mur)||(c[a][b] instanceof Bords)) {
+			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)) {
 				speedX=0;
-				if(Math.random()>0.5) {
+				if(World.player.getY()>y) {
 					speedY=0.2;
+				}else {
+					speedY=-0.2;
 				}
 			}
 			
 		}else if (speedX<0) {
 			//going to the left
+			int a= (int) (x+speedX*delta)/36; //left border of the hitbox if we continue the movement (number in the grid)
+			int b= (int) (y/36); //top border of the hitbox if we continue the movement (number in the grid)
+			int b1= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
+			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)) {
+				speedX=0;
+				if(World.player.getY()>y) {
+					speedY=0.2;
+				}else {
+					speedY=-0.2;
+				}
+			}
 			
 		}else if(speedY>0) {
 			//going down
+			int a= (int) (y+speedY*delta+height)/36; //left border of the hitbox if we continue the movement (number in the grid)
+			int b= (int) (x/36); //top border of the hitbox if we continue the movement (number in the grid)
+			int b1= (int) (x+width)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
+			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)) {
+				speedY=0;
+				if(World.player.getX()>x) {
+					speedX=0.2;
+				}else {
+					speedX=-0.2;
+				}
+			}
 			
 		}else {
 			//going top
-			
+			int a= (int) (y+speedY*delta)/36; //left border of the hitbox if we continue the movement (number in the grid)
+			int b= (int) (x/36); //top border of the hitbox if we continue the movement (number in the grid)
+			int b1= (int) (x+width)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
+			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)) {
+				speedY=0;
+				if(World.player.getX()>x) {
+					speedX=0.2;
+				}else {
+					speedX=-0.2;
+				}
+			}
 		}
 		
-		*/
+		x+=speedX*delta;
+		y+=speedY*delta;
+		hitbox.setX(x);
+		hitbox.setY(y);
 	}
 	
 	
