@@ -39,6 +39,7 @@ public class Porte extends Case {
 		
 		if(pY == this.y && pX == this.x){
 			World.changeMap(Generation.genereNewSalle(niveau, y, x));
+			World.newItem();
 			
 			
 		if(pX == 0)

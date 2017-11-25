@@ -89,8 +89,8 @@ public class Player extends Entity {
 		}
 		if(World.item != null){
 			if(hitbox.intersects(World.item.getShape())){
-				System.out.println("Objet touché !\n");
 				World.item.alreadyDead = true;
+				speed *= 1.33;
 				return;
 			}
 		}

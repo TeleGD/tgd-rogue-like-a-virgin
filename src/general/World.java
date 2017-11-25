@@ -121,4 +121,8 @@ public class World extends BasicGameState {
 		// TODO Auto-generated method stub
 	}
 
+	public static void newItem() throws SlickException {
+		item = new Item();
+	}
+
 }
