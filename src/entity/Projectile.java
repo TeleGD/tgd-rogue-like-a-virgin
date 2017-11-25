@@ -19,7 +19,7 @@ public class Projectile extends Entity{
 		atk = 1;
 	}
 	
-	public Projectile(float x, float y, boolean friendly){
+	public Projectile(float x, float y, boolean friendly,double vitX,double vitY){
 		this.friendly = friendly;
 		this.x = x;
 		this.y = y;
@@ -29,6 +29,8 @@ public class Projectile extends Entity{
 		hitbox = new Rectangle(x+4,y+4,width-8,height-8);
 		World.projectiles.add(this);
 		atk = 1;
+		speedX=vitX;
+		speedY=vitY;
 		if(friendly){
 			try {
 				sprite = new Image(World.DIRECTORY_IMAGES+"coeur.png");

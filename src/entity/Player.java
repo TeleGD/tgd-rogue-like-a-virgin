@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -30,6 +32,14 @@ public class Player extends Entity {
 	private boolean ouest;
 	private boolean nordsud;
 	private boolean estouest;
+	private int periodeTir;
+	private int attenteTir;
+	private ArrayList<Projectile> playerProjectiles;
+	private boolean tir;
+	private double projSpeed;
+	private double projSpeedX;
+	private double projSpeedY;
+	
 	
 
 	public Player() throws SlickException{
@@ -43,6 +53,13 @@ public class Player extends Entity {
 		height=36;
 		speed=0.25;
 		direction=2;
+		sprite=spriteD;
+		playerProjectiles=new ArrayList<Projectile>();
+		periodeTir=50;
+		attenteTir=0;
+		tir=false;
+		projSpeed=0.4;
+		
 	}
 	
 	@Override
@@ -185,28 +202,49 @@ public class Player extends Entity {
 	
 	public void setDir() {
 		direction=2;
+		tir=false;
+		sprite=spriteD;
+		projSpeedX=0;
+		projSpeedY=0;
 		
 		if((nord && !sud) || (nord && sud && !nordsud)) {
 			direction=0;
+			sprite=spriteU;
+			projSpeedX=-projSpeed;
+			tir=true;
 		}
 		if((sud && !nord) || (nord && sud && nordsud)) {
 			direction=2;
+			sprite=spriteD;
+			projSpeedX=projSpeed;
+			tir=true;
 		}
 		if((ouest && !est)|| (ouest && est && !estouest)) {
 			direction=3;
+			sprite=spriteL;
+			projSpeedY=-projSpeed;
+			tir=true;
 		}
 		if((!ouest && est)|| (ouest && est && estouest)) {
 			direction=1;
+			sprite=spriteR;
+			projSpeedY=projSpeed;
+			tir=true;
+		}
+		
+		if (tir && attenteTir==0) {
+			playerProjectiles.add(new Projectile(x,y,true,projSpeedY,projSpeedX));
+			attenteTir=periodeTir;
+		}
+		if (attenteTir>0) {
+			attenteTir--;
 		}
 		
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		setDir();
-		if (direction==0) g.drawImage(spriteU,(float) x,(float) y);
-		if (direction==1) g.drawImage(spriteR,(float) x,(float) y);
-		if (direction==2) g.drawImage(spriteD,(float) x,(float) y);
-		if (direction==3) g.drawImage(spriteL,(float) x,(float) y);
+		g.drawImage(sprite,(float) x,(float) y);
 		
 	}
 }
