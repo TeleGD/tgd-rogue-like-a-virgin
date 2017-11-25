@@ -14,8 +14,8 @@ import map.Mur;
 
 public class Enemy1 extends Enemy{
 
-	private Polygon zoneR,zoneL,zoneT,zoneB;
-	private double speed;
+	protected Polygon zoneR,zoneL,zoneT,zoneB;
+	protected double speed;
 	
 	public Enemy1(float x, float y) {
 		super(x, y);
