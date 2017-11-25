@@ -20,7 +20,7 @@ public class Porte extends Case {
 			e.printStackTrace();
 		}
 		
-		System.out.println("porte " + getCouleur() + " x : " + x + "   y " + y);
+		//System.out.println("porte " + getCouleur() + " x : " + x + "   y " + y);
 	}
 	
 	@Override
@@ -33,13 +33,26 @@ public class Porte extends Case {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		
-		//System.out.println("player x : " +  Math.round(World.player.getX()/36) + " y : " + Math.round(World.player.getY()/36));
-		//System.out.println("salle "+getCouleur()+" x : " +  x + " y : " +y);
+		int pX = Math.round(World.player.getX()/36);
+		int pY = Math.round(World.player.getY()/36);
 
 		
-		if(Math.round(World.player.getY()/36) == this.y && Math.round(World.player.getX()/36) == this.x){
+		if(pY == this.y && pX == this.x){
 			World.changeMap(Generation.genereNewSalle(niveau, y, x));
-
+			
+			
+		if(pX == 0)
+			pX = 18;
+		else if(pX == 19)
+			pX = 1;
+		if(pY == 0)
+			pY = 18;
+		else if(pY == 19)
+			pY = 1;
+		
+			
+			World.player.setX(pX*36);
+			World.player.setY(pY*36);
 		}
 	}
 	

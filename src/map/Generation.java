@@ -16,23 +16,27 @@ public class Generation {
 		int fermee = 0;
 		
 		if(posx==0){
-			fermee = 4;
+			//porte haut
+			fermee =3;
 		}
 		if(posx==largeur-1){
-			fermee = 3;
+			//bas
+			fermee = 4;
 		}
 		if(posy==0){
-			fermee = 1;
+			//gauche
+			fermee = 2;
 		}
 		if(posy==hauteur-1){
-			fermee = 2;
+			//droite
+			fermee = 1;
 		}
 		
 		return genereSalle( niveau,  largeur,  hauteur,fermee);
 	}
 	
 	
-	//porte fermee : 0 rien | 1 : haut | 2 : droite | 3 : bas | 4 : gauche
+	//porte fermee : 0 rien | 1 : gauche | 2 : droite | 3 : bas | 4 : haut
 	public static Salle genereSalle(int niveau, int plargeur, int phauteur,int porteFermee) {
 		hauteur = phauteur;
 		largeur = plargeur;
@@ -77,32 +81,32 @@ public class Generation {
 		
 		//porte gauche
 		if(fermee != 1){
-			map[0][l] = new Porte(0, l, 1);
-			map[0][l+1] = new Porte(0, l+1, 1);
+			map[0][l] = new Porte(0, l, diffPorte);
+			map[0][l+1] = new Porte(0, l+1, diffPorte);
 		}
 
 		
 		//porte droite
 		if(fermee != 2){
 			diffPorte = r.nextInt(difficulteMax);
-			map[hauteur-1][l] = new Porte(hauteur-1, l, 2);
-			map[hauteur-1][l+1] = new Porte(hauteur-1, l+1, 2);
+			map[hauteur-1][l] = new Porte(hauteur-1, l, diffPorte);
+			map[hauteur-1][l+1] = new Porte(hauteur-1, l+1, diffPorte);
 		}
 
 		
 		//porte haut
 		if(fermee != 4){
 			diffPorte = r.nextInt(difficulteMax);
-			map[h][0] = new Porte(h, 0, 3);
-			map[h+1][0] = new Porte(h+1, 0, 3);
+			map[h][0] = new Porte(h, 0, diffPorte);
+			map[h+1][0] = new Porte(h+1, 0, diffPorte);
 		}
 
 		
 		//porte bas
 		if(fermee != 3){
 			diffPorte = r.nextInt(difficulteMax);
-			map[h][largeur-1] = new Porte(h, largeur-1, 4);
-			map[h+1][largeur-1] = new Porte(h+1, largeur-1, 4);
+			map[h][largeur-1] = new Porte(h, largeur-1, diffPorte);
+			map[h+1][largeur-1] = new Porte(h+1, largeur-1, diffPorte);
 		}
 		
 		
