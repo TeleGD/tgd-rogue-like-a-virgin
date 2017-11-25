@@ -16,7 +16,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import general.World;
-import entity.enemies.*;
+import entity.enemies.Enemy;
 
 public class Player extends Entity {
 
