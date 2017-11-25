@@ -88,21 +88,23 @@ public class Player extends Entity {
 		tmpJ = (int) y/36;
 		for(int deltaI = -1; deltaI < 2; deltaI++){
 			for(int deltaJ = -1; deltaJ < 2; deltaJ++){
-				collision = c[tmpI+deltaI][tmpJ+deltaJ].getHitbox().intersects(hitbox);
-				if(!(deltaI == 0 && deltaJ == 0) && tmpI+deltaI >= 0 && tmpJ+deltaJ >= 0 && tmpI+deltaI < c.length && tmpJ+deltaJ < c[tmpI].length){
-					if(collision && (c[tmpI+deltaI][tmpJ+deltaJ] instanceof Mur)){
-						if (deltaI<0) deplacementPossibleGauche = false;
-						else deplacementPossibleDroite = false;
-						//System.out.println("mur");
-						if (deltaJ<0) deplacementPossibleHaut = false;
-						else deplacementPossibleBas = false;
+				if(tmpI+deltaI>0 && tmpJ+deltaJ>0 && tmpJ+deltaJ<720 && tmpI+deltaI<720) {
+					collision = c[tmpI+deltaI][tmpJ+deltaJ].getHitbox().intersects(hitbox);
+					if(!(deltaI == 0 && deltaJ == 0) && tmpI+deltaI >= 0 && tmpJ+deltaJ >= 0 && tmpI+deltaI < c.length && tmpJ+deltaJ < c[tmpI].length){
+						if(collision && (c[tmpI+deltaI][tmpJ+deltaJ] instanceof Mur)){
+							if (deltaI<0) deplacementPossibleGauche = false;
+							else deplacementPossibleDroite = false;
+							System.out.println("mur");
+							if (deltaJ<0) deplacementPossibleHaut = false;
+							else deplacementPossibleBas = false;
+						}
+					} else if(!(c[tmpI+deltaI][tmpJ+deltaJ] instanceof Mur)) {
+						deplacementPossibleGauche = true;
+						deplacementPossibleDroite = true;
+						deplacementPossibleHaut = true;
+						deplacementPossibleBas = true;
+						System.out.println("deplacement");
 					}
-				} else if(!(c[tmpI+deltaI][tmpJ+deltaJ] instanceof Mur)) {
-					deplacementPossibleGauche = true;
-					deplacementPossibleDroite = true;
-					deplacementPossibleHaut = true;
-					deplacementPossibleBas = true;
-					//System.out.println("deplacement");
 				}
 
 			}
@@ -110,23 +112,24 @@ public class Player extends Entity {
 		//pour que la collision à droite et en bas fonctionne avec le mur
 		for(int deltaI = 1; deltaI > -2; deltaI--){
 			for(int deltaJ = 1; deltaJ > -2; deltaJ--){
-				collision = c[tmpI+1+deltaI][tmpJ+1+deltaJ].getHitbox().intersects(hitbox);
-				if(!(deltaI == 0 && deltaJ == 0) && tmpI+1+deltaI >= 0 && tmpJ+1+deltaJ >= 0 && tmpI+1+deltaI < c.length && tmpJ+1+deltaJ < c[tmpI+1].length){
-					if(collision && (c[tmpI+1+deltaI][tmpJ+1+deltaJ] instanceof Mur)){
-						if (deltaI<0) deplacementPossibleGauche = false;
-						else deplacementPossibleDroite = false;
-						//System.out.println("mur");
-						if (deltaJ<0) deplacementPossibleHaut = false;
-						else deplacementPossibleBas = false;
+				if(tmpI+deltaI>0 && tmpJ+deltaJ>0 && tmpJ+deltaJ<720 && tmpI+deltaI<720) {
+					collision = c[tmpI+1+deltaI][tmpJ+1+deltaJ].getHitbox().intersects(hitbox);
+					if(!(deltaI == 0 && deltaJ == 0) && tmpI+1+deltaI >= 0 && tmpJ+1+deltaJ >= 0 && tmpI+1+deltaI < c.length && tmpJ+1+deltaJ < c[tmpI+1].length){
+						if(collision && (c[tmpI+1+deltaI][tmpJ+1+deltaJ] instanceof Mur)){
+							if (deltaI<0) deplacementPossibleGauche = false;
+							else deplacementPossibleDroite = false;
+							System.out.println("mur");
+							if (deltaJ<0) deplacementPossibleHaut = false;
+							else deplacementPossibleBas = false;
+						}
+					} else if(!(c[tmpI+1+deltaI][tmpJ+1+deltaJ] instanceof Mur)) {
+						deplacementPossibleGauche = true;
+						deplacementPossibleDroite = true;
+						deplacementPossibleHaut = true;
+						deplacementPossibleBas = true;
+						System.out.println("deplacement");
 					}
-				} else if(!(c[tmpI+1+deltaI][tmpJ+1+deltaJ] instanceof Mur)) {
-					deplacementPossibleGauche = true;
-					deplacementPossibleDroite = true;
-					deplacementPossibleHaut = true;
-					deplacementPossibleBas = true;
-					//System.out.println("deplacement");
 				}
-
 			}
 		}
 		for(Enemy e : World.enemies){
@@ -271,16 +274,16 @@ public class Player extends Entity {
 	public void move(int dt) {
 		speedX = 0;
 		speedY = 0;
-		if(((up && !down) || (up && down && !updown)) && deplacementPossibleHaut) {
+		if(((up && !down) || (up && down && !updown)) && deplacementPossibleHaut && (y>38 || (x>320 && x<360))){
 			speedY=-speed;
 		}
-		if(((down && !up) || (up && down && updown)) && deplacementPossibleBas) {
+		if(((down && !up) || (up && down && updown)) && deplacementPossibleBas && (y<644 || (x>320 && x<360))) {
 				speedY=speed;
 		}
-		if(((left && !right)|| (left && right && !rightLeft)) && deplacementPossibleGauche) {
+		if(((left && !right)|| (left && right && !rightLeft)) && deplacementPossibleGauche && (x>38 || (y>320 && y<360))) {
 			speedX = -speed;
 		}
-		if(((!left && right)|| (left && right && rightLeft)) && deplacementPossibleDroite) {
+		if(((!left && right)|| (left && right && rightLeft)) && deplacementPossibleDroite && (x<644 || (y>320 && y<360))) {
 				speedX = speed;
 		}
 		if (speedX!=0 && speedY!=0) {
