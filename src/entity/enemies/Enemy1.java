@@ -21,7 +21,12 @@ public class Enemy1 extends Enemy{
 		super(x, y);
 		hp=1;
 		try {
-			this.sprite=new Image("images/RogueLike/blobBas.png");
+			this.imgB=new Image("images/RogueLike/blobBas.png");
+			this.imgT=new Image("images/RogueLike/blobHaut.png");
+			this.imgR=new Image("images/RogueLike/blobDroite.png");
+			this.imgL=new Image("images/RogueLike/blobGauche.png");
+			
+			this.sprite=imgB;
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -132,6 +137,17 @@ public class Enemy1 extends Enemy{
 				}
 			}
 		}
+		
+		if(speedX>0) {
+			sprite=imgR;
+		}else if (speedX<0) {
+			sprite=imgL;
+		}else if(speedY>0) {
+			sprite=imgB;
+		}else {
+			sprite=imgT;
+		}
+		
 		
 		x+=speedX*delta;
 		y+=speedY*delta;
