@@ -50,6 +50,8 @@ public class World extends BasicGameState {
 	public static Item item;
 	public static Salle map;
 	
+	public Image coeur;
+	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
 		game=arg1;
@@ -66,6 +68,7 @@ public class World extends BasicGameState {
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+		coeur = new Image(World.DIRECTORY_IMAGES+"vie.png");
 	}
 	
 	public static void changeMap(Salle s){
@@ -86,6 +89,9 @@ public class World extends BasicGameState {
 		}
 		for(Projectile p : projectiles){
 			p.render(container, game, g);
+		}
+		for (int i = 0; i < player.getHp(); i++){
+			g.drawImage(coeur, 756+i*50, 36);
 		}
 		
 	}

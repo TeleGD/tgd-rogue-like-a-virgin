@@ -69,7 +69,7 @@ public class Player extends Entity {
 		attenteTir=0;
 		tir=false;
 		projSpeed=0.4;
-		
+		hp = 5;
 	}
 	
 	@Override
@@ -161,6 +161,14 @@ public class Player extends Entity {
 
 	public void setSpeed(double speed) {
 		this.speed = speed;
+	}
+	
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
 	}
 
 	public void keyPressed(int key, char c) {
