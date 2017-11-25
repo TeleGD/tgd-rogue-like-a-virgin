@@ -315,7 +315,7 @@ public class Player extends Entity {
 		}
 		
 		if (tir && attenteTir==0) {
-			playerProjectiles.add(new Projectile(x,y,true,projSpeedY,projSpeedX));
+			playerProjectiles.add(new Projectile(x+10,y+10,true,projSpeedY,projSpeedX));
 			attenteTir=periodeTir;
 		}
 		if (attenteTir>0) {
