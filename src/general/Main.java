@@ -28,7 +28,7 @@ public class Main extends StateBasedGame{
 	
 
 	public Main() {
-		super("INSERER LE NOM DU PROJET ICI MAIS EN PLUS COURT QUAND MEME PARCE-QUE LA C'EST UN PEU LONG");
+		super("NOM PLUS COURT");
 	}
 
 
