@@ -32,7 +32,7 @@ public class Generation {
 			fermee = 1;
 		}
 		
-		return genereSalle( niveau,  largeur,  hauteur,fermee);
+		return genereSalle( niveau,  largeur,  hauteur,0);
 	}
 	
 	
