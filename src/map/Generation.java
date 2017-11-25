@@ -5,6 +5,8 @@ import java.util.Random;
 import org.newdawn.slick.SlickException;
 
 import entity.Item;
+import entity.enemies.Boss;
+import entity.enemies.Enemy1;
 import general.World;
 
 public class Generation {
@@ -83,6 +85,7 @@ public class Generation {
 				map[i][j]=c;
 			}
 		}
+		genereEnemies(difficulte,map);
 		return new Salle(posePortes(map,porteFermee), hauteur, largeur);
 	}
 	
@@ -146,5 +149,49 @@ public class Generation {
 		return map;
 	}
 	
+	
+	public static void genereEnemies(int type,Case[][] c) {
+		/*type est la difficulte de la salle
+		 * 1 a 5: difficulte croissante
+		 * 6: Boss
+		 */
+		if(type<6) {
+			//generation des salles normales
+			for (int i=0;i<type*4;i++) {
+				/*
+				 * proba de faire apparaitre un faible monstre: 1/type mais a voir apres
+				 */
+				float x=(float) ((float) 50+Math.random()*(720-36-50));
+				float y=(float) ((float) 50+Math.random()*(720-36-50));
+				while (c[(int)x/36][(int)y/36] instanceof Mur) {
+					x=(float) ((float) 50+Math.random()*(720-36-50));
+					y=(float) ((float) 50+Math.random()*(720-36-50));
+				}
+				new Enemy1(x,y);
+			}
+			
+		}else {
+			float x,y;
+			for (int i=0;i<6;i++) {
+				
+				x=(float) ((float) 50+Math.random()*(720-36-50));
+				y=(float) ((float) 50+Math.random()*(720-36-50));
+				while (c[(int)x/36][(int)y/36] instanceof Mur) {
+					x=(float) ((float) 50+Math.random()*(720-36-50));
+					y=(float) ((float) 50+Math.random()*(720-36-50));
+				}
+				new Enemy1(x,y);
+			}
+			x=(float) ((float) 50+Math.random()*(720-36-50));
+			y=(float) ((float) 50+Math.random()*(720-36-50));
+			while (c[(int)x/36][(int)y/36] instanceof Mur) {
+				x=(float) ((float) 50+Math.random()*(720-36-50));
+				y=(float) ((float) 50+Math.random()*(720-36-50));
+			}
+			new Boss(x,y);
+		}
+		
+		
+	}
 	
 }
