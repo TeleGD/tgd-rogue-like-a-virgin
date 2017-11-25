@@ -52,6 +52,10 @@ public class Generation {
 				if(i==0 || j == 0 || i == hauteur-1 || j == largeur-1){
 					c=new Bords(i,j);
 				}
+				else if(difficulte == 6){
+					//telecom
+					c=new CaseVide(i,j,difficulte);
+				}
 				else{
 					int a = r.nextInt(100);
 					a+=difficulte*difficulte/2;
@@ -81,6 +85,8 @@ public class Generation {
 		
 		//porte gauche
 		if(fermee != 1){
+			if(diffPorte == r.nextInt(15))
+				diffPorte = 6;
 			map[0][l] = new Porte(0, l, diffPorte);
 			map[0][l+1] = new Porte(0, l+1, diffPorte);
 		}
@@ -89,6 +95,8 @@ public class Generation {
 		//porte droite
 		if(fermee != 2){
 			diffPorte = r.nextInt(difficulteMax);
+			if(diffPorte == r.nextInt(15))
+				diffPorte = 6;
 			map[hauteur-1][l] = new Porte(hauteur-1, l, diffPorte);
 			map[hauteur-1][l+1] = new Porte(hauteur-1, l+1, diffPorte);
 		}
@@ -97,6 +105,8 @@ public class Generation {
 		//porte haut
 		if(fermee != 4){
 			diffPorte = r.nextInt(difficulteMax);
+			if(diffPorte == r.nextInt(15))
+				diffPorte = 6;
 			map[h][0] = new Porte(h, 0, diffPorte);
 			map[h+1][0] = new Porte(h+1, 0, diffPorte);
 		}
@@ -105,6 +115,8 @@ public class Generation {
 		//porte bas
 		if(fermee != 3){
 			diffPorte = r.nextInt(difficulteMax);
+			if(diffPorte == r.nextInt(15))
+				diffPorte = 6;
 			map[h][largeur-1] = new Porte(h, largeur-1, diffPorte);
 			map[h+1][largeur-1] = new Porte(h+1, largeur-1, diffPorte);
 		}

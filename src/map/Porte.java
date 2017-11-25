@@ -10,6 +10,8 @@ import entity.Player;
 import general.World;
 
 public class Porte extends Case {
+	
+	int rotation;
 
 	public Porte(int x, int y,int difficulte) {
 		super(x, y,difficulte);
