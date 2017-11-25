@@ -16,6 +16,7 @@ import map.Mur;
 public class Enemy extends Entity {
 
 	private Polygon zoneR,zoneL,zoneT,zoneB;
+	private double speed;
 	
 	public Enemy(){
 		hp=1;
@@ -32,6 +33,7 @@ public class Enemy extends Entity {
 		this.height=36;
 		zoning();
 		this.hitbox=new Rectangle (x,y,width,height);
+		speed = 0.15;
 	}
 	
 	@Override
@@ -76,15 +78,15 @@ public class Enemy extends Entity {
 	public void move(int delta) {
 		if(zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
 			speedX=0;
-			speedY=-0.2;
+			speedY=-speed;
 		}else if(zoneB.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
 			speedX=0;
-			speedY=0.2;
+			speedY=speed;
 		}else if(zoneL.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
-			speedX=-0.2;
+			speedX=-speed;
 			speedY=0;
 		}else {
-			speedX=0.2;
+			speedX=speed;
 			speedY=0;
 		}
 		
@@ -102,9 +104,9 @@ public class Enemy extends Entity {
 			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)) {
 				speedX=0;
 				if(World.player.getY()>y) {
-					speedY=0.2;
+					speedY=speed;
 				}else {
-					speedY=-0.2;
+					speedY=-speed;
 				}
 			}
 			
@@ -116,9 +118,9 @@ public class Enemy extends Entity {
 			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)) {
 				speedX=0;
 				if(World.player.getY()>y) {
-					speedY=0.2;
+					speedY=speed;
 				}else {
-					speedY=-0.2;
+					speedY=-speed;
 				}
 			}
 			
@@ -130,9 +132,9 @@ public class Enemy extends Entity {
 			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)) {
 				speedY=0;
 				if(World.player.getX()>x) {
-					speedX=0.2;
+					speedX=speed;
 				}else {
-					speedX=-0.2;
+					speedX=-speed;
 				}
 			}
 			
@@ -144,9 +146,9 @@ public class Enemy extends Entity {
 			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)) {
 				speedY=0;
 				if(World.player.getX()>x) {
-					speedX=0.2;
+					speedX=speed;
 				}else {
-					speedX=-0.2;
+					speedX=-speed;
 				}
 			}
 		}
