@@ -94,7 +94,11 @@ public class World extends BasicGameState {
 			p.render(container, game, g);
 		}
 		for (int i = 0; i < player.getHp(); i++){
-			g.drawImage(coeur, 756+i*50, 36);
+			if ( i < 10 ){
+				g.drawImage(coeur, 756+i*50, 36);
+			} else {
+				g.drawImage(coeur, 756+(i-10)*50, 86);
+			}
 		}
 		
 	}
