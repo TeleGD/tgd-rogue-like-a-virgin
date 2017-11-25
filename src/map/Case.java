@@ -77,6 +77,8 @@ public abstract class Case {
 			return "Blue";
 		case 3:
 			return "Yellow";
+		case 6 :
+			return"Telecom";
 		default:
 			return "Red";
 		}

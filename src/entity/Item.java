@@ -24,8 +24,7 @@ public class Item extends Entity {
 	}
 	
 	public void die() {
-		//World.item = null;
-		//System.out.println("DIE ITEM :D");
+		World.item = null;
 	}
 
 	public void checkForCollision() {
