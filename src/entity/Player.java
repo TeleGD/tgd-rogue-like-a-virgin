@@ -108,7 +108,7 @@ public class Player extends Entity {
 						deplacementPossibleDroite = true;
 						deplacementPossibleHaut = true;
 						deplacementPossibleBas = true;
-						System.out.println("deplacement");
+						//System.out.println("deplacement");
 					}
 				}
 
@@ -132,7 +132,7 @@ public class Player extends Entity {
 						deplacementPossibleDroite = true;
 						deplacementPossibleHaut = true;
 						deplacementPossibleBas = true;
-						System.out.println("deplacement");
+						//System.out.println("deplacement");
 					}
 				}
 			}
