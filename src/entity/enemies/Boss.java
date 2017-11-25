@@ -8,36 +8,39 @@ import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
+import entity.Projectile;
+import entity.ProjectileSplit;
 import general.World;
 import map.Case;
 import map.Mur;
 
-public class Enemy1 extends Enemy{
+public class Boss extends Enemy{
 
 	private Polygon zoneR,zoneL,zoneT,zoneB;
 	private double speed;
+	private int compt;
 	
-	public Enemy1(float x, float y) {
+	public Boss(float x, float y) {
 		super(x, y);
 		hp=1;
+		compt=0;
 		try {
-			this.imgB=new Image("images/RogueLike/blobBas.png");
-			this.imgT=new Image("images/RogueLike/blobHaut.png");
-			this.imgR=new Image("images/RogueLike/blobDroite.png");
-			this.imgL=new Image("images/RogueLike/blobGauche.png");
+			this.imgB=new Image("images/RogueLike/bossBas.png");
+			this.imgT=new Image("images/RogueLike/bossHaut.png");
+			this.imgR=new Image("images/RogueLike/bossDroite.png");
+			this.imgL=new Image("images/RogueLike/bossGauche.png");
 			
 			this.sprite=imgB;
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		this.width=36;
-		this.height=36;
+		this.width=72;
+		this.height=72;
 		zoning();
 		this.hitbox=new Rectangle (x,y,width,height);
 		speed = 0.15;
 	}
-	
-	
+
 	public void zoning() {
 		// creating the zones used to know the direction to go
 		zoneL=new Polygon();
@@ -85,8 +88,9 @@ public class Enemy1 extends Enemy{
 			//going to the right
 			int a= (int) (x+speedX*delta+width)/36; //right border of the hitbox if we continue the movement (number in the grid)
 			int b= (int) (y/36); //top border of the hitbox if we continue the movement (number in the grid)
-			int b1= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
-			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)) {
+			int b1= (int) (y+height/2)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
+			int b2= (int) (y+height)/36;
+			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)||(c[a][b2] instanceof Mur)) {
 				speedX=0;
 				if(World.player.getY()>y) {
 					speedY=speed;
@@ -99,8 +103,9 @@ public class Enemy1 extends Enemy{
 			//going to the left
 			int a= (int) (x+speedX*delta)/36; //left border of the hitbox if we continue the movement (number in the grid)
 			int b= (int) (y/36); //top border of the hitbox if we continue the movement (number in the grid)
-			int b1= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
-			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)) {
+			int b1= (int) (y+height/2)/36;
+			int b2= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
+			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)|| (c[a][b2] instanceof Mur)) {
 				speedX=0;
 				if(World.player.getY()>y) {
 					speedY=speed;
@@ -113,8 +118,9 @@ public class Enemy1 extends Enemy{
 			//going down
 			int a= (int) (y+speedY*delta+height)/36; //left border of the hitbox if we continue the movement (number in the grid)
 			int b= (int) (x/36); //top border of the hitbox if we continue the movement (number in the grid)
-			int b1= (int) (x+width)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
-			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)) {
+			int b1= (int) (x+width/2)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
+			int b2= (int) (x+width)/36;
+			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)||(c[b2][a]instanceof Mur)) {
 				speedY=0;
 				if(World.player.getX()>x) {
 					speedX=speed;
@@ -127,8 +133,9 @@ public class Enemy1 extends Enemy{
 			//going top
 			int a= (int) (y+speedY*delta)/36; //left border of the hitbox if we continue the movement (number in the grid)
 			int b= (int) (x/36); //top border of the hitbox if we continue the movement (number in the grid)
-			int b1= (int) (x+width)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
-			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)) {
+			int b1= (int) (x+width/2)/36;
+			int b2= (int) (x+width)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
+			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)||(c[b2][a]instanceof Mur)) {
 				speedY=0;
 				if(World.player.getX()>x) {
 					speedX=speed;
@@ -148,16 +155,27 @@ public class Enemy1 extends Enemy{
 			sprite=imgT;
 		}
 		
-		
 		x+=speedX*delta;
 		y+=speedY*delta;
 		hitbox.setX(x);
 		hitbox.setY(y);
 	}
 	
+	private void shoot() {
+		new ProjectileSplit(this.x+width/2,this.y+height/2,0.2f,0,false,10,3);
+		new ProjectileSplit(this.x+width/2,this.y+height/2,-0.2f,0,false,10,3);
+		new ProjectileSplit(this.x+width/2,this.y+height/2,0,0.2f,false,10,3);
+		new ProjectileSplit(this.x+width/2,this.y+height/2,0,-0.2f,false,10,3);
+	}
+	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
 		zoning();
+		if(compt>40) {
+			compt=0;
+			shoot();
+		}
+		compt++;
 		//move(delta);
 	}
 	
@@ -165,5 +183,4 @@ public class Enemy1 extends Enemy{
 		super.render(container, game, g);
 		g.draw(hitbox);
 	}
-
 }

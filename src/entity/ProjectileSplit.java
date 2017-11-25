@@ -1,5 +1,7 @@
 package entity;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
@@ -9,6 +11,13 @@ public class ProjectileSplit extends Projectile {
 	boolean recursive;
 	Projectile child;
 	double speed,angle;
+	
+	public ProjectileSplit(float x, float y, float speedX,float speedY, boolean friendly,int dt,int fragments) {
+		super(x,y,friendly,speedX,speedY);
+		tMax=dt;
+		t=dt;
+		frag=fragments;
+	}
 	
 	public ProjectileSplit(int i, int j,double speedX,double speedY, boolean friendly, int dt){
 		super(i,j,friendly);
@@ -57,9 +66,8 @@ public class ProjectileSplit extends Projectile {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		checkForCollision();
 		move(delta);
-		
 		t -= delta;
-		if(t <= 0){
+		/*if(t <= 0){
 			if(recursive){
 				for(int a = 0; a < frag /2; a++){
 					angle = -90 + a*90/frag;
@@ -69,6 +77,13 @@ public class ProjectileSplit extends Projectile {
 				}				
 			}
 			alreadyDead = true;
+		}*/
+		if(t<=0) {
+			for(int a=1;a<=frag;a++) {
+				angle = -90+a*180/(frag-1);
+				new Projectile(x,y,friendly,speedX*Math.cos(angle)-speedY*Math.sin(angle),speedY*Math.cos(angle)+speedX*Math.sin(angle));
+			}
+			alreadyDead=true;
 		}
 		if(alreadyDead) die();
 	}

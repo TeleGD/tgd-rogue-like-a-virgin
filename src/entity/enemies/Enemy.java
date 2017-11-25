@@ -17,9 +17,10 @@ import map.Mur;
 
 public abstract class Enemy extends Entity {
 
-	
+	protected Image imgR,imgL,imgT,imgB;
 	public Enemy(float x,float y){
 		hp=1;
+		this.atk=1;
 		World.enemies.add(this);
 		try {
 			this.sprite=new Image("images/RogueLike/blobBas.png");
@@ -61,7 +62,8 @@ public abstract class Enemy extends Entity {
 	@Override
 	public void checkForCollision() {
 		if(hitbox.intersects(World.player.getShape())){
-			//this.setHP(0);
+			this.setHP(0);
+			
 			//System.out.println("col player1");
 			//this.setHP(hp-Math.max(World.player.getAtk()-def, 0));
 			if(hp <= 0) alreadyDead = true;
