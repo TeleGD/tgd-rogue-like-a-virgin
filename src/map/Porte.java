@@ -51,7 +51,6 @@ public class Porte extends Case {
 			if(prob == 0)
 				new Item();
 			
-			
 		if(pX == 0)
 			pX = 18;
 		else if(pX == 19)

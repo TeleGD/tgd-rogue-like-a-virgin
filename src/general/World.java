@@ -53,7 +53,9 @@ public class World extends BasicGameState {
 	public static Salle map;
 	public static Enemy Nico;
 	
-	public Image coeur;
+	private Image coeur,coin;
+	private Button atkUp,speedUp,delayUp,oneUp ;
+	
 	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
@@ -67,13 +69,65 @@ public class World extends BasicGameState {
 		item = new ArrayList<Item>();
 		map =  Generation.genereSalle(-1, 20,20 ,0);
 		player = new Player();
-		item.add(new Item());
 		Nico=new Enemy1(100,100);
+		
+		
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		coeur = new Image(World.DIRECTORY_IMAGES+"vie.png");
+		coin = new Image(World.DIRECTORY_IMAGES+"itemCoin.png");
+		atkUp = new Button("Puissance Up",container,750,600,TGDComponent.AUTOMATIC,30);
+		atkUp.setBackgroundColor(new Color(255,255,255));
+		atkUp.setTextColor(Color.black);
+		atkUp.setPadding(7,10,7,10);
+		atkUp.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(TGDComponent componenent) {
+                World.player.setAtk(World.player.getAtk()+1);
+
+            }});
+		
+		speedUp = new Button("Vitesse Up",container,900,600,TGDComponent.AUTOMATIC,30);
+		speedUp.setBackgroundColor(new Color(255,255,255));
+		speedUp.setTextColor(Color.black);
+		speedUp.setPadding(7,10,7,10);
+		speedUp.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(TGDComponent componenent) {
+                World.player.setSpeed(World.player.getSpeed()*1.1);
+
+            }});
+		
+		delayUp = new Button("Cadence Up",container,1050,600,TGDComponent.AUTOMATIC,30);
+		delayUp.setBackgroundColor(new Color(255,255,255));
+		delayUp.setTextColor(Color.black);
+		delayUp.setPadding(7,10,7,10);
+		delayUp.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(TGDComponent componenent) {
+            	if(World.player.getPeriode() >= 10)
+            		World.player.setPeriod(World.player.getPeriode()-5);
+
+            }});
+		
+		oneUp = new Button("One Up",container,1200,600,TGDComponent.AUTOMATIC,30);
+		oneUp.setBackgroundColor(new Color(255,255,255));
+		oneUp.setTextColor(Color.black);
+		oneUp.setPadding(7,10,7,10);
+		oneUp.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(TGDComponent componenent) {
+            	if(World.player.getHp() <= 19)
+            		World.player.setHp(World.player.getHp()+1);
+
+            }});
+		
 	}
 	
 	public static void changeMap(Salle s){
@@ -97,7 +151,9 @@ public class World extends BasicGameState {
 		for(Projectile p : projectiles){
 			p.render(container, game, g);
 		}
-		for (int i = 0; i < player.getHp(); i++){
+		
+		
+		for (int i = 0; i < World.player.getHp(); i++){
 			if ( i < 10 ){
 				g.drawImage(coeur, 756+i*50, 36);
 			} else {
@@ -106,10 +162,16 @@ public class World extends BasicGameState {
 		}
 		g.setLineWidth(36);
 		g.setColor(Color.white);
-		g.drawString("Vitesse : "+player.getSpeed(), 756, 100+((player.getHp()-1)/10)*50);
-		g.drawString("Cadence de tir : "+player.getPeriode(), 756, 150+((player.getHp()-1)/10)*50);
-		g.drawString("Vitesse de tir : "+player.getProj(), 756, 200+((player.getHp()-1)/10)*50);
-		g.drawString("Pièces : "+player.getCoin(), 756, 250+((player.getHp()-1)/10)*50);
+		g.drawString("Vitesse : "+World.player.getSpeed(), 756, 100+((World.player.getHp()-1)/10)*50);
+		g.drawString("Puissance : "+World.player.getAtk(), 756, 150+((World.player.getHp()-1)/10)*50);
+		g.drawString("Cadence de tir : "+World.player.getPeriode(), 756, 200+((World.player.getHp()-1)/10)*50);
+		g.drawString("Pièces : "+World.player.getCoin(), 956, 500);
+		g.drawImage(coin, 1064, 490);
+		
+		atkUp.render(container, game, g);
+		oneUp.render(container, game, g);
+		speedUp.render(container, game, g);
+		delayUp.render(container, game, g);
 		
 	}
 
