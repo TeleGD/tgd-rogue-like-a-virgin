@@ -346,7 +346,6 @@ public class Player extends Entity {
 					if (hitbox.intersects(c[i][j].getHitbox()) && (c[i][j] instanceof Piques)) {
 						aTouchePique=80;
 						 hp--;
-						 System.out.println("touché");
 					}
 				}
 			}
@@ -359,7 +358,6 @@ public class Player extends Entity {
 		hitbox.setY(y);
 		touchePiques();
 		if (aTouchePique>0) aTouchePique--;
-		if (hp==0) System.exit(0);
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
