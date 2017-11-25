@@ -19,26 +19,28 @@ public class Generation {
 			fermee = 4;
 		}
 		if(posx==largeur-1){
-			fermee = 2;
+			fermee = 3;
 		}
 		if(posy==0){
 			fermee = 1;
 		}
-		if(posy==largeur-1){
-			fermee = 3;
+		if(posy==hauteur-1){
+			fermee = 2;
 		}
 		
-		return genereSalle( niveau,  hauteur,  largeur,fermee);
+		return genereSalle( niveau,  largeur,  hauteur,fermee);
 	}
 	
 	
 	//porte fermee : 0 rien | 1 : haut | 2 : droite | 3 : bas | 4 : gauche
-	public static Salle genereSalle(int niveau, int phauteur, int plargeur,int porteFermee) {
+	public static Salle genereSalle(int niveau, int plargeur, int phauteur,int porteFermee) {
 		hauteur = phauteur;
 		largeur = plargeur;
 		Case[][] map = new Case[hauteur][largeur];
 		Random r = new Random();
 		difficulte = r.nextInt(difficulteMax);
+		if(niveau != -1)
+			difficulte =niveau;
 		for (int i=0;i<hauteur;i++) {
 			for (int j=0;j<largeur;j++) {
 				Case c;
@@ -73,45 +75,45 @@ public class Generation {
 		int h=(hauteur/2)-1;
 		int l=(largeur/2)-1;
 		
-		//porte haut
+		//porte gauche
 		if(fermee != 1){
-			map[0][l] = new Porte(0, l, diffPorte);
-			map[0][l+1] = new Porte(0, l+1, diffPorte);
+			map[0][l] = new Porte(0, l, 1);
+			map[0][l+1] = new Porte(0, l+1, 1);
+		}
+
+		
+		//porte droite
+		if(fermee != 2){
+			diffPorte = r.nextInt(difficulteMax);
+			map[hauteur-1][l] = new Porte(hauteur-1, l, 2);
+			map[hauteur-1][l+1] = new Porte(hauteur-1, l+1, 2);
+		}
+
+		
+		//porte haut
+		if(fermee != 4){
+			diffPorte = r.nextInt(difficulteMax);
+			map[h][0] = new Porte(h, 0, 3);
+			map[h+1][0] = new Porte(h+1, 0, 3);
 		}
 
 		
 		//porte bas
 		if(fermee != 3){
 			diffPorte = r.nextInt(difficulteMax);
-			map[hauteur-1][l] = new Porte(hauteur-1, l, diffPorte);
-			map[hauteur-1][l+1] = new Porte(hauteur-1, l+1, diffPorte);
+			map[h][largeur-1] = new Porte(h, largeur-1, 4);
+			map[h+1][largeur-1] = new Porte(h+1, largeur-1, 4);
 		}
-
 		
-		//porte gauche
-		if(fermee != 2){
-			diffPorte = r.nextInt(difficulteMax);
-			map[h][0] = new Porte(h, 0, diffPorte);
-			map[h+1][0] = new Porte(h+1, 0, diffPorte);
-		}
-
-		
-		//porte bas
-		if(fermee != 4){
-			diffPorte = r.nextInt(difficulteMax);
-			map[h][largeur-1] = new Porte(h, largeur-1, diffPorte);
-			map[h+1][largeur-1] = new Porte(h+1, largeur-1, diffPorte);
-		}
-
 		
 		for(int i =1;i<hauteur-1;i++){
-			map[i][h]=new CaseVide(i, h, difficulte);
-			map[i][h+1]=new CaseVide(i, h+1, difficulte);
+			map[i][l]=new CaseVide(i, l, difficulte);
+			map[i][l+1]=new CaseVide(i, l+1, difficulte);
 		}
 		
 		for(int j =1;j<largeur-1;j++){
-			map[l][j]=new CaseVide(l, j, difficulte);
-			map[l+1][j]=new CaseVide(l+1, j, difficulte);
+			map[h][j]=new CaseVide(h, j, difficulte);
+			map[h+1][j]=new CaseVide(h+1, j, difficulte);
 		}
 		
 		return map;
