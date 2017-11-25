@@ -49,7 +49,7 @@ public class World extends BasicGameState {
 	public static ArrayList<Enemy> enemies,enemiesTmp;
 	public static ArrayList<Projectile> projectiles,projectilesTmp;
 	public static Player player;
-	public static Item item;
+	public static ArrayList<Item> item;
 	public static Salle map;
 	public static Enemy Nico;
 	
@@ -64,9 +64,10 @@ public class World extends BasicGameState {
 		enemiesTmp = new ArrayList<Enemy>();
 		projectiles = new ArrayList<Projectile>();
 		projectilesTmp = new ArrayList<Projectile>();
+		item = new ArrayList<Item>();
 		map =  Generation.genereSalle(-1, 20,20 ,0);
 		player = new Player();
-		item = new Item();
+		item.add(new Item());
 		Nico=new Enemy1(100,100);
 	}
 	
@@ -84,7 +85,9 @@ public class World extends BasicGameState {
 		g.fillRect(620, 340, 40, 40);
 
 		map.render(container, game, g);
-		if (item != null) item.render(container, game, g);
+		for(Item i : item){
+			i.render(container, game, g);
+		}
 		
 		player.render(container, game, g);
 		
@@ -106,13 +109,15 @@ public class World extends BasicGameState {
 		g.drawString("Vitesse : "+player.getSpeed(), 756, 100+((player.getHp()-1)/10)*50);
 		g.drawString("Cadence de tir : "+player.getPeriode(), 756, 150+((player.getHp()-1)/10)*50);
 		g.drawString("Vitesse de tir : "+player.getProj(), 756, 200+((player.getHp()-1)/10)*50);
+		g.drawString("Pièces : "+player.getCoin(), 756, 250+((player.getHp()-1)/10)*50);
 		
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		player.update(container, game, delta);
-		if (item != null)
-			item.update(container, game, delta);
+		for(int i = 0; i < item.size(); i++){
+			item.get(i).update(container, game, delta);
+		}
 		for(int i = 0; i < enemies.size(); i++){
 			enemies.get(i).update(container, game, delta);
 		}
@@ -138,13 +143,6 @@ public class World extends BasicGameState {
 
 	public static void reset() {
 		// TODO Auto-generated method stub
-	}
-
-	public static void newItem() throws SlickException {
-		Random r = new Random();
-		int prob = r.nextInt(3);
-		if(prob == 0)
-			item = new Item();
 	}
 
 }
