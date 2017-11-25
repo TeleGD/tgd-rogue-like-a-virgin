@@ -12,7 +12,7 @@ import map.Porte;
 
 public class Projectile extends Entity{
 
-	private boolean friendly;
+	protected boolean friendly;
 	
 	public Projectile(){
 		World.projectiles.add(this);
