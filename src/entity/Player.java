@@ -95,24 +95,51 @@ public class Player extends Entity {
 
 		for(int i = -1; i <= 1; i++){
 			for(int j = -1; j <= 1; j++){
-				collision = c[tmpI+i][tmpJ+j].getHitbox().intersects(hitbox) && (c[tmpI+i][tmpJ+j] instanceof Mur || c[tmpI+i][tmpJ+j] instanceof Bords);
+				collision = false;
+				if(tmpI+i < c.length && tmpI+i >= 0 && tmpJ+j < c[0].length && tmpJ+j >= 0) collision = c[tmpI+i][tmpJ+j].getHitbox().intersects(hitbox) && (c[tmpI+i][tmpJ+j] instanceof Mur || c[tmpI+i][tmpJ+j] instanceof Bords);
 				accumulateur = accumulateur || collision;
 				if(collision){
-					if(i < 0) deplacementPossibleGauche = false;
-					else if ( i > 0) deplacementPossibleDroite = false;
-					if(j < 0) deplacementPossibleHaut = false;
-					else if (j > 0) deplacementPossibleBas = false;
+					if(i < 0) {
+						deplacementPossibleGauche = false;
+					}else if ( i > 0){
+						deplacementPossibleDroite = false;
+					}
+					if(j < 0){
+						deplacementPossibleHaut = false;
+					}else if (j > 0){
+						deplacementPossibleBas = false;
+					}
 				}
 			}
 		}
-		for(entity.enemies.Enemy e : World.enemies){
-			if(!accumulateur){
-				deplacementPossibleBas = true;
-				deplacementPossibleDroite = true;
-				deplacementPossibleGauche = true;
-				deplacementPossibleHaut = true;
+		if(!accumulateur){
+			deplacementPossibleBas = true;
+			deplacementPossibleDroite = true;
+			deplacementPossibleGauche = true;
+			deplacementPossibleHaut = true;
+		}else{
+			if(!deplacementPossibleBas){
+				if(!deplacementPossibleDroite) {
+					x = x - 2;
+					y = y - 2;
+				}else if(!deplacementPossibleGauche){
+					x = x + 2;
+					y = y - 2;
+				} else y = y - 8;
 			}
-
+			if(!deplacementPossibleHaut){
+				if(!deplacementPossibleDroite) {
+					x = x - 2;
+					y = y + 2;
+				}else if(!deplacementPossibleGauche){
+					x = x + 2;
+					y = y + 2;
+				} else y = y + 8;
+			}
+			
+		}
+		
+		for(Enemy e : World.enemies){
 			if(hitbox.intersects(e.getShape())){
 				this.setHP(hp-Math.max(e.getAtk()-def, 0));
 				if(hp <= 0) alreadyDead = true;
