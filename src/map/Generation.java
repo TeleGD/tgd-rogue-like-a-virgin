@@ -5,8 +5,7 @@ import java.util.Random;
 import org.newdawn.slick.SlickException;
 
 import entity.Item;
-import entity.enemies.Boss;
-import entity.enemies.Enemy1;
+import entity.enemies.*;
 import general.World;
 
 public class Generation {
@@ -167,7 +166,7 @@ public class Generation {
 					x=(float) ((float) 50+Math.random()*(720-36-50));
 					y=(float) ((float) 50+Math.random()*(720-36-50));
 				}
-				new Enemy1(x,y);
+				new Ghost2(x,y);
 			}
 			
 		}else {
@@ -180,7 +179,7 @@ public class Generation {
 					x=(float) ((float) 50+Math.random()*(720-36-50));
 					y=(float) ((float) 50+Math.random()*(720-36-50));
 				}
-				new Enemy1(x,y);
+				new Ghost2(x,y);
 			}
 			x=(float) ((float) 50+Math.random()*(720-36-50));
 			y=(float) ((float) 50+Math.random()*(720-36-50));
