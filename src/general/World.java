@@ -2,6 +2,7 @@ package general;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -49,6 +50,7 @@ public class World extends BasicGameState {
 	public static Player player;
 	public static Item item;
 	public static Salle map;
+	public static Enemy Nico;
 	
 	public Image coeur;
 	
@@ -64,6 +66,7 @@ public class World extends BasicGameState {
 		player = new Player();
 		item = new Item();
 		map =  Generation.genereSalle(-1, 20,20 ,0);
+		Nico=new Enemy();
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
@@ -128,7 +131,10 @@ public class World extends BasicGameState {
 	}
 
 	public static void newItem() throws SlickException {
-		item = new Item();
+		Random r = new Random();
+		int prob = r.nextInt(3);
+		if(prob == 0)
+			item = new Item();
 	}
 
 }
