@@ -42,7 +42,7 @@ public class Enemy extends Entity {
 	public void checkForCollision() {
 		if(hitbox.intersects(World.player.getShape())){
 			this.setHP(0);
-			
+			System.out.println("col player");
 			//this.setHP(hp-Math.max(World.player.getAtk()-def, 0));
 			if(hp <= 0) alreadyDead = true;
 			return;
@@ -69,10 +69,11 @@ public class Enemy extends Entity {
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
-		g.draw(zoneL);
+		/*g.draw(zoneL);
 		g.draw(zoneB);
 		g.draw(zoneR);
-		g.draw(zoneT);
+		g.draw(zoneT);*/
+		g.draw(hitbox);
 	}
 	
 	public void move(int delta) {
@@ -91,6 +92,8 @@ public class Enemy extends Entity {
 		}
 		x+=speedX*delta;
 		y+=speedY*delta;
+		hitbox.setX(x);
+		hitbox.setY(y);
 		
 		/*il faut voir pour les murs et bouger en conséquence
 		 * 
