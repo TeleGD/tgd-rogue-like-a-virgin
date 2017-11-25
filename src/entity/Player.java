@@ -117,7 +117,7 @@ public class Player extends Entity {
 		//pour que la collision à droite et en bas fonctionne avec le mur
 		for(int deltaI = 1; deltaI > -2; deltaI--){
 			for(int deltaJ = 1; deltaJ > -2; deltaJ--){
-				if(tmpI+deltaI>0 && tmpJ+deltaJ>0 && tmpJ+deltaJ<720 && tmpI+deltaI<720) {
+				if(tmpI+deltaI>12 && tmpJ+deltaJ>12 && tmpJ+deltaJ<708 && tmpI+deltaI<708) {
 					collision = c[tmpI+1+deltaI][tmpJ+1+deltaJ].getHitbox().intersects(hitbox);
 					if(!(deltaI == 0 && deltaJ == 0) && tmpI+1+deltaI >= 0 && tmpJ+1+deltaJ >= 0 && tmpI+1+deltaI < c.length && tmpJ+1+deltaJ < c[tmpI+1].length){
 						if(collision && (c[tmpI+1+deltaI][tmpJ+1+deltaJ] instanceof Mur)){
