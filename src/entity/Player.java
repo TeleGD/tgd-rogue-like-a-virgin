@@ -93,7 +93,7 @@ public class Player extends Entity {
 		coin = 0;
 		atk = 1;
 		invincible = false;
-		invincibleTimerMax = 200;
+		invincibleTimerMax = 700;
 		invincibleTimer = invincibleTimerMax;
 		
 	}
