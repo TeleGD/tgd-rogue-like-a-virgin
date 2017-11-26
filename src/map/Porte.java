@@ -45,7 +45,7 @@ public class Porte extends Case {
 		if(pY == this.y && pX == this.x){
 			World.changeMap(Generation.genereNewSalle(niveau, y, x));
 			World.player.setMap(World.map.getCases());
-			
+			World.score += niveau * niveau * 10;
 			Random r = new Random();
 			int prob = r.nextInt(3);
 			if(prob == 0)

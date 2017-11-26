@@ -93,7 +93,7 @@ public class Player extends Entity {
 		coin = 0;
 		atk = 1;
 		invincible = false;
-		invincibleTimerMax = 200;
+		invincibleTimerMax = 700;
 		invincibleTimer = invincibleTimerMax;
 		
 	}
@@ -123,10 +123,10 @@ public class Player extends Entity {
 				accumulateur = accumulateur || collision;
 			}
 		}
-		if(tmpI-1 >= 0) deplacementPossibleGauche = !(c[tmpI-1][tmpJ]instanceof Mur||c[tmpI-1][tmpJ]instanceof Bords);
-		if(tmpI+1 < c.length) deplacementPossibleDroite = !(c[tmpI+1][tmpJ]instanceof Mur||c[tmpI+1][tmpJ]instanceof Bords);
-		if(tmpJ-1 >= 0) deplacementPossibleHaut = !(c[tmpI][tmpJ-1]instanceof Mur||c[tmpI][tmpJ-1]instanceof Bords);
-		if(tmpJ+1 < c[tmpI].length) deplacementPossibleBas = !(c[tmpI][tmpJ+1]instanceof Mur||c[tmpI][tmpJ+1]instanceof Bords);
+		if(tmpJ >=0 && tmpJ < c[tmpI].length && tmpI-1 >= 0 && tmpI-1 < c.length) deplacementPossibleGauche = !(c[tmpI-1][tmpJ]instanceof Mur||c[tmpI-1][tmpJ]instanceof Bords);
+		if(tmpI+1 >= 0 && tmpI+1 < c.length && tmpJ >=0 && tmpJ < c[tmpI].length) deplacementPossibleDroite = !(c[tmpI+1][tmpJ]instanceof Mur||c[tmpI+1][tmpJ]instanceof Bords);
+		if(tmpI >= 0 && tmpI < c.length && tmpJ-1 >= 0 && tmpJ-1 < c[tmpI].length) deplacementPossibleHaut = !(c[tmpI][tmpJ-1]instanceof Mur||c[tmpI][tmpJ-1]instanceof Bords);
+		if(tmpI >= 0 && tmpI < c.length && tmpJ+1 >= 0 && tmpJ+1 < c[tmpI].length) deplacementPossibleBas = !(c[tmpI][tmpJ+1]instanceof Mur||c[tmpI][tmpJ+1]instanceof Bords);
 		
 		if(!accumulateur){
 			deplacementPossibleBas = true;
@@ -198,8 +198,6 @@ public class Player extends Entity {
 			if(hitbox.intersects(e.getShape())){
 				if(!invincible) {
 					this.setHP(hp-Math.max(e.getAtk()-def, 0));
-					invincibleTimer  = invincibleTimerMax;
-					invincible = true;
 				}
 				if(hp <= 0) alreadyDead = true;
 				return;
@@ -210,8 +208,6 @@ public class Player extends Entity {
 				if(hitbox.intersects(p.getShape())){
 					if(!invincible) {
 						this.setHP(hp-Math.max(p.getAtk()-def, 0));
-						invincibleTimer  = invincibleTimerMax;
-						invincible = true;
 					}
 					if(hp <= 0) alreadyDead = true;
 					p.die();
@@ -225,23 +221,29 @@ public class Player extends Entity {
 					switch (World.item.get(i).type) {
 					case "SpeedUp":  
 						speed *= 1.1;
+						World.score += 20;
 						break;
 					case "SpeedDown":  
 						speed /= 1.1;
+						World.score += 20;
 						break;
 					case "HpUp":
 						if(hp <= 19)
 							hp++;
+						World.score += 20;
 						break;
 					case "FireRateUp":
 						if(periodeTir >= 10)
 							periodeTir -= 5;
+						World.score += 20;
 						break;
 					case "FireRateDown":
 						periodeTir += 5;
+						World.score += 20;
 						break;
 					case "Coin":
 						setCoin(getCoin()+10);
+						World.score += 20;
 						break;
 					}
 					World.item.remove(i);
@@ -466,7 +468,10 @@ public class Player extends Entity {
 		tmpSpeedY = speedY;
 		move(delta);
 		if(invincible) invincibleTimer -= delta;
-		if(invincibleTimer <= 0) invincible = false;
+		if(invincibleTimer <= 0){
+			invincible = false;
+			invincibleTimer = 0;
+		}
 		checkForCollision();
 		hitbox.setX(x+4);
 		hitbox.setY(y+4);
@@ -478,7 +483,7 @@ public class Player extends Entity {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		setDir();
 		g.drawImage(sprite,(float) x,(float) y);
-		g.draw(hitbox);
+		//g.draw(hitbox);
 	}
 
 	public int getCoin() {
