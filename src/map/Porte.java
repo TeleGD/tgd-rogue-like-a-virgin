@@ -63,6 +63,8 @@ public class Porte extends Case {
 			
 			World.player.setX(pX*36);
 			World.player.setY(pY*36);
+			World.player.getHitbox().setX(pX*36+4);
+			World.player.getHitbox().setY(pY*36+4);
 		}
 	}
 	
