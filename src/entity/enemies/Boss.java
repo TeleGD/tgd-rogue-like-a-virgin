@@ -116,10 +116,6 @@ public class Boss extends Enemy{
 			int b= (int) (y/36); //top border of the hitbox if we continue the movement (number in the grid)
 			int b1= (int) (y+height/2)/36;
 			int b2= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
-			System.out.println("a="+a);
-			System.out.println("b="+b);
-			System.out.println("b1="+b1);
-			System.out.println("b2="+b2);
 			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)|| (c[a][b2] instanceof Mur)) {
 				speedX=0;
 				if(World.player.getY()>y) {

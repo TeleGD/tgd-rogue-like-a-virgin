@@ -33,7 +33,6 @@ public class MainMenu extends Menu{
 		try {	
 			background=new Music("musics/menu.ogg");
 			background.loop();
-			System.out.println("oui "+background.getPosition());
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
