@@ -54,15 +54,16 @@ public class World extends BasicGameState {
 	public static Enemy Nico;
 	
 	private Image coeur,coin;
-	private Button jouer,atkUp,speedUp,delayUp,oneUp ;
+	private Button jouer,atkUp,speedUp,delayUp,oneUp,rejouer ;
 	private int atkCoin,speedCoin,delayCoin,oneCoin;
-	private boolean gameOn;
+	private boolean gameOn,gameOver;
 	
 	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
 		game=arg1;
 		gameOn = false;
+		gameOver = false;
 		
 		//Il faudra voir s'il faut bouger ces inits dans enter(...) si ca prend trop de temps
 		enemies = new ArrayList<Enemy>();
@@ -94,6 +95,25 @@ public class World extends BasicGameState {
             @Override
             public void onClick(TGDComponent componenent) {
             	startGame();
+                
+            }});
+		
+		rejouer = new Button("Rejouer",container,786,294,TGDComponent.AUTOMATIC,TGDComponent.AUTOMATIC);
+		rejouer.setTextSize(32);
+		rejouer.setBackgroundColor(new Color(255,255,255));
+		rejouer.setSize(420,120);
+		rejouer.setTextColor(Color.black);
+		rejouer.setPadding(70,100,70,100);
+		rejouer.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(TGDComponent componenent) {
+            	try {
+					startAgain();
+				} catch (SlickException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 
             }});
 		
@@ -191,7 +211,27 @@ public class World extends BasicGameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Nico=new Enemy1(100,100);
+	}
+	
+	public void startAgain() throws SlickException{
+		gameOn = true;
+		gameOver = false;
+		enemies = new ArrayList<Enemy>();
+		enemiesTmp = new ArrayList<Enemy>();
+		projectiles = new ArrayList<Projectile>();
+		projectilesTmp = new ArrayList<Projectile>();
+		item = new ArrayList<Item>();
+		map = Generation.genereNewSalle(0, 1, 1);
+		player.setMap(World.map.getCases());
+		player.setX(10*36);
+		player.setY(10*36);
+		player.getHitbox().setX(10*36+4);
+		player.getHitbox().setY(10*36+4);
+		atkCoin = 10;
+		speedCoin = 5;
+		delayCoin = 10;
+		oneCoin = 1;
+		player = new Player();
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -272,6 +312,10 @@ public class World extends BasicGameState {
 				projectiles.get(i).update(container, game, delta);
 			}
 			map.update(container, game, delta);
+			if (player.getHP()<=0){
+				gameOver = true;
+				gameOn = false;
+			}
 		}
 		
 		
@@ -279,7 +323,9 @@ public class World extends BasicGameState {
 	}
 	
 	public void keyReleased(int key, char c) {
-		player.keyReleased(key,c);
+		if (gameOn){
+			player.keyReleased(key,c);
+		}
 	}
 
 
