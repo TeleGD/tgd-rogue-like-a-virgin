@@ -96,6 +96,7 @@ public class Player extends Entity {
 
 	@Override
 	public void checkForCollision() {
+//Bonjour, ce code est hideux. Desole.
 		int tmpI,tmpJ;
 		boolean accumulateur = false;
 		tmpI = (int) (x+width/2)/width;
@@ -106,50 +107,78 @@ public class Player extends Entity {
 				collision = false;
 				if(tmpI+i < c.length && tmpI+i >= 0 && tmpJ+j < c[0].length && tmpJ+j >= 0) collision = c[tmpI+i][tmpJ+j].getHitbox().intersects(hitbox) && (c[tmpI+i][tmpJ+j] instanceof Mur || c[tmpI+i][tmpJ+j] instanceof Bords);
 				accumulateur = accumulateur || collision;
-				/*if(collision){
-					if(i < 0) {
-						deplacementPossibleGauche = false;
-					}else if ( i > 0){
-						deplacementPossibleDroite = false;
-					}
-					if(j < 0){
-						deplacementPossibleHaut = false;
-					}else if (j > 0){
-						deplacementPossibleBas = false;
-					}
-				}*/
 			}
 		}
+		if(tmpI-1 >= 0) deplacementPossibleGauche = !(c[tmpI-1][tmpJ]instanceof Mur||c[tmpI-1][tmpJ]instanceof Bords);
+		if(tmpI+1 < c.length) deplacementPossibleDroite = !(c[tmpI+1][tmpJ]instanceof Mur||c[tmpI+1][tmpJ]instanceof Bords);
+		if(tmpJ-1 >= 0) deplacementPossibleHaut = !(c[tmpI][tmpJ-1]instanceof Mur||c[tmpI][tmpJ-1]instanceof Bords);
+		if(tmpJ+1 < c[tmpI].length) deplacementPossibleBas = !(c[tmpI][tmpJ+1]instanceof Mur||c[tmpI][tmpJ+1]instanceof Bords);
+		
 		if(!accumulateur){
 			deplacementPossibleBas = true;
 			deplacementPossibleDroite = true;
 			deplacementPossibleGauche = true;
 			deplacementPossibleHaut = true;
 		}else{
-			if(right && !rightLeft && (tmpI+1 < c.length)){
-				if((tmpJ+1 < c[tmpI+1].length && (c[tmpI+1][tmpJ+1] instanceof Mur || c[tmpI+1][tmpJ+1] instanceof Bords)) || (c[tmpI+1][tmpJ] instanceof Mur || c[tmpI+1][tmpJ] instanceof Bords) || (tmpJ-1 >= 0 && (c[tmpI+1][tmpJ+1] instanceof Mur || c[tmpI+1][tmpJ+1] instanceof Bords))) {
-					x = tryX;
-					speedX = tmpSpeedX;
-				}
+			boolean u,d,l,r,ul,ur,dl,dr;
+			r = (!up && !down && right && !rightLeft && (tmpI+1 < c.length)) && (c[tmpI+1][tmpJ] instanceof Mur || c[tmpI+1][tmpJ] instanceof Bords); 
+			l = (!up && !down && (left || rightLeft) && tmpI-1 >= 0) && (c[tmpI-1][tmpJ] instanceof Mur || c[tmpI-1][tmpJ] instanceof Bords);
+			u = (!left && !right && up && !updown && (tmpJ-1 >= 0 && (c[tmpI][tmpJ-1] instanceof Mur || c[tmpI][tmpJ-1] instanceof Bords)) );
+			d = (!left && !right && (down || updown) && (tmpJ+1 < c[tmpI].length && (c[tmpI][tmpJ+1] instanceof Mur ||c[tmpI][tmpJ+1] instanceof Bords)));
+			ul = (up && (left || rightLeft) && !updown && tmpI-1 >= 0) && (tmpJ-1 >= 0 && (c[tmpI-1][tmpJ-1] instanceof Mur || c[tmpI-1][tmpJ-1] instanceof Bords));
+			ur = (up && right && !rightLeft && !updown && (tmpI+1 < c.length)) && (tmpJ-1 >= 0 && (c[tmpI+1][tmpJ-1] instanceof Mur || c[tmpI+1][tmpJ-1] instanceof Bords));
+			dl = ((down || updown) && (left || rightLeft)&& tmpI-1 >= 0 ) && (tmpJ+1 < c[tmpI].length && (c[tmpI-1][tmpJ+1] instanceof Mur || c[tmpI-1][tmpJ+1] instanceof Bords));
+			dr = ((down || updown) && right && !rightLeft && (tmpI+1 < c.length) ) && (tmpJ+1 < c[tmpI].length && (c[tmpI+1][tmpJ+1] instanceof Mur || c[tmpI+1][tmpJ+1] instanceof Bords));
+			
+			if(r){
+				x = tryX;
+				speedX = tmpSpeedX;
 			}
 			
-			if((left || rightLeft) && tmpI-1 >= 0){
-				if((c[tmpI-1][tmpJ] instanceof Mur || c[tmpI-1][tmpJ] instanceof Bords) || (tmpJ+1 < c[tmpI-1].length && (c[tmpI-1][tmpJ+1] instanceof Mur || c[tmpI-1][tmpJ+1] instanceof Bords)) || (tmpJ-1 >= 0 && (c[tmpI-1][tmpJ+1] instanceof Mur || c[tmpI-1][tmpJ+1] instanceof Bords))) {
-					x = tryX;
-					speedY = tmpSpeedY;
-				}
+			if(l){
+				x = tryX;
+				speedY = tmpSpeedY;
 			}
 
-			if(up && !updown && (tmpJ-1 >= 0 && (c[tmpI][tmpJ-1] instanceof Mur || c[tmpI][tmpJ-1] instanceof Bords)) ) {
+			if(u){
 				y = tryY;
 				speedY = tmpSpeedY;
 			}
 
-			if( (down || updown) && (tmpJ+1 < c[tmpI].length && (c[tmpI][tmpJ+1] instanceof Mur ||c[tmpI][tmpJ+1] instanceof Bords))){
+			if(d){
 				y = tryY;
 				speedY = tmpSpeedY;
 			}
-		}
+			
+			if(ul){
+				y = tryY;
+				x = tryX;
+				speedX = tmpSpeedX;
+				speedY = tmpSpeedY;
+			}
+			
+			if(ur){
+				y = tryY;
+				x = tryX;
+				speedX = tmpSpeedX;
+				speedY = tmpSpeedY;
+			}
+			
+			if(dl){
+				y = tryY;
+				x = tryX;
+				speedX = tmpSpeedX;
+				speedY = tmpSpeedY;
+			}
+			
+			if(dr){
+				y = tryY;
+				x = tryX;
+				speedX = tmpSpeedX;
+				speedY = tmpSpeedY;
+			}
+			
+		}//*/
 		
 		for(Enemy e : World.enemies){
 			if(hitbox.intersects(e.getShape())){
