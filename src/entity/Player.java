@@ -93,7 +93,9 @@ public class Player extends Entity {
 		coin = 0;
 		atk = 1;
 		invincible = false;
-		invincibleTimer = 50;
+		invincibleTimerMax = 50;
+		invincibleTimer = invincibleTimerMax;
+		
 	}
 
 	@Override
