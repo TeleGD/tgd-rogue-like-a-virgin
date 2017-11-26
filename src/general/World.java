@@ -279,7 +279,7 @@ public class World extends BasicGameState {
 			g.drawString("Vitesse : "+(Math.floor(World.player.getSpeed()*100)/100), 756, 100+((World.player.getHp()-1)/10)*50);
 			g.drawString("Puissance : "+World.player.getAtk(), 756, 150+((World.player.getHp()-1)/10)*50);
 			g.drawString("Cadence de tir : "+World.player.getPeriode(), 756, 200+((World.player.getHp()-1)/10)*50);
-			g.drawString("Score : "+score, 900, 320);
+			g.drawString("Score : "+score, 945, 345);
 			g.drawString("Pièces : "+World.player.getCoin(), 936, 500);
 			if (player.getCoin() == 0){
 				g.drawImage(coin, 1044, 491);
