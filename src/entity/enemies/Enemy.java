@@ -37,6 +37,7 @@ public abstract class Enemy extends Entity {
 	@Override
 	public void die() {
 		World.enemies.remove(this);
+		World.player.setCoin(World.player.getCoin()+1);
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {

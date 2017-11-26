@@ -9,7 +9,7 @@ public class Ghost2 extends Ghost1{
 
 	public Ghost2(float x,float y) {
 		super(x,y);
-		hp=1;
+		hp=2;
 		atk=3;
 		compt=0;
 		try {
