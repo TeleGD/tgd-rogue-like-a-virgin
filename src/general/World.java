@@ -68,7 +68,7 @@ public class World extends BasicGameState {
 		projectiles = new ArrayList<Projectile>();
 		projectilesTmp = new ArrayList<Projectile>();
 		item = new ArrayList<Item>();
-		map =  Generation.genereSalle(1, 20,20 ,0);
+		map =  Generation.genereSalle(0, 20,20 ,0);
 		player = new Player();
 		Nico=new Enemy1(100,100);
 		atkCoin = 10;
@@ -196,7 +196,7 @@ public class World extends BasicGameState {
 		}
 		g.setLineWidth(36);
 		g.setColor(Color.white);
-		g.drawString("Vitesse : "+World.player.getSpeed(), 756, 100+((World.player.getHp()-1)/10)*50);
+		g.drawString("Vitesse : "+(Math.floor(World.player.getSpeed()*100)/100), 756, 100+((World.player.getHp()-1)/10)*50);
 		g.drawString("Puissance : "+World.player.getAtk(), 756, 150+((World.player.getHp()-1)/10)*50);
 		g.drawString("Cadence de tir : "+World.player.getPeriode(), 756, 200+((World.player.getHp()-1)/10)*50);
 		g.drawString("Pièces : "+World.player.getCoin(), 936, 500);
