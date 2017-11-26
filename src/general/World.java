@@ -10,13 +10,14 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
+import org.newdawn.slick.MusicListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-
+import org.newdawn.slick.tests.MusicListenerTest;
 
 import entity.enemies.Enemy;
 import entity.enemies.Enemy1;
@@ -58,8 +59,9 @@ public class World extends BasicGameState {
 	private Button jouer,atkUp,speedUp,delayUp,oneUp,rejouer ;
 	private int atkCoin,speedCoin,delayCoin,oneCoin;
 	private boolean gameOn,gameOver;
-	private static Music music;
-	
+	private static Sound saxGuy;
+
+	private static Music mainMusic;
 	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
@@ -67,7 +69,8 @@ public class World extends BasicGameState {
 		gameOn = false;
 		gameOver = false;
 		score = 0;
-		
+		saxGuy=new Sound("musics/boss.ogg");
+		mainMusic=new Music("musics/music.ogg");
 		//Il faudra voir s'il faut bouger ces inits dans enter(...) si ca prend trop de temps
 		enemies = new ArrayList<Enemy>();
 		enemiesTmp = new ArrayList<Enemy>();
@@ -79,7 +82,7 @@ public class World extends BasicGameState {
 		speedCoin = 5;
 		delayCoin = 10;
 		oneCoin = 1;
-		music=new Music("musics/music.ogg");
+		
 		
 	}
 	
@@ -200,8 +203,7 @@ public class World extends BasicGameState {
             	}
 
             }});
-		music.loop();
-		
+		mainMusic.play();
 	}
 	
 	public static void changeMap(Salle s){
@@ -239,7 +241,7 @@ public class World extends BasicGameState {
 		delayCoin = 10;
 		oneCoin = 1;
 		player = new Player();
-		music.loop();
+		mainMusic.play();
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -330,7 +332,6 @@ public class World extends BasicGameState {
 		}
 		
 		
-		
 	}
 	
 	public void keyReleased(int key, char c) {
@@ -370,11 +371,25 @@ public class World extends BasicGameState {
 	}
 	
 	public static void stopMusic() {
-		music.pause();
+		mainMusic.pause();
 	}
 	
 	public static void resumeMusic() {
-		music.resume();
+		mainMusic.resume();
+	}
+	public static boolean isSaxGuy() {
+		return saxGuy.playing();
 	}
 	
+	public static void changeMusic() {
+		if(saxGuy.playing()) {
+			saxGuy.stop();
+			System.out.println("on a bien");
+			mainMusic.resume();
+			//mainMusic.stop();
+		}else {
+			mainMusic.pause();
+			saxGuy.play();
+		}
+	}
 }

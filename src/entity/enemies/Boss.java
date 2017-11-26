@@ -20,7 +20,6 @@ public class Boss extends Enemy{
 	private Polygon zoneR,zoneL,zoneT,zoneB;
 	private double speed;
 	private int compt;
-	Music background;
 	
 	public Boss(float x, float y) {
 		super(x, y);
@@ -42,14 +41,6 @@ public class Boss extends Enemy{
 		this.hitbox=new Rectangle (x,y,width,height);
 		speed = 0.15;
 		
-		try {
-			background = new Music("musics/Boss.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		general.World.stopMusic();
-	    background.loop();
 	}
 
 	public void zoning() {
@@ -197,8 +188,6 @@ public class Boss extends Enemy{
 	
 	@Override
 	public void die() {
-		background.stop();
-		general.World.resumeMusic();
 		super.die();
 		World.player.setCoin(World.player.getCoin()+100);
 	}
