@@ -24,7 +24,7 @@ public class Ghost1 extends Enemy{
 		}
 		this.width=36;
 		this.height=36;
-		this.hitbox=new Rectangle (x,y,width,height);
+		this.hitbox=new Rectangle (x+4,y+5,width-7,height-10);
 	}
 
 	@Override
@@ -58,8 +58,8 @@ public class Ghost1 extends Enemy{
 		
 		x+=speedX*delta;
 		y+=speedY*delta;
-		hitbox.setX(x);
-		hitbox.setY(y);
+		hitbox.setX(x+4);
+		hitbox.setY(y+5);
 	}
 	
 	

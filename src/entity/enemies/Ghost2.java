@@ -24,7 +24,7 @@ public class Ghost2 extends Ghost1{
 		}
 		this.width=36;
 		this.height=36;
-		this.hitbox=new Rectangle (x,y,width,height);
+		this.hitbox=new Rectangle (x+4,y+5,width-7,height-10);
 	}
 	
 }

@@ -31,7 +31,7 @@ public abstract class Enemy extends Entity {
 		this.y=y;
 		this.width=36;
 		this.height=36;
-		this.hitbox=new Rectangle (x,y,width,height);
+		this.hitbox=new Rectangle (x+4,y+4,width-8,height-8);
 	}
 	
 	@Override
