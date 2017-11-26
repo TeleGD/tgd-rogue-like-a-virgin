@@ -235,8 +235,10 @@ public class World extends BasicGameState {
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		if (!gameOn){
+		if (!gameOn && !gameOver){
 			jouer.render(container, game, g);
+		} else if (!gameOn && gameOver){
+			rejouer.render(container, game, g);
 		}
 		
 
@@ -333,9 +335,19 @@ public class World extends BasicGameState {
 		if (gameOn){
 			player.keyPressed(key,c);
 		}
-		if (!gameOn){
+		if (!gameOn && !gameOver){
 			if (key==Input.KEY_ENTER){
 				startGame();
+			}
+		}
+		if (!gameOn && gameOver){
+			if (key==Input.KEY_ENTER){
+				try {
+					startAgain();
+				} catch (SlickException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
