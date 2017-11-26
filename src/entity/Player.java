@@ -54,8 +54,18 @@ public class Player extends Entity {
 	private float tryY;
 	private double tmpSpeedX;
 	private double tmpSpeedY;
-	
+	private boolean invincible;
+	private int invincibleTimer;
+	private int invincibleTimerMax;
 
+
+	public int getInvincibleTimerMax() {
+		return invincibleTimerMax;
+	}
+
+	public void setInvincibleTimerMax(int invincibleTimerMax) {
+		this.invincibleTimerMax = invincibleTimerMax;
+	}
 
 	public Player() throws SlickException{
 		World.player = this;
@@ -82,6 +92,8 @@ public class Player extends Entity {
 		aTouchePique=0;
 		coin = 0;
 		atk = 1;
+		invincible = false;
+		invincibleTimer = 50;
 	}
 
 	@Override
@@ -182,7 +194,11 @@ public class Player extends Entity {
 		
 		for(Enemy e : World.enemies){
 			if(hitbox.intersects(e.getShape())){
-				this.setHP(hp-Math.max(e.getAtk()-def, 0));
+				if(!invincible) {
+					this.setHP(hp-Math.max(e.getAtk()-def, 0));
+					invincibleTimer  = invincibleTimerMax;
+					invincible = true;
+				}
 				if(hp <= 0) alreadyDead = true;
 				return;
 			}
@@ -229,6 +245,22 @@ public class Player extends Entity {
 		}
 	}
 
+	public boolean isInvincible(){
+		return invincible;
+	}
+	
+	public void setInvincible(boolean invincible){
+		this.invincible = invincible;
+	}
+	
+	public int getInvincibleTimer(){
+		return invincibleTimer;
+	}
+	
+	public void setInvincibleTimer(int timer){
+		this.invincibleTimer = timer;
+	}
+	
 	public double getSpeed() {
 		return speed;
 	}
@@ -427,6 +459,8 @@ public class Player extends Entity {
 		tmpSpeedX = speedX;
 		tmpSpeedY = speedY;
 		move(delta);
+		if(invincible) invincibleTimer -= delta;
+		if(invincibleTimer <= 0) invincible = false;
 		checkForCollision();
 		hitbox.setX(x+4);
 		hitbox.setY(y+4);
