@@ -93,7 +93,7 @@ public class Player extends Entity {
 		coin = 0;
 		atk = 1;
 		invincible = false;
-		invincibleTimerMax = 50;
+		invincibleTimerMax = 200;
 		invincibleTimer = invincibleTimerMax;
 		
 	}
@@ -208,7 +208,11 @@ public class Player extends Entity {
 		for(Projectile p : World.projectiles){
 			if(!p.getFriendly()){
 				if(hitbox.intersects(p.getShape())){
-					this.setHP(hp-Math.max(p.getAtk()-def, 0));
+					if(!invincible) {
+						this.setHP(hp-Math.max(p.getAtk()-def, 0));
+						invincibleTimer  = invincibleTimerMax;
+						invincible = true;
+					}
 					if(hp <= 0) alreadyDead = true;
 					p.die();
 					return;
