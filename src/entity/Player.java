@@ -52,6 +52,9 @@ public class Player extends Entity {
 	private int coin;
 	private float tryX;
 	private float tryY;
+	private double tmpSpeedX;
+	private double tmpSpeedY;
+	
 
 
 	public Player() throws SlickException{
@@ -95,8 +98,8 @@ public class Player extends Entity {
 	public void checkForCollision() {
 		int tmpI,tmpJ;
 		boolean accumulateur = false;
-		tmpI = (int) (tryX+width/2)/width;
-		tmpJ = (int) (tryY+height/2)/height;
+		tmpI = (int) (x+width/2)/width;
+		tmpJ = (int) (y+height/2)/height;
 
 		for(int i = -1; i <= 1; i++){
 			for(int j = -1; j <= 1; j++){
@@ -124,20 +127,28 @@ public class Player extends Entity {
 			deplacementPossibleHaut = true;
 		}else{
 			if(right && !rightLeft && (tmpI+1 < c.length)){
-				if(c[tmpI+1][tmpJ] instanceof Mur || c[tmpI+1][tmpJ] instanceof Bords) tryX = x;
-				if(tmpJ+1 < c[tmpI+1].length && (c[tmpI+1][tmpJ+1] instanceof Mur || c[tmpI+1][tmpJ+1] instanceof Bords)) tryX = x;
-				if(tmpJ-1 >= 0 && (c[tmpI+1][tmpJ+1] instanceof Mur || c[tmpI+1][tmpJ+1] instanceof Bords)) tryX = x;
+				if((tmpJ+1 < c[tmpI+1].length && (c[tmpI+1][tmpJ+1] instanceof Mur || c[tmpI+1][tmpJ+1] instanceof Bords)) || (c[tmpI+1][tmpJ] instanceof Mur || c[tmpI+1][tmpJ] instanceof Bords) || (tmpJ-1 >= 0 && (c[tmpI+1][tmpJ+1] instanceof Mur || c[tmpI+1][tmpJ+1] instanceof Bords))) {
+					x = tryX;
+					speedX = tmpSpeedX;
+				}
 			}
 			
 			if((left || rightLeft) && tmpI-1 >= 0){
-				if(c[tmpI-1][tmpJ] instanceof Mur || c[tmpI-1][tmpJ] instanceof Bords) tryX = x;
-				if(tmpJ+1 < c[tmpI-1].length && (c[tmpI-1][tmpJ+1] instanceof Mur || c[tmpI-1][tmpJ+1] instanceof Bords)) tryX = x;
-				if(tmpJ-1 >= 0 && (c[tmpI-1][tmpJ+1] instanceof Mur || c[tmpI-1][tmpJ+1] instanceof Bords)) tryX = x;
+				if((c[tmpI-1][tmpJ] instanceof Mur || c[tmpI-1][tmpJ] instanceof Bords) || (tmpJ+1 < c[tmpI-1].length && (c[tmpI-1][tmpJ+1] instanceof Mur || c[tmpI-1][tmpJ+1] instanceof Bords)) || (tmpJ-1 >= 0 && (c[tmpI-1][tmpJ+1] instanceof Mur || c[tmpI-1][tmpJ+1] instanceof Bords))) {
+					x = tryX;
+					speedY = tmpSpeedY;
+				}
 			}
 
-			if(up && !updown && (tmpJ-1 >= 0 && (c[tmpI][tmpJ-1] instanceof Mur || c[tmpI][tmpJ-1] instanceof Bords)) ) tryY = y;
+			if(up && !updown && (tmpJ-1 >= 0 && (c[tmpI][tmpJ-1] instanceof Mur || c[tmpI][tmpJ-1] instanceof Bords)) ) {
+				y = tryY;
+				speedY = tmpSpeedY;
+			}
 
-			if( (down || updown) && (tmpJ+1 < c[tmpI].length && (c[tmpI][tmpJ+1] instanceof Mur ||c[tmpI][tmpJ+1] instanceof Bords)))	tryY = y;
+			if( (down || updown) && (tmpJ+1 < c[tmpI].length && (c[tmpI][tmpJ+1] instanceof Mur ||c[tmpI][tmpJ+1] instanceof Bords))){
+				y = tryY;
+				speedY = tmpSpeedY;
+			}
 		}
 		
 		for(Enemy e : World.enemies){
@@ -322,6 +333,8 @@ public class Player extends Entity {
 
 		x+=dt*speedX;
 		y+=dt*speedY;
+		hitbox.setX(x+4);
+		hitbox.setY(y+4);
 	}
 
 	public void setDir() {
@@ -380,44 +393,17 @@ public class Player extends Entity {
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		//Collisions, puis move, puis un eventuel die()
-
-		premove(delta);
+		tryX = x;
+		tryY = y;
+		tmpSpeedX = speedX;
+		tmpSpeedY = speedY;
+		move(delta);
 		checkForCollision();
-		//move(delta);
-		x = tryX;
-		y = tryY;
 		hitbox.setX(x+4);
 		hitbox.setY(y+4);
 		touchePiques();
 		if (aTouchePique>0) aTouchePique--;
 		if(alreadyDead) die();
-	}
-
-	private void premove(int dt) {
-		double tmpSpeedX = 0;
-		double tmpSpeedY = 0;
-		if(((up && !down) || (up && down && !updown)) && deplacementPossibleHaut){
-			tmpSpeedY=-speed;
-		}
-		if(((down && !up) || (up && down && updown)) && deplacementPossibleBas) {
-			tmpSpeedY=speed;
-		}
-		if(((left && !right)|| (left && right && rightLeft)) && deplacementPossibleGauche) {
-			tmpSpeedX = -speed;
-		}
-		if(((!left && right)|| (left && right && !rightLeft)) && deplacementPossibleDroite) {
-			tmpSpeedX = speed;
-		}
-		if (tmpSpeedX!=0 && tmpSpeedY!=0) {
-			tmpSpeedX/=Math.sqrt(2);
-			tmpSpeedY/=Math.sqrt(2);
-		}
-
-		tryX+=dt*tmpSpeedX;
-		tryY+=dt*tmpSpeedY;
-		hitbox.setX(tryX+4);
-		hitbox.setY(tryY+4);
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
