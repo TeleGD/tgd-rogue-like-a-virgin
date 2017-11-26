@@ -66,6 +66,9 @@ public class Generation {
 				}
 				else if(difficulte == 6){
 					//telecom
+					
+					
+					
 					c=new CaseVide(i,j,difficulte);
 				}
 				else{
@@ -189,13 +192,8 @@ public class Generation {
 				}
 				new Ghost2(x,y);
 			}
-			x=(float) ((float) 50+Math.random()*(720-36-50));
-			y=(float) ((float) 50+Math.random()*(720-36-50));
-			while (c[(int)x/36][(int)y/36] instanceof Mur) {
-				x=(float) ((float) 50+Math.random()*(720-36-50));
-				y=(float) ((float) 50+Math.random()*(720-36-50));
-			}
-			new Boss(x,y);
+			
+			new Boss(400,400);
 		}
 
 

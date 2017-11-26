@@ -54,13 +54,15 @@ public class World extends BasicGameState {
 	public static Enemy Nico;
 	
 	private Image coeur,coin;
-	private Button atkUp,speedUp,delayUp,oneUp ;
+	private Button jouer,atkUp,speedUp,delayUp,oneUp ;
 	private int atkCoin,speedCoin,delayCoin,oneCoin;
+	private boolean gameOn;
 	
 	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
 		game=arg1;
+		gameOn = false;
 		
 		//Il faudra voir s'il faut bouger ces inits dans enter(...) si ca prend trop de temps
 		enemies = new ArrayList<Enemy>();
@@ -69,8 +71,6 @@ public class World extends BasicGameState {
 		projectilesTmp = new ArrayList<Projectile>();
 		item = new ArrayList<Item>();
 		map =  Generation.genereSalle(0, 20,20 ,0);
-		player = new Player();
-		Nico=new Enemy1(100,100);
 		atkCoin = 10;
 		speedCoin = 5;
 		delayCoin = 10;
@@ -82,6 +82,21 @@ public class World extends BasicGameState {
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		coeur = new Image(World.DIRECTORY_IMAGES+"vie.png");
 		coin = new Image(World.DIRECTORY_IMAGES+"itemCoin.png");
+		
+		jouer = new Button("Jouer",container,786,294,TGDComponent.AUTOMATIC,TGDComponent.AUTOMATIC);
+		jouer.setTextSize(32);
+		jouer.setBackgroundColor(new Color(255,255,255));
+		jouer.setSize(420,120);
+		jouer.setTextColor(Color.black);
+		jouer.setPadding(70,100,70,100);
+		jouer.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(TGDComponent componenent) {
+            	startGame();
+                
+            }});
+		
 		atkUp = new Button("Puissance Up",container,780,570,TGDComponent.AUTOMATIC,30);
 		atkUp.setBackgroundColor(new Color(255,255,255));
 		atkUp.setTextColor(Color.black);
@@ -168,75 +183,99 @@ public class World extends BasicGameState {
 		map = s;
 	}
 	
+	public void startGame(){
+		gameOn = true;
+		try {
+			player = new Player();
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Nico=new Enemy1(100,100);
+	}
+	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		g.setColor(Color.green);
-		g.fillRect(620, 340, 40, 40);
+		if (!gameOn){
+			jouer.render(container, game, g);
+		}
+		
 
 		map.render(container, game, g);
 		for(Item i : item){
 			i.render(container, game, g);
 		}
 		
-		player.render(container, game, g);
-		
-		for(Enemy e : enemies){
-			e.render(container, game, g);
-		}
-		for(Projectile p : projectiles){
-			p.render(container, game, g);
-		}
-		
-		
-		for (int i = 0; i < World.player.getHp(); i++){
-			if ( i < 10 ){
-				g.drawImage(coeur, 756+i*50, 36);
-			} else {
-				g.drawImage(coeur, 756+(i-10)*50, 86);
+		if (gameOn){
+			player.render(container, game, g);
+			
+			for(Enemy e : enemies){
+				e.render(container, game, g);
 			}
+
+			for(Projectile p : projectiles){
+				p.render(container, game, g);
+			}
+			for (int i = 0; i < World.player.getHp(); i++){
+				if ( i < 10 ){
+					g.drawImage(coeur, 756+i*50, 36);
+				} else {
+					g.drawImage(coeur, 756+(i-10)*50, 86);
+				}
+			}
+			g.setLineWidth(36);
+			g.setColor(Color.white);
+			g.drawString("Vitesse : "+(Math.floor(World.player.getSpeed()*100)/100), 756, 100+((World.player.getHp()-1)/10)*50);
+			g.drawString("Puissance : "+World.player.getAtk(), 756, 150+((World.player.getHp()-1)/10)*50);
+			g.drawString("Cadence de tir : "+World.player.getPeriode(), 756, 200+((World.player.getHp()-1)/10)*50);
+			g.drawString("Pièces : "+World.player.getCoin(), 936, 500);
+			if (player.getCoin() == 0){
+				g.drawImage(coin, 1044, 491);
+			} else {
+				g.drawImage(coin,(float) ((float)1044+8*Math.floor(Math.log10(player.getCoin()))), 491);
+			}
+			
+			atkUp.render(container, game, g);
+			oneUp.render(container, game, g);
+			speedUp.render(container, game, g);
+			delayUp.render(container, game, g);
+			
+			g.setLineWidth(36);
+			g.setColor(Color.white);
+			g.drawString(""+atkCoin, 915, 576);
+			g.drawImage(coin,(float) ((float)938+8*Math.floor(Math.log10(atkCoin))), 567);
+			g.drawString(""+delayCoin, 904, 635);
+			g.drawImage(coin,(float) ((float)927+8*Math.floor(Math.log10(delayCoin))), 626);
+			g.drawString(""+speedCoin, 1152, 576);
+			g.drawImage(coin,(float) ((float)1175+8*Math.floor(Math.log10(speedCoin))), 567);
+			g.drawString(""+oneCoin, 1132, 635);
+			g.drawImage(coin,(float) ((float)1158+8*Math.floor(Math.log10(oneCoin))), 626);
 		}
-		g.setLineWidth(36);
-		g.setColor(Color.white);
-		g.drawString("Vitesse : "+(Math.floor(World.player.getSpeed()*100)/100), 756, 100+((World.player.getHp()-1)/10)*50);
-		g.drawString("Puissance : "+World.player.getAtk(), 756, 150+((World.player.getHp()-1)/10)*50);
-		g.drawString("Cadence de tir : "+World.player.getPeriode(), 756, 200+((World.player.getHp()-1)/10)*50);
-		g.drawString("Pièces : "+World.player.getCoin(), 936, 500);
-		if (player.getCoin() == 0){
-			g.drawImage(coin, 1044, 491);
-		} else {
-			g.drawImage(coin,(float) ((float)1044+8*Math.floor(Math.log10(player.getCoin()))), 491);
-		}
 		
 		
-		atkUp.render(container, game, g);
-		oneUp.render(container, game, g);
-		speedUp.render(container, game, g);
-		delayUp.render(container, game, g);
 		
-		g.setLineWidth(36);
-		g.setColor(Color.white);
-		g.drawString(""+atkCoin, 915, 576);
-		g.drawImage(coin,(float) ((float)938+8*Math.floor(Math.log10(atkCoin))), 567);
-		g.drawString(""+delayCoin, 904, 635);
-		g.drawImage(coin,(float) ((float)927+8*Math.floor(Math.log10(delayCoin))), 626);
-		g.drawString(""+speedCoin, 1152, 576);
-		g.drawImage(coin,(float) ((float)1175+8*Math.floor(Math.log10(speedCoin))), 567);
-		g.drawString(""+oneCoin, 1132, 635);
-		g.drawImage(coin,(float) ((float)1158+8*Math.floor(Math.log10(oneCoin))), 626);
+		
+		
+		
+		
 	}
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		player.update(container, game, delta);
-		for(int i = 0; i < item.size(); i++){
-			item.get(i).update(container, game, delta);
-		}
-		for(int i = 0; i < enemies.size(); i++){
-			enemies.get(i).update(container, game, delta);
-		}
-		for(int i = 0; i < projectiles.size(); i++){
-			projectiles.get(i).update(container, game, delta);
+		if (gameOn){
+			player.update(container, game, delta);
+			for(int i = 0; i < item.size(); i++){
+				item.get(i).update(container, game, delta);
+			}
+			for(int i = 0; i < enemies.size(); i++){
+				enemies.get(i).update(container, game, delta);
+			}
+			for(int i = 0; i < projectiles.size(); i++){
+				projectiles.get(i).update(container, game, delta);
+			}
+			map.update(container, game, delta);
 		}
 		
-		map.update(container, game, delta);
+		
+		
 	}
 	
 	public void keyReleased(int key, char c) {
@@ -245,7 +284,14 @@ public class World extends BasicGameState {
 
 
 	public void keyPressed(int key, char c) {
-		player.keyPressed(key,c);
+		if (gameOn){
+			player.keyPressed(key,c);
+		}
+		if (!gameOn){
+			if (key==Input.KEY_ENTER){
+				startGame();
+			}
+		}
 	}
 
 	public int getID() {
