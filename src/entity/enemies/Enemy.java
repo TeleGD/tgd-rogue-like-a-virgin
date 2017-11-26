@@ -64,7 +64,7 @@ public abstract class Enemy extends Entity {
 	@Override
 	public void checkForCollision() {
 		if(hitbox.intersects(World.player.getShape())){
-			if(!World.player.isInvincible()) this.setHP(hp-Math.max(World.player.getAtk()-def, 0));
+			this.setHP(hp-Math.max(World.player.getAtk()-def, 0));
 			if(hp <= 0) alreadyDead = true;
 			return;
 		}

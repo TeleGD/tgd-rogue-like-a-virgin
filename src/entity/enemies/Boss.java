@@ -172,6 +172,26 @@ public class Boss extends Enemy{
 		hitbox.setY(y);
 	}
 	
+	@Override
+	public void checkForCollision() {
+		if(hitbox.intersects(World.player.getShape())){
+			if(!World.player.isInvincible()) this.setHP(hp-Math.max(World.player.getAtk()-def, 0));
+			if(hp <= 0) alreadyDead = true;
+			return;
+		}
+		for(Projectile p : World.projectiles){
+			if(p.getFriendly()){
+				if(hitbox.intersects(p.getShape())){
+					this.setHP(hp-Math.max(p.getAtk()-def, 0));
+					if(hp <= 0) alreadyDead = true;
+					p.die();
+					return;
+				}
+			}
+			
+		}
+	}
+	
 	private void shoot() {
 		new ProjectileSplit(this.x+width/2,this.y+height/2,0.2f,0,false,10,3);
 		new ProjectileSplit(this.x+width/2,this.y+height/2,-0.2f,0,false,10,3);
