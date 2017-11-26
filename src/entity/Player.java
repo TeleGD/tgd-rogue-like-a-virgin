@@ -467,7 +467,6 @@ public class Player extends Entity {
 		tmpSpeedX = speedX;
 		tmpSpeedY = speedY;
 		move(delta);
-		System.out.println("inv :"+invincible+" ; invtimer : "+invincibleTimer);
 		if(invincible) invincibleTimer -= delta;
 		if(invincibleTimer <= 0){
 			invincible = false;
