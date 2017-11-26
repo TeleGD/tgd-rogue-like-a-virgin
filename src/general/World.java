@@ -52,6 +52,7 @@ public class World extends BasicGameState {
 	public static ArrayList<Item> item;
 	public static Salle map;
 	public static Enemy Nico;
+	public static int score;
 	
 	private Image coeur,coin;
 	private Button jouer,atkUp,speedUp,delayUp,oneUp,rejouer ;
@@ -65,6 +66,7 @@ public class World extends BasicGameState {
 		game=arg1;
 		gameOn = false;
 		gameOver = false;
+		score = 0;
 		
 		//Il faudra voir s'il faut bouger ces inits dans enter(...) si ca prend trop de temps
 		enemies = new ArrayList<Enemy>();
@@ -210,6 +212,7 @@ public class World extends BasicGameState {
 		gameOn = true;
 		try {
 			player = new Player();
+			score = 0;
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -217,6 +220,7 @@ public class World extends BasicGameState {
 	}
 	
 	public void startAgain() throws SlickException{
+		score = 0;
 		gameOn = true;
 		gameOver = false;
 		enemies = new ArrayList<Enemy>();
@@ -273,6 +277,7 @@ public class World extends BasicGameState {
 			g.drawString("Vitesse : "+(Math.floor(World.player.getSpeed()*100)/100), 756, 100+((World.player.getHp()-1)/10)*50);
 			g.drawString("Puissance : "+World.player.getAtk(), 756, 150+((World.player.getHp()-1)/10)*50);
 			g.drawString("Cadence de tir : "+World.player.getPeriode(), 756, 200+((World.player.getHp()-1)/10)*50);
+			g.drawString("Score : "+score, 900, 320);
 			g.drawString("Pièces : "+World.player.getCoin(), 936, 500);
 			if (player.getCoin() == 0){
 				g.drawImage(coin, 1044, 491);
