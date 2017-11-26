@@ -198,8 +198,6 @@ public class Player extends Entity {
 			if(hitbox.intersects(e.getShape())){
 				if(!invincible) {
 					this.setHP(hp-Math.max(e.getAtk()-def, 0));
-					invincibleTimer  = invincibleTimerMax;
-					invincible = true;
 				}
 				if(hp <= 0) alreadyDead = true;
 				return;
@@ -210,8 +208,6 @@ public class Player extends Entity {
 				if(hitbox.intersects(p.getShape())){
 					if(!invincible) {
 						this.setHP(hp-Math.max(p.getAtk()-def, 0));
-						invincibleTimer  = invincibleTimerMax;
-						invincible = true;
 					}
 					if(hp <= 0) alreadyDead = true;
 					p.die();
@@ -472,7 +468,10 @@ public class Player extends Entity {
 		tmpSpeedY = speedY;
 		move(delta);
 		if(invincible) invincibleTimer -= delta;
-		if(invincibleTimer <= 0) invincible = false;
+		if(invincibleTimer <= 0){
+			invincible = false;
+			invincibleTimer = 0;
+		}
 		checkForCollision();
 		hitbox.setX(x+4);
 		hitbox.setY(y+4);
@@ -484,7 +483,7 @@ public class Player extends Entity {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		setDir();
 		g.drawImage(sprite,(float) x,(float) y);
-		g.draw(hitbox);
+		//g.draw(hitbox);
 	}
 
 	public int getCoin() {

@@ -50,6 +50,15 @@ public class Generation {
 
 	//porte fermee : 0 rien | 1 : gauche | 2 : droite | 3 : bas | 4 : haut
 	public static Salle genereSalle(int niveau, int plargeur, int phauteur,int porteFermee) throws SlickException {
+		if(niveau==6) {
+			if(!World.isSaxGuy()) {
+				World.changeMusic();
+			}
+		}else {
+			if(World.isSaxGuy()) {
+				World.changeMusic();
+			}
+		}
 		hauteur = phauteur;
 		largeur = plargeur;
 		Case[][] map = new Case[hauteur][largeur];

@@ -33,7 +33,7 @@ public class Enemy1 extends Enemy{
 		this.width=36;
 		this.height=36;
 		zoning();
-		this.hitbox=new Rectangle (x,y,width,height);
+		this.hitbox=new Rectangle (x+4,y+4,width-8,height-8);
 		speed = 0.15;
 	}
 	
@@ -151,8 +151,8 @@ public class Enemy1 extends Enemy{
 		
 		x+=speedX*delta;
 		y+=speedY*delta;
-		hitbox.setX(x);
-		hitbox.setY(y);
+		hitbox.setX(x+4);
+		hitbox.setY(y+4);
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
@@ -163,7 +163,7 @@ public class Enemy1 extends Enemy{
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
-		g.draw(hitbox);
+		//g.draw(hitbox);
 	}
 
 }

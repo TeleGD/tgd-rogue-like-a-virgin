@@ -22,7 +22,7 @@ public class Enemy2 extends Enemy1{
 		this.width=36;
 		this.height=36;
 		zoning();
-		this.hitbox=new Rectangle (x,y,width,height);
+		this.hitbox=new Rectangle (x+4,y+4,width-8,height-8);
 		speed=0.1;
 	}
 
