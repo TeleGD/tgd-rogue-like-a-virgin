@@ -3,6 +3,7 @@ package entity.enemies;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
@@ -19,6 +20,7 @@ public class Boss extends Enemy{
 	private Polygon zoneR,zoneL,zoneT,zoneB;
 	private double speed;
 	private int compt;
+	Music background;
 	
 	public Boss(float x, float y) {
 		super(x, y);
@@ -39,6 +41,14 @@ public class Boss extends Enemy{
 		zoning();
 		this.hitbox=new Rectangle (x,y,width,height);
 		speed = 0.15;
+		
+		try {
+			background = new Music("musics/Boss.ogg");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    background.loop();
 	}
 
 	public void zoning() {
@@ -186,5 +196,11 @@ public class Boss extends Enemy{
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
 		g.draw(hitbox);
+	}
+	
+	@Override
+	public void die() {
+		background.stop();
+		super.die();
 	}
 }
