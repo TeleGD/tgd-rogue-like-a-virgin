@@ -198,8 +198,6 @@ public class Player extends Entity {
 			if(hitbox.intersects(e.getShape())){
 				if(!invincible) {
 					this.setHP(hp-Math.max(e.getAtk()-def, 0));
-					invincibleTimer  = invincibleTimerMax;
-					invincible = true;
 				}
 				if(hp <= 0) alreadyDead = true;
 				return;
@@ -210,8 +208,6 @@ public class Player extends Entity {
 				if(hitbox.intersects(p.getShape())){
 					if(!invincible) {
 						this.setHP(hp-Math.max(p.getAtk()-def, 0));
-						invincibleTimer  = invincibleTimerMax;
-						invincible = true;
 					}
 					if(hp <= 0) alreadyDead = true;
 					p.die();
@@ -471,8 +467,12 @@ public class Player extends Entity {
 		tmpSpeedX = speedX;
 		tmpSpeedY = speedY;
 		move(delta);
+		System.out.println("inv :"+invincible+" ; invtimer : "+invincibleTimer);
 		if(invincible) invincibleTimer -= delta;
-		if(invincibleTimer <= 0) invincible = false;
+		if(invincibleTimer <= 0){
+			invincible = false;
+			invincibleTimer = 0;
+		}
 		checkForCollision();
 		hitbox.setX(x+4);
 		hitbox.setY(y+4);
