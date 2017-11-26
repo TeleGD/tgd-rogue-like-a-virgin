@@ -100,7 +100,7 @@ public class Player extends Entity {
 
 	@Override
 	public void die() {
-		// TODO Auto-generated method stub
+		general.World.stopMusic();
 
 	}
 	

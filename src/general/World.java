@@ -57,6 +57,7 @@ public class World extends BasicGameState {
 	private Button jouer,atkUp,speedUp,delayUp,oneUp,rejouer ;
 	private int atkCoin,speedCoin,delayCoin,oneCoin;
 	private boolean gameOn,gameOver;
+	private static Music music;
 	
 	
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -76,6 +77,7 @@ public class World extends BasicGameState {
 		speedCoin = 5;
 		delayCoin = 10;
 		oneCoin = 1;
+		music=new Music("musics/music.ogg");
 		
 	}
 	
@@ -196,6 +198,7 @@ public class World extends BasicGameState {
             	}
 
             }});
+		music.loop();
 		
 	}
 	
@@ -232,6 +235,7 @@ public class World extends BasicGameState {
 		delayCoin = 10;
 		oneCoin = 1;
 		player = new Player();
+		music.loop();
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
@@ -359,5 +363,13 @@ public class World extends BasicGameState {
 	public static void reset() {
 		// TODO Auto-generated method stub
 	}
-
+	
+	public static void stopMusic() {
+		music.pause();
+	}
+	
+	public static void resumeMusic() {
+		music.resume();
+	}
+	
 }

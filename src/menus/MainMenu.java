@@ -30,7 +30,7 @@ public class MainMenu extends Menu{
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		try {
+		try {	
 			background=new Music("musics/menu.ogg");
 			background.loop();
 			System.out.println("oui "+background.getPosition());

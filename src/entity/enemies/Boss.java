@@ -48,6 +48,7 @@ public class Boss extends Enemy{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		general.World.stopMusic();
 	    background.loop();
 	}
 
@@ -201,6 +202,7 @@ public class Boss extends Enemy{
 	@Override
 	public void die() {
 		background.stop();
+		general.World.resumeMusic();
 		super.die();
 		World.player.setCoin(World.player.getCoin()+100);
 	}
