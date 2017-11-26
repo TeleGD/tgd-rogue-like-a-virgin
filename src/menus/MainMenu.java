@@ -16,12 +16,11 @@ import general.World;
 public class MainMenu extends Menu{
 
 	public static int ID = -3;	
-	private Music background;
 	
 	public MainMenu(){
 		super.setTitrePrincipal("TGD MULTI-3-GAME");
-		super.setTitreSecondaire("Menu Principal");
-		super.setItems(World.GAME_NAME,"Multitask", "Quitter");
+		super.setTitreSecondaire("Main Menu");
+		super.setItems(World.GAME_NAME,"Scores","Credits", "Quit");
 		super.setEnableClignote(false);
 		super.setCouleurClignote(Color.red);
 		super.setTempsClignote(400);
@@ -30,12 +29,6 @@ public class MainMenu extends Menu{
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		try {	
-			background=new Music("musics/menu.ogg");
-			background.loop();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
@@ -50,13 +43,19 @@ public class MainMenu extends Menu{
 			World.reset();
 			game.enterState(World.ID, new FadeOutTransition(),
 					new FadeInTransition());
-			background.stop();
+			//background.stop();
 			break;
 		case 1:
-			//Pareil pour le deuxieme item, etc
+			//Score board
+			game.enterState(ScoreMenu.ID, new FadeOutTransition(),
+					new FadeInTransition());
+			
+			
 			break;
 		case 2:
-			System.out.println("exit");
+			System.exit(0);
+			break;
+		case 3:
 			System.exit(0);
 			break;
 		}

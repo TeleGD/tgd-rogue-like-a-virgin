@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import general.World;
 import menus.MainMenu;
+import menus.ScoreMenu;
 import menus.WelcomeMenu;
 
 public class Main extends StateBasedGame{
@@ -38,7 +39,7 @@ public class Main extends StateBasedGame{
 		addState(new WelcomeMenu());
 		addState(new MainMenu());
 		addState(new World());
-		
+		addState(new ScoreMenu(this));
 		this.enterState(WelcomeMenu.ID);
 	}
 }

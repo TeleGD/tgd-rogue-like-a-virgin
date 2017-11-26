@@ -7,17 +7,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import general.ui.Button;
 import general.ui.TGDComponent;
 import general.ui.TGDComponent.OnClickListener;
-import general.ui.TextField;
-import general.utils.FontUtils;
 import general.Main;
 
 
@@ -29,6 +26,7 @@ public class WelcomeMenu extends Menu implements OnClickListener{
 
 	private Image background;
 	private int blinkPeriod=10;
+	private Music Mbackground;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -37,6 +35,16 @@ public class WelcomeMenu extends Menu implements OnClickListener{
 		
 		background=new Image("Images/LogoTGD_transparent.png");
 		
+	}
+	
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) {
+		try {	
+			Mbackground=new Music("musics/menu.ogg");
+			Mbackground.loop();
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
