@@ -237,7 +237,7 @@ public class Player extends Entity {
 						periodeTir += 5;
 						break;
 					case "Coin":
-						setCoin(getCoin()+1);
+						setCoin(getCoin()+10);
 						break;
 					}
 					World.item.remove(i);
@@ -433,7 +433,7 @@ public class Player extends Entity {
 		}
 
 		if (tir && attenteTir==0) {
-			new Projectile(x+width/2-8,y+height/2-8,true,projSpeedX,projSpeedY);
+			new Projectile(x+width/2-8,y+height/2-8,true,projSpeedX,projSpeedY,this.atk);
 			attenteTir=periodeTir;
 		}
 		if (attenteTir>0) {
