@@ -45,6 +45,33 @@ public class Projectile extends Entity{
 			}
 		}
 	}
+	
+	public Projectile(float x, float y, boolean friendly,double vitX,double vitY,int atk){
+		this.friendly = friendly;
+		this.x = x;
+		this.y = y;
+		this.atk = atk;
+		height = 16;
+		width = 16;
+		//On reduit la hitbox pour pouvoir passer sans problemes dans des espaces d'une case de large
+		hitbox = new Rectangle(x+4,y+4,width-8,height-8);
+		World.projectiles.add(this);
+		speedX=vitX;
+		speedY=vitY;
+		if(friendly){
+			try {
+				sprite = new Image(World.DIRECTORY_IMAGES+"coeur.png");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}else{
+			try {
+				sprite = new Image(World.DIRECTORY_IMAGES+"carreau.png");
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public Projectile(int i, int j, boolean friendly){
 		this.friendly = friendly;
