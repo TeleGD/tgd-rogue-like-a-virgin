@@ -61,10 +61,10 @@ public class ScoreMenu extends BasicGameState{
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		g.setColor(Color.red);
 		g.setFont(fontTitrePrincipal);
-		g.drawString("TGD MULTI-3-GAME",(Main.longueur-fontTitrePrincipal.getWidth("TGD MULTI-3-GAME"))/2 , 120);
+		g.drawString("Rogue Like A Virgin",(Main.longueur-fontTitrePrincipal.getWidth("Rogue Like A Virgin"))/2 , 120);
 		g.setColor(Color.white);
 		g.setFont(fontTitrePrincipal);
-		g.drawString("TGD MULTI-3-GAME",(Main.longueur-fontTitrePrincipal.getWidth("TGD MULTI-3-GAME"))/2+4 , 122);
+		g.drawString("Rogue Like A Virgin",(Main.longueur-fontTitrePrincipal.getWidth("Rogue Like A Virgin"))/2+4 , 122);
 
 		g.setFont(fontTitreSecondaire);
 		g.drawString("Scores", Main.longueur/2-fontTitreSecondaire.getWidth("Scores")/2, 232);

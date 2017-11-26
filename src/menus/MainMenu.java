@@ -18,9 +18,9 @@ public class MainMenu extends Menu{
 	public static int ID = -3;	
 	
 	public MainMenu(){
-		super.setTitrePrincipal("TGD MULTI-3-GAME");
+		super.setTitrePrincipal("Rogue Like A Virgin");
 		super.setTitreSecondaire("Main Menu");
-		super.setItems(World.GAME_NAME,"Scores","Credits", "Quit");
+		super.setItems("Play","Scores","Credits", "Quit");
 		super.setEnableClignote(false);
 		super.setCouleurClignote(Color.red);
 		super.setTempsClignote(400);

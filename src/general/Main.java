@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import general.World;
 import menus.MainMenu;
+import menus.NameMenu;
 import menus.ScoreMenu;
 import menus.WelcomeMenu;
 
@@ -29,17 +30,14 @@ public class Main extends StateBasedGame{
 	
 
 	public Main() {
-		super("NOM PLUS COURT");
+		super("Rogue Like A Virgin");
 	}
 
 
 
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-		addState(new WelcomeMenu());
-		addState(new MainMenu());
-		addState(new World());
-		addState(new ScoreMenu(this));
-		this.enterState(WelcomeMenu.ID);
+		addState(new NameMenu());
+		this.enterState(NameMenu.ID);
 	}
 }

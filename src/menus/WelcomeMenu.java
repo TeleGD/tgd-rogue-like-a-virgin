@@ -31,20 +31,18 @@ public class WelcomeMenu extends Menu implements OnClickListener{
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		
+		try {	
+			Mbackground=new Music("musics/menu.ogg");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 		
 		background=new Image("Images/LogoTGD_transparent.png");
-		
 	}
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
-		try {	
-			Mbackground=new Music("musics/menu.ogg");
-			Mbackground.loop();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		Mbackground.loop();
 	}
 
 	@Override
@@ -70,7 +68,6 @@ public class WelcomeMenu extends Menu implements OnClickListener{
 
 		g.drawRect(Main.longueur/2-300,25, 600,37);
 		
-		;
 		g.setFont(fontConfirmText);
 		int alpha=(int) ((System.currentTimeMillis()/blinkPeriod)%1000);
 		if(alpha>255)alpha=500-alpha;

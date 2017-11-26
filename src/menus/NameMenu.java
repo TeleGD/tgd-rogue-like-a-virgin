@@ -13,6 +13,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.Main;
+import general.World;
 import general.utils.FontUtils;
 
 public class NameMenu extends BasicGameState{
@@ -22,9 +23,17 @@ public class NameMenu extends BasicGameState{
 	private TrueTypeFont fontTitrePrincipal;
 	
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+	public void init(GameContainer arg0, StateBasedGame game) throws SlickException {
 		fontTitrePrincipal=FontUtils.loadFont("iCrack.ttf",Font.PLAIN,55,false);
 		compt =0;
+	}
+	
+	@Override
+	public void enter(GameContainer arg0, StateBasedGame game) throws SlickException {
+		game.addState(new WelcomeMenu());
+		game.addState(new MainMenu());
+		game.addState(new World());
+		game.addState(new ScoreMenu(game));
 	}
 
 	@Override
@@ -39,6 +48,13 @@ public class NameMenu extends BasicGameState{
 		compt++;
 		if(compt>300) {
 			game.enterState(WelcomeMenu.ID,new FadeOutTransition(),new FadeInTransition());
+		}
+		
+		if (compt==2) {
+			game.getState(WelcomeMenu.ID).init(arg0, game);
+			game.getState(MainMenu.ID).init(arg0, game);
+			game.getState(World.ID).init(arg0, game);
+			game.getState(ScoreMenu.ID).init(arg0, game);
 		}
 	}
 
