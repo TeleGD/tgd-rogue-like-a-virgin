@@ -170,12 +170,12 @@ public class Generation {
 			//generation des salles normales
 			for (int i=0;i<type*2;i++) {
 
-				float x=(float) ((float) 50+Math.random()*(720-36-50));
-				float y=(float) ((float) 50+Math.random()*(720-36-50));
-				float x2=(float) ((float) 50+Math.random()*(720-36-50));
-				float y2=(float) ((float) 50+Math.random()*(720-36-50));
-				float x3=(float) ((float) 50+Math.random()*(720-36-50));
-				float y3=(float) ((float) 50+Math.random()*(720-36-50));
+				float x=(float) ((float) 50+Math.random()*(720-72-50));
+				float y=(float) ((float) 50+Math.random()*(720-72-50));
+				float x2=(float) ((float) 50+Math.random()*(720-72-50));
+				float y2=(float) ((float) 50+Math.random()*(720-72-50));
+				float x3=(float) ((float) 50+Math.random()*(720-72-50));
+				float y3=(float) ((float) 50+Math.random()*(720-72-50));
 				while (c[(int)x/36][(int)y/36] instanceof Mur) {
 					x=(float) ((float) 50+Math.random()*(720-36-50));
 					y=(float) ((float) 50+Math.random()*(720-36-50));
@@ -195,6 +195,7 @@ public class Generation {
 				}else {
 					new Enemy2(x,y);
 					new Ghost2(x3,y3);
+					new Skull2(x2,y2);
 				}
 			}
 

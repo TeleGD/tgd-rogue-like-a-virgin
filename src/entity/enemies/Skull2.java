@@ -14,20 +14,20 @@ import general.World;
 import map.Case;
 import map.Mur;
 
-public class Skull1 extends Enemy{
+public class Skull2 extends Enemy{
 
 	protected Polygon zoneR,zoneL,zoneT,zoneB;
 	protected double speed;
 	private int compt;
 	
-	public Skull1(float x, float y) {
+	public Skull2(float x, float y) {
 		super(x, y);
-		hp=1;
+		hp=3;
 		try {
-			this.imgB=new Image("images/RogueLike/squeletteBas.png");
-			this.imgT=new Image("images/RogueLike/squeletteHaut.png");
-			this.imgR=new Image("images/RogueLike/squeletteDroite.png");
-			this.imgL=new Image("images/RogueLike/squeletteGauche.png");
+			this.imgB=new Image("images/RogueLike/squeletteMocheBas.png");
+			this.imgT=new Image("images/RogueLike/squeletteMocheHaut.png");
+			this.imgR=new Image("images/RogueLike/squeletteMocheDroite.png");
+			this.imgL=new Image("images/RogueLike/squeletteMocheGauche.png");
 			
 			this.sprite=imgB;
 		} catch (SlickException e) {
@@ -166,7 +166,7 @@ public class Skull1 extends Enemy{
 	}
 	
 	private void shoot() {
-		new Projectile(this.x+width/2,this.y+height/2,false,(World.player.getX()-x)/1500,(World.player.getY()-y)/1500);
+		new Projectile(this.x+width/2,this.y+height/2,false,(World.player.getX()-x)/800,(World.player.getY()-y)/800);
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
