@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
@@ -17,7 +16,6 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.Doublet;
 import general.Main;
-import general.World;
 import general.utils.FontUtils;
 
 public class ScoreMenu extends BasicGameState{

@@ -2,37 +2,25 @@ package general;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Random;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
-import org.newdawn.slick.MusicListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
-import org.newdawn.slick.tests.MusicListenerTest;
-
 import entity.enemies.Enemy;
-import entity.enemies.Enemy1;
 import entity.Player;
 import entity.Projectile;
 import entity.Item;
-import general.Main;
 import general.ui.Button;
 import general.ui.TGDComponent;
 import general.ui.TGDComponent.OnClickListener;
-import general.ui.TextField;
-import general.ui.TextField.EnterActionListener;
 import map.Generation;
 import map.Salle;
-import menus.MainMenu;
 
 public class World extends BasicGameState {
 
@@ -45,7 +33,6 @@ public class World extends BasicGameState {
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
 
-	private static StateBasedGame game;
 
 	public static ArrayList<Enemy> enemies,enemiesTmp;
 	public static ArrayList<Projectile> projectiles,projectilesTmp;
@@ -67,7 +54,6 @@ public class World extends BasicGameState {
 
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
-		game=arg1;
 		gameOn = false;
 		gameOver = false;
 		score = 0;

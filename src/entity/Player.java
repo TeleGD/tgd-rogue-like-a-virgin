@@ -81,7 +81,7 @@ public class Player extends Entity {
 		height=36;
 		hitbox = new Rectangle(x+4,y+4,width-8,height-8);
 		speed=0.2;
-		direction=2;
+		setDirection(2);
 		sprite=spriteD;
 		periodeTir=50;
 		attenteTir=0;
@@ -407,32 +407,32 @@ public class Player extends Entity {
 	}
 
 	public void setDir() {
-		direction=2;
+		setDirection(2);
 		tir=false;
 		sprite=spriteD;
 		projSpeedX=0;
 		projSpeedY=0;
 
 		if((nord && !sud) || (nord && sud && !nordsud)) {
-			direction=0;
+			setDirection(0);
 			sprite=spriteU;
 			projSpeedY=-projSpeed;
 			tir=true;
 		}
 		if((sud && !nord) || (nord && sud && nordsud)) {
-			direction=2;
+			setDirection(2);
 			sprite=spriteD;
 			projSpeedY=projSpeed;
 			tir=true;
 		}
 		if((ouest && !est)|| (ouest && est && !estouest)) {
-			direction=3;
+			setDirection(3);
 			sprite=spriteL;
 			projSpeedX=-projSpeed;
 			tir=true;
 		}
 		if((!ouest && est)|| (ouest && est && estouest)) {
-			direction=1;
+			setDirection(1);
 			sprite=spriteR;
 			projSpeedX=projSpeed;
 			tir=true;
@@ -497,5 +497,13 @@ public class Player extends Entity {
 	public void setPeriod(int i) {
 		this.periodeTir = i;
 		
+	}
+
+	public int getDirection() {
+		return direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
 	}
 }

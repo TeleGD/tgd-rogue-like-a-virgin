@@ -1,6 +1,5 @@
 package entity;
 
-import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;

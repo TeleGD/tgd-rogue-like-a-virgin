@@ -12,7 +12,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import general.World;
 import map.Case;
 import map.CaseVide;
-import map.Mur;
 
 
 public class Item extends Entity {

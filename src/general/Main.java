@@ -7,11 +7,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.World;
-import menus.MainMenu;
 import menus.NameMenu;
-import menus.ScoreMenu;
-import menus.WelcomeMenu;
 
 public class Main extends StateBasedGame{
 	
@@ -20,7 +16,8 @@ public class Main extends StateBasedGame{
 	
 	public static void main(String[] args) throws SlickException {
 		//Normalement c'est plus necessaire, c'est fait dans le setup du projet en theorie
-		//System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
+		//Et pourtant quand je cree un runnable jar il le faut sinon le jar ne se lance pas...
+		System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
 		AppGameContainer app = new AppGameContainer(new Main(),longueur, hauteur, false);
 		app.setTargetFrameRate(60);
 		app.setVSync(true);

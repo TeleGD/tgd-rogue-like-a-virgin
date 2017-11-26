@@ -1,6 +1,5 @@
 package general;
 
-import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -9,6 +8,7 @@ public class Dao {
 
 	// Accéder à la BD
 	public static void openDataBase() {
+		@SuppressWarnings("unused")
 		Connection c = null;
 		try {
 			Class.forName("org.sqlite.JDBC");

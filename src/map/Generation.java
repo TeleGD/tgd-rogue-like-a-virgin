@@ -4,7 +4,6 @@ import java.util.Random;
 
 import org.newdawn.slick.SlickException;
 
-import entity.Item;
 import entity.enemies.*;
 import general.World;
 
@@ -19,6 +18,7 @@ public class Generation {
 
 
 	public static Salle genereNewSalle(int niveau, int posx, int posy) throws SlickException{
+		@SuppressWarnings("unused")
 		int fermee = 0;
 
 		if(posx==0){

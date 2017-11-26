@@ -10,6 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
+@SuppressWarnings("serial")
 public class TGDComponent extends Rectangle implements MouseListener, KeyListener{
 	public static final float AUTOMATIC = -1;
 

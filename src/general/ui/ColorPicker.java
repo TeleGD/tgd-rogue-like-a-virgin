@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+@SuppressWarnings("serial")
 public class ColorPicker extends TGDComponent {
 
 
