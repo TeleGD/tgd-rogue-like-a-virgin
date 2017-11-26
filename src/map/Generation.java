@@ -163,9 +163,17 @@ public class Generation {
 
 				float x=(float) ((float) 50+Math.random()*(720-36-50));
 				float y=(float) ((float) 50+Math.random()*(720-36-50));
+				float x2=(float) ((float) 50+Math.random()*(720-36-50));
+				float y2=(float) ((float) 50+Math.random()*(720-36-50));
+				float x3=(float) ((float) 50+Math.random()*(720-36-50));
+				float y3=(float) ((float) 50+Math.random()*(720-36-50));
 				while (c[(int)x/36][(int)y/36] instanceof Mur) {
 					x=(float) ((float) 50+Math.random()*(720-36-50));
 					y=(float) ((float) 50+Math.random()*(720-36-50));
+				}
+				while (c[(int)x2/36][(int)y2/36] instanceof Mur) {
+					x2=(float) ((float) 50+Math.random()*(720-36-50));
+					y2=(float) ((float) 50+Math.random()*(720-36-50));
 				}
 				/*
 				 * proba de faire apparaitre un faible monstre: 1/type mais a voir apres
@@ -173,10 +181,11 @@ public class Generation {
 				if(Math.random()<(float)1/type) {
 
 					new Enemy1(x,y);
-					new Ghost1(720-x,720-y);
+					new Ghost1(x3,y3);
+					new Skull1(x2,y2);
 				}else {
 					new Enemy2(x,y);
-					new Ghost2(720-x,720-y);
+					new Ghost2(x3,y3);
 				}
 			}
 
