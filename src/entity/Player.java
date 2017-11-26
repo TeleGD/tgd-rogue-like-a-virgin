@@ -123,10 +123,10 @@ public class Player extends Entity {
 				accumulateur = accumulateur || collision;
 			}
 		}
-		if(tmpI-1 >= 0) deplacementPossibleGauche = !(c[tmpI-1][tmpJ]instanceof Mur||c[tmpI-1][tmpJ]instanceof Bords);
-		if(tmpI+1 < c.length) deplacementPossibleDroite = !(c[tmpI+1][tmpJ]instanceof Mur||c[tmpI+1][tmpJ]instanceof Bords);
-		if(tmpJ-1 >= 0) deplacementPossibleHaut = !(c[tmpI][tmpJ-1]instanceof Mur||c[tmpI][tmpJ-1]instanceof Bords);
-		if(tmpJ+1 < c[tmpI].length) deplacementPossibleBas = !(c[tmpI][tmpJ+1]instanceof Mur||c[tmpI][tmpJ+1]instanceof Bords);
+		if(tmpJ >=0 && tmpJ < c[tmpI].length && tmpI-1 >= 0 && tmpI-1 < c.length) deplacementPossibleGauche = !(c[tmpI-1][tmpJ]instanceof Mur||c[tmpI-1][tmpJ]instanceof Bords);
+		if(tmpI+1 >= 0 && tmpI+1 < c.length && tmpJ >=0 && tmpJ < c[tmpI].length) deplacementPossibleDroite = !(c[tmpI+1][tmpJ]instanceof Mur||c[tmpI+1][tmpJ]instanceof Bords);
+		if(tmpI >= 0 && tmpI < c.length && tmpJ-1 >= 0 && tmpJ-1 < c[tmpI].length) deplacementPossibleHaut = !(c[tmpI][tmpJ-1]instanceof Mur||c[tmpI][tmpJ-1]instanceof Bords);
+		if(tmpI >= 0 && tmpI < c.length && tmpJ+1 >= 0 && tmpJ+1 < c[tmpI].length) deplacementPossibleBas = !(c[tmpI][tmpJ+1]instanceof Mur||c[tmpI][tmpJ+1]instanceof Bords);
 		
 		if(!accumulateur){
 			deplacementPossibleBas = true;
@@ -225,23 +225,29 @@ public class Player extends Entity {
 					switch (World.item.get(i).type) {
 					case "SpeedUp":  
 						speed *= 1.1;
+						World.score += 20;
 						break;
 					case "SpeedDown":  
 						speed /= 1.1;
+						World.score += 20;
 						break;
 					case "HpUp":
 						if(hp <= 19)
 							hp++;
+						World.score += 20;
 						break;
 					case "FireRateUp":
 						if(periodeTir >= 10)
 							periodeTir -= 5;
+						World.score += 20;
 						break;
 					case "FireRateDown":
 						periodeTir += 5;
+						World.score += 20;
 						break;
 					case "Coin":
 						setCoin(getCoin()+10);
+						World.score += 20;
 						break;
 					}
 					World.item.remove(i);

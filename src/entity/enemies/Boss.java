@@ -200,6 +200,7 @@ public class Boss extends Enemy{
 		background.stop();
 		general.World.resumeMusic();
 		super.die();
+		World.score += 230;
 		World.player.setCoin(World.player.getCoin()+100);
 	}
 }
