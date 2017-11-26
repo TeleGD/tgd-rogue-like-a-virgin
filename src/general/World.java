@@ -1,5 +1,6 @@
 package general;
 
+import java.awt.Font;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,6 +30,7 @@ import general.ui.TGDComponent;
 import general.ui.TGDComponent.OnClickListener;
 import general.ui.TextField;
 import general.ui.TextField.EnterActionListener;
+import general.utils.FontUtils;
 import map.Generation;
 import map.Salle;
 import menus.MainMenu;
