@@ -483,7 +483,7 @@ public class Player extends Entity {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		setDir();
 		g.drawImage(sprite,(float) x,(float) y);
-		g.draw(hitbox);
+		//g.draw(hitbox);
 	}
 
 	public int getCoin() {

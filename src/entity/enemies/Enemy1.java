@@ -163,7 +163,7 @@ public class Enemy1 extends Enemy{
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
-		g.draw(hitbox);
+		//g.draw(hitbox);
 	}
 
 }
