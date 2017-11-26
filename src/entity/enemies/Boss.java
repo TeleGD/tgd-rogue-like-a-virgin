@@ -202,5 +202,6 @@ public class Boss extends Enemy{
 	public void die() {
 		background.stop();
 		super.die();
+		World.player.setCoin(World.player.getCoin()+100);
 	}
 }
