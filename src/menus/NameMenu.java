@@ -34,6 +34,7 @@ public class NameMenu extends BasicGameState{
 		game.addState(new MainMenu());
 		game.addState(new World());
 		game.addState(new ScoreMenu(game));
+		game.addState(new CreditsMenu());
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class NameMenu extends BasicGameState{
 	@Override
 	public void update(GameContainer arg0, StateBasedGame game, int arg2) throws SlickException {
 		compt++;
-		if(compt>300) {
+		if(compt>15) {
 			game.enterState(WelcomeMenu.ID,new FadeOutTransition(),new FadeInTransition());
 		}
 		
@@ -55,6 +56,7 @@ public class NameMenu extends BasicGameState{
 			game.getState(MainMenu.ID).init(arg0, game);
 			game.getState(World.ID).init(arg0, game);
 			game.getState(ScoreMenu.ID).init(arg0, game);
+			game.getState(CreditsMenu.ID).init(arg0, game);
 		}
 	}
 

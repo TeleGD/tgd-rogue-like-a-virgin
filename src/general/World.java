@@ -12,6 +12,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+
 import entity.enemies.Enemy;
 import entity.Player;
 import entity.Projectile;
@@ -21,6 +24,7 @@ import general.ui.TGDComponent;
 import general.ui.TGDComponent.OnClickListener;
 import map.Generation;
 import map.Salle;
+import menus.MainMenu;
 
 public class World extends BasicGameState {
 
@@ -43,7 +47,7 @@ public class World extends BasicGameState {
 	public static int score;
 
 	private Image coeur,coin;
-	private Button jouer,atkUp,speedUp,delayUp,oneUp,rejouer ;
+	private Button jouer,atkUp,speedUp,delayUp,oneUp,rejouer,pauseMode ;
 	private int atkCoin,speedCoin,delayCoin,oneCoin;
 	private boolean gameOn,gameOver;
 	private static Sound saxGuy;
@@ -51,8 +55,11 @@ public class World extends BasicGameState {
 	private static Music mainMusic;
 	private static boolean scoreTime;
 	public static String name;
+	private StateBasedGame game;
+	private int pauseCompt;
+	private boolean pause,maj;
 
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables 
 		gameOn = false;
 		gameOver = false;
@@ -71,11 +78,9 @@ public class World extends BasicGameState {
 		delayCoin = 10;
 		oneCoin = 1;
 		scoreTime=false;
+		this.game=arg1;
+		maj=false;
 
-	}
-
-	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
-		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 		coeur = new Image(World.DIRECTORY_IMAGES+"vie.png");
 		coin = new Image(World.DIRECTORY_IMAGES+"itemCoin.png");
 
@@ -108,6 +113,24 @@ public class World extends BasicGameState {
 				} catch (SlickException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}
+
+			}});
+
+		pauseMode = new Button("Continue",container,786,294,TGDComponent.AUTOMATIC,TGDComponent.AUTOMATIC);
+		pauseMode.setTextSize(32);
+		pauseMode.setBackgroundColor(new Color(255,255,255));
+		pauseMode.setSize(420,120);
+		pauseMode.setTextColor(Color.black);
+		pauseMode.setPadding(70,100,70,100);
+		pauseMode.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(TGDComponent componenent) {
+				if(pauseCompt==0) {
+					pause=false;
+				}else {
+					game.enterState(MainMenu.ID, new FadeInTransition(), new FadeOutTransition());
 				}
 
 			}});
@@ -191,6 +214,12 @@ public class World extends BasicGameState {
 				}
 
 			}});
+
+	}
+
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
+		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
+
 		mainMusic.play();
 	}
 
@@ -200,6 +229,7 @@ public class World extends BasicGameState {
 
 	public void startGame(){
 		gameOn = true;
+		pause=false;
 		try {
 			player = new Player();
 			score = 0;
@@ -264,34 +294,40 @@ public class World extends BasicGameState {
 						g.drawImage(coeur, 756+(i-10)*50, 86);
 					}
 				}
-				g.setLineWidth(36);
-				g.setColor(Color.white);
-				g.drawString("Speed : "+(Math.floor(World.player.getSpeed()*100)/100), 756, 100+((World.player.getHp()-1)/10)*50);
-				g.drawString("Power : "+World.player.getAtk(), 756, 150+((World.player.getHp()-1)/10)*50);
-				g.drawString("Cadence de tir : "+World.player.getPeriode(), 756, 200+((World.player.getHp()-1)/10)*50);
-				g.drawString("Score : "+score, 900, 320);
-				g.drawString("Money : "+World.player.getCoin(), 936, 500);
-				if (player.getCoin() == 0){
-					g.drawImage(coin, 1044, 491);
-				} else {
-					g.drawImage(coin,(float) ((float)1044+8*Math.floor(Math.log10(player.getCoin()))), 491);
+
+				if(pause) {
+					pauseMode.render(container,game,g);
+				}else {
+
+					g.setLineWidth(36);
+					g.setColor(Color.white);
+					g.drawString("Speed : "+(Math.floor(World.player.getSpeed()*100)/100), 756, 100+((World.player.getHp()-1)/10)*50);
+					g.drawString("Power : "+World.player.getAtk(), 756, 150+((World.player.getHp()-1)/10)*50);
+					g.drawString("Cadence de tir : "+World.player.getPeriode(), 756, 200+((World.player.getHp()-1)/10)*50);
+					g.drawString("Score : "+score, 900, 320);
+					g.drawString("Money : "+World.player.getCoin(), 936, 500);
+					if (player.getCoin() == 0){
+						g.drawImage(coin, 1044, 491);
+					} else {
+						g.drawImage(coin,(float) ((float)1044+8*Math.floor(Math.log10(player.getCoin()))), 491);
+					}
+
+					atkUp.render(container, game, g);
+					oneUp.render(container, game, g);
+					speedUp.render(container, game, g);
+					delayUp.render(container, game, g);
+
+					g.setLineWidth(36);
+					g.setColor(Color.white);
+					g.drawString(""+atkCoin, 915, 576);
+					g.drawImage(coin,(float) ((float)938+8*Math.floor(Math.log10(atkCoin))), 567);
+					g.drawString(""+delayCoin, 904, 635);
+					g.drawImage(coin,(float) ((float)927+8*Math.floor(Math.log10(delayCoin))), 626);
+					g.drawString(""+speedCoin, 1152, 576);
+					g.drawImage(coin,(float) ((float)1175+8*Math.floor(Math.log10(speedCoin))), 567);
+					g.drawString(""+oneCoin, 1132, 635);
+					g.drawImage(coin,(float) ((float)1158+8*Math.floor(Math.log10(oneCoin))), 626);
 				}
-
-				atkUp.render(container, game, g);
-				oneUp.render(container, game, g);
-				speedUp.render(container, game, g);
-				delayUp.render(container, game, g);
-
-				g.setLineWidth(36);
-				g.setColor(Color.white);
-				g.drawString(""+atkCoin, 915, 576);
-				g.drawImage(coin,(float) ((float)938+8*Math.floor(Math.log10(atkCoin))), 567);
-				g.drawString(""+delayCoin, 904, 635);
-				g.drawImage(coin,(float) ((float)927+8*Math.floor(Math.log10(delayCoin))), 626);
-				g.drawString(""+speedCoin, 1152, 576);
-				g.drawImage(coin,(float) ((float)1175+8*Math.floor(Math.log10(speedCoin))), 567);
-				g.drawString(""+oneCoin, 1132, 635);
-				g.drawImage(coin,(float) ((float)1158+8*Math.floor(Math.log10(oneCoin))), 626);
 			}
 		} else {
 			g.drawString("Score: "+score, 900, 320);
@@ -312,22 +348,24 @@ public class World extends BasicGameState {
 
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if (gameOn){
-			player.update(container, game, delta);
-			for(int i = 0; i < item.size(); i++){
-				item.get(i).update(container, game, delta);
-			}
-			for(int i = 0; i < enemies.size(); i++){
-				enemies.get(i).update(container, game, delta);
-			}
-			for(int i = 0; i < projectiles.size(); i++){
-				projectiles.get(i).update(container, game, delta);
-			}
-			map.update(container, game, delta);
-			if (player.getHP()<=0){
-				scoreTime=true;
-				name="";
-				gameOver = true;
-				gameOn = false;
+			if(!pause) {
+				player.update(container, game, delta);
+				for(int i = 0; i < item.size(); i++){
+					item.get(i).update(container, game, delta);
+				}
+				for(int i = 0; i < enemies.size(); i++){
+					enemies.get(i).update(container, game, delta);
+				}
+				for(int i = 0; i < projectiles.size(); i++){
+					projectiles.get(i).update(container, game, delta);
+				}
+				map.update(container, game, delta);
+				if (player.getHP()<=0){
+					scoreTime=true;
+					name="";
+					gameOver = true;
+					gameOn = false;
+				}
 			}
 		}
 
@@ -338,13 +376,48 @@ public class World extends BasicGameState {
 		if (gameOn){
 			player.keyReleased(key,c);
 		}
+		if(scoreTime) {
+			if(key==Input.KEY_LSHIFT)
+				maj=false;
+		}
 	}
 
 
 	public void keyPressed(int key, char c) {
-		if(!scoreTime) {
+		if(scoreTime){
+			if(!maj && !(key==Input.KEY_LSHIFT &&!(key==Input.KEY_ENTER))) {
+				name+=c;
+				System.out.println(name);
+			}
+			else if(!(key==Input.KEY_LSHIFT &&!(key==Input.KEY_ENTER))){
+				System.out.println(name);
+				name+=(""+c).toUpperCase();
+			}
+			switch (key) {
+
+			case Input.KEY_BACK://.KEY_RETURN:
+				name=name.substring(0, name.length()-2);
+				break;
+			case Input.KEY_ENTER :
+				name=name.replace("'", "''");
+				/*if(name.toCharArray()[0]=='\'')
+					name=" "+name;
+				if(name.toCharArray()[name.length()-1]=='\'')
+					name=name+" ";*/
+				System.out.println("nom final="+name);
+				Dao.addScore(name, score);
+				scoreTime=false;
+				break;
+			case Input.KEY_LSHIFT:
+				maj=true;
+			}
+		}else if(!pause) {
 			if (gameOn){
 				player.keyPressed(key,c);
+				if(key==Input.KEY_ESCAPE) {
+					pause=true;
+					pauseCompt=0;
+				}
 			}
 			if (!gameOn && !gameOver){
 				if (key==Input.KEY_ENTER){
@@ -356,16 +429,22 @@ public class World extends BasicGameState {
 					try {
 						startAgain();
 					} catch (SlickException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
 		} else {
-			name+=c;
-			if(key==Input.KEY_ENTER) {
-				Dao.addScore(name, score);
-				scoreTime=false;
+			if(pauseCompt==1 && key==Input.KEY_ENTER) {
+				game.enterState(MainMenu.ID,new FadeOutTransition(), new FadeInTransition());
+			}else if(key==Input.KEY_Z || key==Input.KEY_S) {
+				pauseCompt=1-pauseCompt;
+				if(pauseCompt==0) {
+					pauseMode.setText("Continue");
+				}else {
+					pauseMode.setText("Quit");
+				}
+			}else if(pauseCompt==0 && key==Input.KEY_ENTER) {
+				pause=false;
 			}
 		}
 	}

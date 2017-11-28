@@ -342,10 +342,6 @@ public class Player extends Entity {
 			est=true;
 			estouest=true;
 			break;
-		case Input.KEY_ESCAPE:
-			System.exit(0);
-			break;
-
 		}
 
 	}

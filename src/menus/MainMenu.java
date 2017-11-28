@@ -52,7 +52,8 @@ public class MainMenu extends Menu{
 			
 			break;
 		case 2:
-			System.exit(0);
+			game.enterState(CreditsMenu.ID, new FadeOutTransition(),
+					new FadeInTransition());
 			break;
 		case 3:
 			System.exit(0);

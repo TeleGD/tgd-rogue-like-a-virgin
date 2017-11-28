@@ -58,6 +58,7 @@ public class Dao {
 			stmt.close();
 			c.close();
 		} catch (Exception e) {
+			System.out.println("INSERT INTO SCORES (NAME,SCORE) VALUES ('"+name+"',"+score+")");
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 			System.out.println("Couldn't load the database");
