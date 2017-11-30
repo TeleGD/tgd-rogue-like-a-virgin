@@ -93,7 +93,7 @@ public class Player extends Entity {
 		coin = 0;
 		atk = 1;
 		invincible = false;
-		invincibleTimerMax = 700;
+		invincibleTimerMax = 1200;
 		invincibleTimer = invincibleTimerMax;
 		
 	}
@@ -198,6 +198,8 @@ public class Player extends Entity {
 			if(hitbox.intersects(e.getShape())){
 				if(!invincible) {
 					this.setHP(hp-Math.max(e.getAtk()-def, 0));
+					invincible=true;
+					invincibleTimer=invincibleTimerMax;
 				}
 				if(hp <= 0) alreadyDead = true;
 				return;
@@ -220,11 +222,11 @@ public class Player extends Entity {
 				if(hitbox.intersects(World.item.get(i).getShape())){
 					switch (World.item.get(i).type) {
 					case "SpeedUp":  
-						speed *= 1.1;
+						speed *= 1.3;
 						World.score += 20;
 						break;
 					case "SpeedDown":  
-						speed /= 1.1;
+						speed /= 1.3;
 						World.score += 20;
 						break;
 					case "HpUp":
@@ -234,11 +236,11 @@ public class Player extends Entity {
 						break;
 					case "FireRateUp":
 						if(periodeTir >= 10)
-							periodeTir -= 5;
+							periodeTir -= 10;
 						World.score += 20;
 						break;
 					case "FireRateDown":
-						periodeTir += 5;
+						periodeTir += 10;
 						World.score += 20;
 						break;
 					case "Coin":
