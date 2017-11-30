@@ -35,7 +35,7 @@ public class WelcomeMenu extends Menu implements OnClickListener{
 			e.printStackTrace();
 		}
 		
-		background=new Image("Images/LogoTGD_transparent.png");
+		background=new Image("images/LogoTGD_transparent.png");
 	}
 	
 	@Override
