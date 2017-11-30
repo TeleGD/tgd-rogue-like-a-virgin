@@ -304,41 +304,41 @@ public class Player extends Entity {
 	public void keyPressed(int key, char c) {
 		switch (key){
 
-		case Input.KEY_UP:
+		case Input.KEY_Z:
 			up = true;
 			updown=false;
 			break;
 
-		case Input.KEY_DOWN:
+		case Input.KEY_S:
 			down=true;
 			updown=true;
 			break;
 
-		case Input.KEY_LEFT:
+		case Input.KEY_Q:
 			left=true;
 			rightLeft=true;
 			break;
-		case Input.KEY_RIGHT:
+		case Input.KEY_D:
 			right=true;
 			rightLeft=false;
 			break;
 
 
-		case Input.KEY_Z:
+		case Input.KEY_UP:
 			nord = true;
 			nordsud=false;
 			break;
 
-		case Input.KEY_S:
+		case Input.KEY_DOWN:
 			sud=true;
 			nordsud=true;
 			break;
 
-		case Input.KEY_Q:
+		case Input.KEY_LEFT:
 			ouest=true;
 			estouest=false;
 			break;
-		case Input.KEY_D:
+		case Input.KEY_RIGHT:
 			est=true;
 			estouest=true;
 			break;
@@ -348,29 +348,29 @@ public class Player extends Entity {
 
 	public void keyReleased(int key, char c) {
 		switch (key) {
-		case Input.KEY_UP:
+		case Input.KEY_Z:
 			up=false;
 			break;
-		case Input.KEY_RIGHT:
+		case Input.KEY_D:
 			right=false;
 			break;
-		case Input.KEY_LEFT:
+		case Input.KEY_Q:
 			left=false;
 			break;
-		case Input.KEY_DOWN:
+		case Input.KEY_S:
 			down=false;
 			break;
 
-		case Input.KEY_Z:
+		case Input.KEY_UP:
 			nord=false;
 			break;
-		case Input.KEY_D:
+		case Input.KEY_RIGHT:
 			est=false;
 			break;
-		case Input.KEY_Q:
+		case Input.KEY_LEFT:
 			ouest=false;
 			break;
-		case Input.KEY_S:
+		case Input.KEY_DOWN:
 			sud=false;
 			break;
 		}
