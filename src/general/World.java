@@ -400,11 +400,8 @@ public class World extends BasicGameState {
 				break;
 			case Input.KEY_ENTER :
 				name=name.replace("'", "''");
-				/*if(name.toCharArray()[0]=='\'')
-					name=" "+name;
-				if(name.toCharArray()[name.length()-1]=='\'')
-					name=name+" ";*/
-				System.out.println("nom final="+name);
+				name=name.substring(0, name.length()-1);
+				
 				Dao.addScore(name, score);
 				scoreTime=false;
 				break;
