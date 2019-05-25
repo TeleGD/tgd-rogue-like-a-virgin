@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 import general.World;
 
 public class Bords extends Case {
-	
+
 	public Bords(int x, int y) {
 		super(x,y);
 		deplacementPossible=false;

@@ -29,7 +29,7 @@ public abstract class Enemy extends Entity {
 		this.height=36;
 		this.hitbox=new Rectangle (x+4,y+4,width-8,height-8);
 	}
-	
+
 	@Override
 	public void die() {
 		World.enemies.remove(this);
@@ -40,23 +40,23 @@ public abstract class Enemy extends Entity {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
 	}
-	
-	public abstract void move(int delta); 
-	
-	
+
+	public abstract void move(int delta);
+
+
 	/*appartition-----
-	 * déplacement	
-	 * mort 
+	 * dï¿½placement
+	 * mort
 	 * tuage de player non
 	 * img non
-	 * 
+	 *
 	 */
-	
-	
+
+
 	@Override
 	public void checkForCollision() {
 		if(hitbox.intersects(World.player.getShape())){
@@ -77,7 +77,7 @@ public abstract class Enemy extends Entity {
 					return;
 				}
 			}
-			
+
 		}
 	}
 

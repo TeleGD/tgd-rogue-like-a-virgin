@@ -30,7 +30,7 @@ public class ScoreMenu extends BasicGameState{
 	public ScoreMenu(StateBasedGame g){
 		super();
 		game=g;
-		fontConfirmText=FontUtils.loadCustomFont("PressStart2P.ttf",Font.PLAIN,20);
+		fontConfirmText=FontUtils.loadCustomFont("press-start-2p.ttf",Font.PLAIN,20);
 		/*try {
 			background=new Image("sprites/main_menu.png");
 		} catch (SlickException e) {
@@ -42,7 +42,7 @@ public class ScoreMenu extends BasicGameState{
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
-		fontTitrePrincipal=FontUtils.loadFont("PressStart2P.ttf",Font.BOLD,40,false);
+		fontTitrePrincipal=FontUtils.loadFont("press-start-2p.ttf",Font.BOLD,40,false);
 		fontTitreSecondaire=FontUtils.loadFont("Kalinga",Font.BOLD,24,true);
 		fontItem=FontUtils.loadFont("Kalinga",Font.BOLD,14,true);
 		scores=general.Dao.search();
@@ -66,22 +66,22 @@ public class ScoreMenu extends BasicGameState{
 
 		g.setFont(fontTitreSecondaire);
 		g.drawString("Scores", Main.longueur/2-fontTitreSecondaire.getWidth("Scores")/2, 232);
-		
+
 		g.drawRect(Main.longueur/2-300, Main.hauteur/2-130, 600,37);
 
 		g.drawRect(Main.longueur/2-300, Main.hauteur-200, 600,37);
-		
+
 		g.setFont(fontConfirmText);
 		g.drawString("PRESS ENTER", Main.longueur/2-fontConfirmText.getWidth("PRESS ENTER")/2, 530);
-		
-		
+
+
 		g.setFont(fontItem);
 		//Affichage des 5 permiers nom avec le meilleur score
 		for (int i=0;i<5;i++) {
 			g.drawString(scores.get(i).getName(), 500, 300+35*i);
 			g.drawString(""+scores.get(i).getScore(), 650, 300+35*i);
 		}
-		
+
 	}
 
 	@Override

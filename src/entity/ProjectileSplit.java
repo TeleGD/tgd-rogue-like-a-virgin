@@ -10,14 +10,14 @@ public class ProjectileSplit extends Projectile {
 	boolean recursive;
 	Projectile child;
 	double speed,angle;
-	
+
 	public ProjectileSplit(float x, float y, float speedX,float speedY, boolean friendly,int dt,int fragments) {
 		super(x,y,friendly,speedX,speedY);
 		tMax=dt;
 		t=dt;
 		frag=fragments;
 	}
-	
+
 	public ProjectileSplit(int i, int j,double speedX,double speedY, boolean friendly, int dt){
 		super(i,j,friendly);
 		t = dt;
@@ -27,7 +27,7 @@ public class ProjectileSplit extends Projectile {
 		this.speedX = speedX;
 		this.speedY = speedY;
 	}
-	
+
 	public ProjectileSplit(int i, int j,double speedX,double speedY, boolean friendly, int dt, int fragments){
 		super(i,j,friendly);
 		t = dt;
@@ -37,7 +37,7 @@ public class ProjectileSplit extends Projectile {
 		this.speedX = speedX;
 		this.speedY = speedY;
 	}
-	
+
 	public ProjectileSplit(int i, int j,double speedX,double speedY, boolean friendly, int dt, int fragments, boolean recursive){
 		super(i,j,friendly);
 		if(dt > 0){
@@ -61,7 +61,7 @@ public class ProjectileSplit extends Projectile {
 		}
 		this.recursive = recursive;
 	}
-	
+
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		checkForCollision();
 		move(delta);
@@ -73,7 +73,7 @@ public class ProjectileSplit extends Projectile {
 					child = new ProjectileSplit((int)x/36,(int)y/36,speedX*Math.cos(angle)-speedY*Math.sin(angle),speedY*Math.cos(angle)+speedX*Math.sin(angle),getFriendly(),tMax,frag,recursive);
 					angle = 90 - a*90/frag;
 					child = new ProjectileSplit((int)x/36,(int)y/36,speedX*Math.cos(angle)-speedY*Math.sin(angle),speedY*Math.cos(angle)+speedX*Math.sin(angle),getFriendly(),tMax,frag,recursive);
-				}				
+				}
 			}
 			alreadyDead = true;
 		}*/

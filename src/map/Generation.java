@@ -75,9 +75,9 @@ public class Generation {
 				}
 				else if(difficulte == 6){
 					//telecom
-					
-					
-					
+
+
+
 					c=new CaseVide(i,j,difficulte);
 				}
 				else{
@@ -211,7 +211,7 @@ public class Generation {
 				}
 				new Ghost2(x,y);
 			}
-			
+
 			new Boss(400,400);
 		}
 

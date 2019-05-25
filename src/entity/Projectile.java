@@ -13,12 +13,12 @@ import map.Porte;
 public class Projectile extends Entity{
 
 	protected boolean friendly;
-	
+
 	public Projectile(){
 		World.projectiles.add(this);
 		atk = 1;
 	}
-	
+
 	public Projectile(float x, float y, boolean friendly,double vitX,double vitY){
 		this.friendly = friendly;
 		this.x = x;
@@ -45,7 +45,7 @@ public class Projectile extends Entity{
 			}
 		}
 	}
-	
+
 	public Projectile(float x, float y, boolean friendly,double vitX,double vitY,int atk){
 		this.friendly = friendly;
 		this.x = x;
@@ -96,15 +96,15 @@ public class Projectile extends Entity{
 			}
 		}
 	}
-	
+
 	public boolean getFriendly(){
 		return friendly;
 	}
-	
+
 	public void setFriendly(boolean friendly){
 		this.friendly = friendly;
 	}
-	
+
 	@Override
 	public void die() {
 		World.projectiles.remove(this);
@@ -125,7 +125,7 @@ public class Projectile extends Entity{
 				}
 			}
 		}
-		
+
 		// pour que les projectiles ne traversent pas les murs
 		for(int deltaI = 1; deltaI > -2; deltaI--){
 			for(int deltaJ = 1; deltaJ > -2; deltaJ--){

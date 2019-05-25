@@ -16,63 +16,63 @@ public abstract class Entity {
 	protected boolean alreadyDead;
 	protected Shape hitbox;
 	protected Image sprite;
-	
+
 	public float getX(){
 		return x;
 	}
-	
+
 	public float getY(){
 		return y;
 	}
-	
+
 	public float getDirX(){
 		return dirX;
 	}
-	
+
 	public float getDirY(){
 		return dirY;
 	}
-	
+
 	public double getSpeedX(){
 		return speedX;
 	}
-	
+
 	public double  getSpeedY(){
 		return speedY;
 	}
-	
+
 	public int getWidth(){
 		return width;
 	}
-	
+
 	public int getHeight(){
 		return height;
 	}
-	
+
 	public int getHP(){
 		return hp;
 	}
-	
+
 	public int getAtk(){
 		return atk;
 	}
-	
+
 	public int getDef(){
 		return def;
 	}
-	
+
 	public boolean isAlreadyDead(){
 		return alreadyDead;
 	}
-	
+
 	public Shape getShape(){
 		return hitbox;
 	}
-	
+
 	public Shape getHitbox(){
 		return hitbox;
 	}
-	
+
 	public Image getSprite(){
 		return sprite;
 	}
@@ -116,11 +116,11 @@ public abstract class Entity {
 	public void setAlreadyDead(boolean alreadyDead) {
 		this.alreadyDead = alreadyDead;
 	}
-	
+
 	public void setAtk(int atk){
 		this.atk = atk;
 	}
-	
+
 	public void setDef(int def){
 		this.def = def;
 	}
@@ -128,11 +128,11 @@ public abstract class Entity {
 	public void setShape(Shape hitbox){
 		this.hitbox = hitbox;
 	}
-	
+
 	public void setHitbox(Shape hitbox) {
 		this.hitbox = hitbox;
 	}
-	
+
 	public void setSprite(Image sprite) {
 		this.sprite = sprite;
 	}
@@ -145,19 +145,19 @@ public abstract class Entity {
 			alreadyDead = true;
 		}
 	}
-	
+
 	public abstract void die();
-	
+
 	public abstract void checkForCollision();
-	
+
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		checkForCollision();
 		move(delta);
 		if(alreadyDead) die();
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.drawImage(sprite,(float) x,(float) y);
 	}
-	
+
 }

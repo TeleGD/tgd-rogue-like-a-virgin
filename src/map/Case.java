@@ -11,17 +11,17 @@ import org.newdawn.slick.state.StateBasedGame;
 import entity.Entity;
 
 public abstract class Case {
-	
+
 	protected int niveau;
-	
+
 	protected Shape hitbox;
 	protected int x;
 	protected int y;
 	protected Image sprite;
-	
+
 	protected boolean deplacementPossible;
 	protected Entity entite;
-	
+
 	public Entity getEntite() {
 		return entite;
 	}
@@ -36,26 +36,26 @@ public abstract class Case {
 		this.x=x;
 		this.y=y;
 	}
-	
+
 	public Case(int x, int y, int difficulte){
 		this(x,y);
 		niveau = difficulte;
 	}
-	
+
 	public boolean getDeplacementPossible(){
 		return deplacementPossible;
 	}
-	
+
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.drawImage(sprite,(float) x*36,(float) y*36);
 	}
-	
+
 	public void ArriveSur(Entity e){
-		
+
 	}
 
 	public Shape getHitbox() {
@@ -65,7 +65,7 @@ public abstract class Case {
 	public void setHitbox(Shape hitbox) {
 		this.hitbox = hitbox;
 	};
-	
+
 	protected String getCouleur(){
 		switch(niveau){
 		case 0:
@@ -82,5 +82,5 @@ public abstract class Case {
 			return "Red";
 		}
 	}
-	
+
 }

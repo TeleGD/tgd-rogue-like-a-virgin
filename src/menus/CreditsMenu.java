@@ -23,7 +23,7 @@ public class CreditsMenu extends BasicGameState{
 	private TrueTypeFont font,font2;
 	private StateBasedGame game;
 	private ArrayList<String> names;
-	
+
 	@Override
 	public void init(GameContainer arg0, StateBasedGame game) throws SlickException {
 		font=FontUtils.loadFont("iCrack.ttf",Font.PLAIN,55,false);
@@ -36,7 +36,7 @@ public class CreditsMenu extends BasicGameState{
 		names.add("N.Balroy");
 		names.add("N.Bernardes");
 	}
-	
+
 	@Override
 	public void enter(GameContainer arg0, StateBasedGame game) throws SlickException {
 		this.game=game;
@@ -67,12 +67,12 @@ public class CreditsMenu extends BasicGameState{
 	public int getID() {
 		return ID;
 	}
-	
+
 	public void keyPressed(int key, char c) {
 		if(key==Input.KEY_ENTER) {
 			game.enterState(MainMenu.ID, new FadeOutTransition(), new FadeInTransition());
 		}
 	}
 
-	
+
 }

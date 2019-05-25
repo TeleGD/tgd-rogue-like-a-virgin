@@ -17,7 +17,7 @@ public class Ghost2 extends Ghost1{
 			this.imgT=new Image("images/RogueLike/fantomeMocheHaut.png");
 			this.imgR=new Image("images/RogueLike/fantomeMocheDroite.png");
 			this.imgL=new Image("images/RogueLike/fantomeMocheGauche.png");
-			
+
 			this.sprite=imgB;
 		} catch (SlickException e) {
 			e.printStackTrace();
@@ -26,5 +26,5 @@ public class Ghost2 extends Ghost1{
 		this.height=36;
 		this.hitbox=new Rectangle (x+4,y+5,width-7,height-10);
 	}
-	
+
 }

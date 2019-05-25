@@ -18,10 +18,10 @@ public class Piques extends Case {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void ArriveSur(Entity e) {
 		//e prend des degats
 	}
-	
+
 }

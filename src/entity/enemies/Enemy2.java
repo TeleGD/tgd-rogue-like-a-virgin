@@ -14,7 +14,7 @@ public class Enemy2 extends Enemy1{
 			this.imgT=new Image("images/RogueLike/blobRoseHaut.png");
 			this.imgR=new Image("images/RogueLike/blobRoseDroite.png");
 			this.imgL=new Image("images/RogueLike/blobRoseGauche.png");
-			
+
 			this.sprite=imgB;
 		} catch (SlickException e) {
 			e.printStackTrace();

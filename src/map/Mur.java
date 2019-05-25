@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 import general.World;
 
 public class Mur extends Case {
-	
+
 	public Mur(int x, int y,int difficulte) {
 		super(x,y,difficulte);
 		deplacementPossible=false;

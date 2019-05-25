@@ -60,7 +60,7 @@ public class World extends BasicGameState {
 	private boolean pause,maj;
 
 	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
-		//Ici ne mettre que des initialisations de variables 
+		//Ici ne mettre que des initialisations de variables
 		gameOn = false;
 		gameOver = false;
 		score = 0;
@@ -401,7 +401,7 @@ public class World extends BasicGameState {
 			case Input.KEY_ENTER :
 				name=name.replace("'", "''");
 				name=name.substring(0, name.length()-1);
-				
+
 				Dao.addScore(name, score);
 				scoreTime=false;
 				break;

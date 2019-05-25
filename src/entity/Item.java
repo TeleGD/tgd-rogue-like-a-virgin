@@ -17,12 +17,12 @@ import map.CaseVide;
 public class Item extends Entity {
 
 	String type;
-	
+
 	public Item() throws SlickException{
 		World.item.add(this);
 		Random r = new Random();
 		switch (r.nextInt(8)) {
-        case 0:  
+        case 0:
         	type = "SpeedUp";
         	sprite = new Image(World.DIRECTORY_IMAGES+"itemSpeedUp.png");
             break;
@@ -30,15 +30,15 @@ public class Item extends Entity {
         	type = "SpeedDown";
         	sprite = new Image(World.DIRECTORY_IMAGES+"itemSpeedDown.png");
             break;
-        case 2:  
+        case 2:
         	type = "HpUp";
         	sprite = new Image(World.DIRECTORY_IMAGES+"itemHpUp.png");
             break;
-		case 3:  
+		case 3:
 			type = "FireRateUp";
         	sprite = new Image(World.DIRECTORY_IMAGES+"itemFireRateUp.png");
             break;
-		case 4:  
+		case 4:
 			type = "FireRateDown";
         	sprite = new Image(World.DIRECTORY_IMAGES+"itemFireRateDown.png");
             break;
@@ -68,11 +68,11 @@ public class Item extends Entity {
 	public void checkForCollision() {
 		// TODO Auto-generated method stub	
 	}
-	
+
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		
+
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.drawImage(sprite,x,y);
 	}
@@ -80,7 +80,7 @@ public class Item extends Entity {
 	@Override
 	public void die() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

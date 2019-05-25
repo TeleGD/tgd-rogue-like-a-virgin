@@ -18,7 +18,7 @@ public class Skull1 extends Enemy{
 	protected Polygon zoneR,zoneL,zoneT,zoneB;
 	protected double speed;
 	private int compt;
-	
+
 	public Skull1(float x, float y) {
 		super(x, y);
 		hp=1;
@@ -27,7 +27,7 @@ public class Skull1 extends Enemy{
 			this.imgT=new Image("images/RogueLike/squeletteHaut.png");
 			this.imgR=new Image("images/RogueLike/squeletteDroite.png");
 			this.imgL=new Image("images/RogueLike/squeletteGauche.png");
-			
+
 			this.sprite=imgB;
 		} catch (SlickException e) {
 			e.printStackTrace();
@@ -38,8 +38,8 @@ public class Skull1 extends Enemy{
 		this.hitbox=new Rectangle (x,y,width,height);
 		speed = 0.07;
 	}
-	
-	
+
+
 	public void zoning() {
 		// creating the zones used to know the direction to go
 		zoneL=new Polygon();
@@ -58,11 +58,11 @@ public class Skull1 extends Enemy{
 		zoneB.addPoint(x+width/2, y+height/2);
 		zoneB.addPoint(x+width/2-1000, y+height/2+1000);
 		zoneB.addPoint(x+width/2+1000, y+height/2+1000);
-		
+
 	}
-	
+
 	public void move(int delta) {
-		
+
 		if (Math.pow(Math.pow((World.player.getX()+World.player.getWidth()/2)-x, 2)+Math.pow((World.player.getY()+World.player.getHeight()/2)-y, 2),0.5)>=200){
 			if(zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
 				speedX=0;
@@ -81,15 +81,15 @@ public class Skull1 extends Enemy{
 			speedX=0;
 			speedY=0;
 		}
-		
-		
-		
-		
-		/*il faut voir pour les murs et bouger en conséquence
+
+
+
+
+		/*il faut voir pour les murs et bouger en consï¿½quence
 		 *
 		 * */
 		Case[][] c=World.map.getCases();
-		
+
 		if (speedX>0){
 			//going to the right
 			int a= (int) (x+speedX*delta+width)/36; //right border of the hitbox if we continue the movement (number in the grid)
@@ -103,7 +103,7 @@ public class Skull1 extends Enemy{
 					speedY=-speed;
 				}
 			}
-			
+
 		}else if (speedX<0) {
 			//going to the left
 			int a= (int) (x+speedX*delta)/36; //left border of the hitbox if we continue the movement (number in the grid)
@@ -117,7 +117,7 @@ public class Skull1 extends Enemy{
 					speedY=-speed;
 				}
 			}
-			
+
 		}else if(speedY>0) {
 			//going down
 			int a= (int) (y+speedY*delta+height)/36; //left border of the hitbox if we continue the movement (number in the grid)
@@ -131,7 +131,7 @@ public class Skull1 extends Enemy{
 					speedX=-speed;
 				}
 			}
-			
+
 		}else {
 			//going top
 			int a= (int) (y+speedY*delta)/36; //left border of the hitbox if we continue the movement (number in the grid)
@@ -146,7 +146,7 @@ public class Skull1 extends Enemy{
 				}
 			}
 		}
-		
+
 		if((zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight()))) {
 			sprite=imgT;
 		}else if (zoneB.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
@@ -156,18 +156,18 @@ public class Skull1 extends Enemy{
 		}else {
 			sprite=imgR;
 		}
-		
-		
+
+
 		x+=speedX*delta;
 		y+=speedY*delta;
 		hitbox.setX(x);
 		hitbox.setY(y);
 	}
-	
+
 	private void shoot() {
 		new Projectile(this.x+width/2,this.y+height/2,false,(World.player.getX()-x)/1500,(World.player.getY()-y)/1500);
 	}
-	
+
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
 		zoning();
@@ -178,7 +178,7 @@ public class Skull1 extends Enemy{
 		}
 		compt++;
 	}
-	
+
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
 	}

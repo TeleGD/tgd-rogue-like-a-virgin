@@ -95,7 +95,7 @@ public class Player extends Entity {
 		invincible = false;
 		invincibleTimerMax = 1200;
 		invincibleTimer = invincibleTimerMax;
-		
+
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class Player extends Entity {
 		general.World.stopMusic();
 
 	}
-	
+
 	public void setMap(Case[][] c){
 		this.c = c;
 	}
@@ -127,7 +127,7 @@ public class Player extends Entity {
 		if(tmpI+1 >= 0 && tmpI+1 < c.length && tmpJ >=0 && tmpJ < c[tmpI].length) deplacementPossibleDroite = !(c[tmpI+1][tmpJ]instanceof Mur||c[tmpI+1][tmpJ]instanceof Bords);
 		if(tmpI >= 0 && tmpI < c.length && tmpJ-1 >= 0 && tmpJ-1 < c[tmpI].length) deplacementPossibleHaut = !(c[tmpI][tmpJ-1]instanceof Mur||c[tmpI][tmpJ-1]instanceof Bords);
 		if(tmpI >= 0 && tmpI < c.length && tmpJ+1 >= 0 && tmpJ+1 < c[tmpI].length) deplacementPossibleBas = !(c[tmpI][tmpJ+1]instanceof Mur||c[tmpI][tmpJ+1]instanceof Bords);
-		
+
 		if(!accumulateur){
 			deplacementPossibleBas = true;
 			deplacementPossibleDroite = true;
@@ -135,7 +135,7 @@ public class Player extends Entity {
 			deplacementPossibleHaut = true;
 		}else{
 			boolean u,d,l,r,ul,ur,dl,dr;
-			r = (!up && !down && right && !rightLeft && (tmpI+1 < c.length)) && (c[tmpI+1][tmpJ] instanceof Mur || c[tmpI+1][tmpJ] instanceof Bords); 
+			r = (!up && !down && right && !rightLeft && (tmpI+1 < c.length)) && (c[tmpI+1][tmpJ] instanceof Mur || c[tmpI+1][tmpJ] instanceof Bords);
 			l = (!up && !down && (left || rightLeft) && tmpI-1 >= 0) && (c[tmpI-1][tmpJ] instanceof Mur || c[tmpI-1][tmpJ] instanceof Bords);
 			u = (!left && !right && up && !updown && (tmpJ-1 >= 0 && (c[tmpI][tmpJ-1] instanceof Mur || c[tmpI][tmpJ-1] instanceof Bords)) );
 			d = (!left && !right && (down || updown) && (tmpJ+1 < c[tmpI].length && (c[tmpI][tmpJ+1] instanceof Mur ||c[tmpI][tmpJ+1] instanceof Bords)));
@@ -143,12 +143,12 @@ public class Player extends Entity {
 			ur = (up && right && !rightLeft && !updown && (tmpI+1 < c.length)) && (tmpJ-1 >= 0 && (c[tmpI+1][tmpJ-1] instanceof Mur || c[tmpI+1][tmpJ-1] instanceof Bords));
 			dl = ((down || updown) && (left || rightLeft)&& tmpI-1 >= 0 ) && (tmpJ+1 < c[tmpI].length && (c[tmpI-1][tmpJ+1] instanceof Mur || c[tmpI-1][tmpJ+1] instanceof Bords));
 			dr = ((down || updown) && right && !rightLeft && (tmpI+1 < c.length) ) && (tmpJ+1 < c[tmpI].length && (c[tmpI+1][tmpJ+1] instanceof Mur || c[tmpI+1][tmpJ+1] instanceof Bords));
-			
+
 			if(r){
 				x = tryX;
 				speedX = tmpSpeedX;
 			}
-			
+
 			if(l){
 				x = tryX;
 				speedY = tmpSpeedY;
@@ -163,37 +163,37 @@ public class Player extends Entity {
 				y = tryY;
 				speedY = tmpSpeedY;
 			}
-			
+
 			if(ul){
 				y = tryY;
 				x = tryX;
 				speedX = tmpSpeedX;
 				speedY = tmpSpeedY;
 			}
-			
+
 			if(ur){
 				y = tryY;
 				x = tryX;
 				speedX = tmpSpeedX;
 				speedY = tmpSpeedY;
 			}
-			
+
 			if(dl){
 				y = tryY;
 				x = tryX;
 				speedX = tmpSpeedX;
 				speedY = tmpSpeedY;
 			}
-			
+
 			if(dr){
 				y = tryY;
 				x = tryX;
 				speedX = tmpSpeedX;
 				speedY = tmpSpeedY;
 			}
-			
+
 		}//*/
-		
+
 		for(Enemy e : World.enemies){
 			if(hitbox.intersects(e.getShape())){
 				if(!invincible) {
@@ -221,11 +221,11 @@ public class Player extends Entity {
 			for (int i = 0; i < World.item.size(); i++ ){
 				if(hitbox.intersects(World.item.get(i).getShape())){
 					switch (World.item.get(i).type) {
-					case "SpeedUp":  
+					case "SpeedUp":
 						speed *= 1.3;
 						World.score += 20;
 						break;
-					case "SpeedDown":  
+					case "SpeedDown":
 						speed /= 1.3;
 						World.score += 20;
 						break;
@@ -258,19 +258,19 @@ public class Player extends Entity {
 	public boolean isInvincible(){
 		return invincible;
 	}
-	
+
 	public void setInvincible(boolean invincible){
 		this.invincible = invincible;
 	}
-	
+
 	public int getInvincibleTimer(){
 		return invincibleTimer;
 	}
-	
+
 	public void setInvincibleTimer(int timer){
 		this.invincibleTimer = timer;
 	}
-	
+
 	public double getSpeed() {
 		return speed;
 	}
@@ -278,7 +278,7 @@ public class Player extends Entity {
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
-	
+
 	public int getAtk() {
 		return atk;
 	}
@@ -494,7 +494,7 @@ public class Player extends Entity {
 
 	public void setPeriod(int i) {
 		this.periodeTir = i;
-		
+
 	}
 
 	public int getDirection() {
