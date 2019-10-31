@@ -1,0 +1,7 @@
+- Antoine Sochala (@AntoineSochala)
+- Arthur Canal (@canalarthur)
+- Guillaume Teset (@gteset)
+- Nathan Barloy (@nathanBarloy)
+- Nicolas Bernardes (@nicorb)
+- Philippe Wang
+- Stéphane Rimlinger (@srimlinger)
