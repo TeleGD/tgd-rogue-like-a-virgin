@@ -14,7 +14,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import general.Doublet;
 import general.Main;
 import general.utils.FontUtils;
 
@@ -45,9 +44,7 @@ public class ScoreMenu extends BasicGameState{
 		fontTitrePrincipal=FontUtils.loadFont("press-start-2p.ttf",Font.BOLD,40,false);
 		fontTitreSecondaire=FontUtils.loadFont("Kalinga",Font.BOLD,24,true);
 		fontItem=FontUtils.loadFont("Kalinga",Font.BOLD,14,true);
-		scores=general.Dao.search();
-
-
+		scores=Dao.search();
 	}
 
 	@Override
@@ -59,10 +56,10 @@ public class ScoreMenu extends BasicGameState{
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		g.setColor(Color.red);
 		g.setFont(fontTitrePrincipal);
-		g.drawString("Rogue Like A Virgin",(Main.longueur-fontTitrePrincipal.getWidth("Rogue Like A Virgin"))/2 , 120);
+		g.drawString("Rogue Like a Virgin",(Main.longueur-fontTitrePrincipal.getWidth("Rogue Like a Virgin"))/2 , 120);
 		g.setColor(Color.white);
 		g.setFont(fontTitrePrincipal);
-		g.drawString("Rogue Like A Virgin",(Main.longueur-fontTitrePrincipal.getWidth("Rogue Like A Virgin"))/2+4 , 122);
+		g.drawString("Rogue Like a Virgin",(Main.longueur-fontTitrePrincipal.getWidth("Rogue Like a Virgin"))/2+4 , 122);
 
 		g.setFont(fontTitreSecondaire);
 		g.drawString("Scores", Main.longueur/2-fontTitreSecondaire.getWidth("Scores")/2, 232);

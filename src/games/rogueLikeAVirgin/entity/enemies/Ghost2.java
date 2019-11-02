@@ -1,4 +1,4 @@
-package entity.enemies;
+package games.rogueLikeAVirgin.entity.enemies;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -13,10 +13,10 @@ public class Ghost2 extends Ghost1{
 		atk=3;
 		compt=0;
 		try {
-			this.imgB=new Image("images/RogueLike/fantomeMocheBas.png");
-			this.imgT=new Image("images/RogueLike/fantomeMocheHaut.png");
-			this.imgR=new Image("images/RogueLike/fantomeMocheDroite.png");
-			this.imgL=new Image("images/RogueLike/fantomeMocheGauche.png");
+			this.imgB=new Image("images/rogueLikeAVirgin/fantomeMocheBas.png");
+			this.imgT=new Image("images/rogueLikeAVirgin/fantomeMocheHaut.png");
+			this.imgR=new Image("images/rogueLikeAVirgin/fantomeMocheDroite.png");
+			this.imgL=new Image("images/rogueLikeAVirgin/fantomeMocheGauche.png");
 
 			this.sprite=imgB;
 		} catch (SlickException e) {

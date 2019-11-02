@@ -1,9 +1,4 @@
-package entity;
-
-import map.Bords;
-import map.Case;
-import map.Mur;
-import map.Piques;
+package games.rogueLikeAVirgin.entity;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -13,8 +8,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.World;
-import entity.enemies.Enemy;
+import games.rogueLikeAVirgin.World;
+import games.rogueLikeAVirgin.entity.enemies.Enemy;
+import games.rogueLikeAVirgin.map.Bords;
+import games.rogueLikeAVirgin.map.Case;
+import games.rogueLikeAVirgin.map.Mur;
+import games.rogueLikeAVirgin.map.Piques;
 
 public class Player extends Entity {
 
@@ -100,7 +99,7 @@ public class Player extends Entity {
 
 	@Override
 	public void die() {
-		general.World.stopMusic();
+		games.rogueLikeAVirgin.World.stopMusic();
 
 	}
 
@@ -279,10 +278,12 @@ public class Player extends Entity {
 		this.speed = speed;
 	}
 
+	@Override
 	public int getAtk() {
 		return atk;
 	}
 
+	@Override
 	public void setAtk(int atk) {
 		this.atk = atk;
 	}
@@ -378,6 +379,7 @@ public class Player extends Entity {
 		}
 	}
 
+	@Override
 	public void move(int dt) {
 		speedX = 0;
 		speedY = 0;
@@ -459,6 +461,7 @@ public class Player extends Entity {
 		}
 	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		tryX = x;
 		tryY = y;
@@ -478,9 +481,10 @@ public class Player extends Entity {
 		if(alreadyDead) die();
 	}
 
+	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		setDir();
-		g.drawImage(sprite,(float) x,(float) y);
+		g.drawImage(sprite,x,y);
 		//g.draw(hitbox);
 	}
 

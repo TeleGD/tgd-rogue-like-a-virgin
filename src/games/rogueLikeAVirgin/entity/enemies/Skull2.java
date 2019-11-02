@@ -1,4 +1,4 @@
-package entity.enemies;
+package games.rogueLikeAVirgin.entity.enemies;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -8,10 +8,10 @@ import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
-import entity.Projectile;
-import general.World;
-import map.Case;
-import map.Mur;
+import games.rogueLikeAVirgin.World;
+import games.rogueLikeAVirgin.entity.Projectile;
+import games.rogueLikeAVirgin.map.Case;
+import games.rogueLikeAVirgin.map.Mur;
 
 public class Skull2 extends Enemy{
 
@@ -23,10 +23,10 @@ public class Skull2 extends Enemy{
 		super(x, y);
 		hp=3;
 		try {
-			this.imgB=new Image("images/RogueLike/squeletteMocheBas.png");
-			this.imgT=new Image("images/RogueLike/squeletteMocheHaut.png");
-			this.imgR=new Image("images/RogueLike/squeletteMocheDroite.png");
-			this.imgL=new Image("images/RogueLike/squeletteMocheGauche.png");
+			this.imgB=new Image("images/rogueLikeAVirgin/squeletteMocheBas.png");
+			this.imgT=new Image("images/rogueLikeAVirgin/squeletteMocheHaut.png");
+			this.imgR=new Image("images/rogueLikeAVirgin/squeletteMocheDroite.png");
+			this.imgL=new Image("images/rogueLikeAVirgin/squeletteMocheGauche.png");
 
 			this.sprite=imgB;
 		} catch (SlickException e) {
@@ -61,6 +61,7 @@ public class Skull2 extends Enemy{
 
 	}
 
+	@Override
 	public void move(int delta) {
 
 		if (Math.pow(Math.pow((World.player.getX()+World.player.getWidth()/2)-x, 2)+Math.pow((World.player.getY()+World.player.getHeight()/2)-y, 2),0.5)>=200){
@@ -168,6 +169,7 @@ public class Skull2 extends Enemy{
 		new Projectile(this.x+width/2,this.y+height/2,false,(World.player.getX()-x)/800,(World.player.getY()-y)/800);
 	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
 		zoning();
@@ -179,6 +181,7 @@ public class Skull2 extends Enemy{
 		compt++;
 	}
 
+	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
 	}

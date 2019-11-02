@@ -1,4 +1,4 @@
-package entity;
+package games.rogueLikeAVirgin.entity;
 
 import java.util.Random;
 
@@ -9,9 +9,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.World;
-import map.Case;
-import map.CaseVide;
+import games.rogueLikeAVirgin.World;
+import games.rogueLikeAVirgin.map.Case;
+import games.rogueLikeAVirgin.map.CaseVide;
 
 
 public class Item extends Entity {
@@ -65,14 +65,17 @@ public class Item extends Entity {
 		hitbox = new Rectangle(x,y,width,height);
 	}
 
+	@Override
 	public void checkForCollision() {
-		// TODO Auto-generated method stub	
+		// TODO Auto-generated method stub
 	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 
 	}
 
+	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.drawImage(sprite,x,y);
 	}

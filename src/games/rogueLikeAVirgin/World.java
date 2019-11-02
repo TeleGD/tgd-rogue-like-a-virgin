@@ -1,4 +1,4 @@
-package general;
+package games.rogueLikeAVirgin;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,24 +15,23 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import entity.enemies.Enemy;
-import entity.Player;
-import entity.Projectile;
-import entity.Item;
+import games.rogueLikeAVirgin.entity.Item;
+import games.rogueLikeAVirgin.entity.Player;
+import games.rogueLikeAVirgin.entity.Projectile;
+import games.rogueLikeAVirgin.entity.enemies.Enemy;
+import games.rogueLikeAVirgin.map.Generation;
+import games.rogueLikeAVirgin.map.Salle;
 import general.ui.Button;
 import general.ui.TGDComponent;
 import general.ui.TGDComponent.OnClickListener;
-import map.Generation;
-import map.Salle;
-import menus.MainMenu;
 
 public class World extends BasicGameState {
 
 	public static int ID=2;
 
-	public final static String GAME_NAME="RogueLikeAVirgin";
+	public final static String GAME_NAME="Rogue Like a Virgin";
 
-	public final static String GAME_FOLDER_NAME="RogueLike";
+	public final static String GAME_FOLDER_NAME="rogueLikeAVirgin";
 	public final static String DIRECTORY_SOUNDS="sounds"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
@@ -47,7 +46,7 @@ public class World extends BasicGameState {
 	public static int score;
 
 	private Image coeur,coin;
-	private Button jouer,atkUp,speedUp,delayUp,oneUp,rejouer,pauseMode ;
+	private Button jouer,atkUp,speedUp,delayUp,oneUp,rejouer,pauseMode, exit ;
 	private int atkCoin,speedCoin,delayCoin,oneCoin;
 	private boolean gameOn,gameOver;
 	private static Sound saxGuy;
@@ -59,13 +58,14 @@ public class World extends BasicGameState {
 	private int pauseCompt;
 	private boolean pause,maj;
 
+	@Override
 	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
 		//Ici ne mettre que des initialisations de variables
 		gameOn = false;
 		gameOver = false;
 		score = 0;
-		saxGuy=new Sound("musics/boss.ogg");
-		mainMusic=new Music("musics/music.ogg");
+		saxGuy=new Sound("musics/rogueLikeAVirgin/boss.ogg");
+		mainMusic=new Music("musics/rogueLikeAVirgin/music.ogg");
 		//Il faudra voir s'il faut bouger ces inits dans enter(...) si ca prend trop de temps
 		enemies = new ArrayList<Enemy>();
 		enemiesTmp = new ArrayList<Enemy>();
@@ -98,7 +98,7 @@ public class World extends BasicGameState {
 
 			}});
 
-		rejouer = new Button("Try again",container,786,294,TGDComponent.AUTOMATIC,TGDComponent.AUTOMATIC);
+		rejouer = new Button("Try again",container,786,234,TGDComponent.AUTOMATIC,TGDComponent.AUTOMATIC);
 		rejouer.setTextSize(32);
 		rejouer.setBackgroundColor(new Color(255,255,255));
 		rejouer.setSize(420,120);
@@ -117,7 +117,7 @@ public class World extends BasicGameState {
 
 			}});
 
-		pauseMode = new Button("Continue",container,786,294,TGDComponent.AUTOMATIC,TGDComponent.AUTOMATIC);
+		pauseMode = new Button("Continue",container,786,234,TGDComponent.AUTOMATIC,TGDComponent.AUTOMATIC);
 		pauseMode.setTextSize(32);
 		pauseMode.setBackgroundColor(new Color(255,255,255));
 		pauseMode.setSize(420,120);
@@ -130,9 +130,22 @@ public class World extends BasicGameState {
 				if(pauseCompt==0) {
 					pause=false;
 				}else {
-					game.enterState(MainMenu.ID, new FadeInTransition(), new FadeOutTransition());
+					game.enterState(menus.MainMenu.ID, new FadeInTransition(), new FadeOutTransition());
 				}
 
+			}});
+
+		exit = new Button("Quitter",container,786,384,TGDComponent.AUTOMATIC,TGDComponent.AUTOMATIC);
+		exit.setTextSize(32);
+		exit.setBackgroundColor(new Color(255,255,255));
+		exit.setSize(420,120);
+		exit.setTextColor(Color.black);
+		exit.setPadding(70,100,70,100);
+		exit.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(TGDComponent componenent) {
+				game.enterState(menus.MainMenu.ID, new FadeInTransition(), new FadeOutTransition());
 			}});
 
 		atkUp = new Button("Puissance Up",container,780,570,TGDComponent.AUTOMATIC,30);
@@ -217,6 +230,7 @@ public class World extends BasicGameState {
 
 	}
 
+	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
 		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
 
@@ -262,6 +276,7 @@ public class World extends BasicGameState {
 		mainMusic.play();
 	}
 
+	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		map.render(container, game, g);
 		for(Item i : item){
@@ -275,6 +290,7 @@ public class World extends BasicGameState {
 				jouer.render(container, game, g);
 			} else if (!gameOn && gameOver){
 				rejouer.render(container, game, g);
+				exit.render(container, game, g);
 			}
 
 			if (gameOn){
@@ -297,6 +313,7 @@ public class World extends BasicGameState {
 
 				if(pause) {
 					pauseMode.render(container,game,g);
+					exit.render(container, game, g);
 				}else {
 
 					g.setLineWidth(36);
@@ -309,7 +326,7 @@ public class World extends BasicGameState {
 					if (player.getCoin() == 0){
 						g.drawImage(coin, 1044, 491);
 					} else {
-						g.drawImage(coin,(float) ((float)1044+8*Math.floor(Math.log10(player.getCoin()))), 491);
+						g.drawImage(coin,(float) (1044+8*Math.floor(Math.log10(player.getCoin()))), 491);
 					}
 
 					atkUp.render(container, game, g);
@@ -320,13 +337,13 @@ public class World extends BasicGameState {
 					g.setLineWidth(36);
 					g.setColor(Color.white);
 					g.drawString(""+atkCoin, 915, 576);
-					g.drawImage(coin,(float) ((float)938+8*Math.floor(Math.log10(atkCoin))), 567);
+					g.drawImage(coin,(float) (938+8*Math.floor(Math.log10(atkCoin))), 567);
 					g.drawString(""+delayCoin, 904, 635);
-					g.drawImage(coin,(float) ((float)927+8*Math.floor(Math.log10(delayCoin))), 626);
+					g.drawImage(coin,(float) (927+8*Math.floor(Math.log10(delayCoin))), 626);
 					g.drawString(""+speedCoin, 1152, 576);
-					g.drawImage(coin,(float) ((float)1175+8*Math.floor(Math.log10(speedCoin))), 567);
+					g.drawImage(coin,(float) (1175+8*Math.floor(Math.log10(speedCoin))), 567);
 					g.drawString(""+oneCoin, 1132, 635);
-					g.drawImage(coin,(float) ((float)1158+8*Math.floor(Math.log10(oneCoin))), 626);
+					g.drawImage(coin,(float) (1158+8*Math.floor(Math.log10(oneCoin))), 626);
 				}
 			}
 		} else {
@@ -346,6 +363,7 @@ public class World extends BasicGameState {
 
 	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if (gameOn){
 			if(!pause) {
@@ -372,6 +390,7 @@ public class World extends BasicGameState {
 
 	}
 
+	@Override
 	public void keyReleased(int key, char c) {
 		if (gameOn){
 			player.keyReleased(key,c);
@@ -383,7 +402,11 @@ public class World extends BasicGameState {
 	}
 
 
+	@Override
 	public void keyPressed(int key, char c) {
+		if ((pause || gameOver) && key == Input.KEY_ESCAPE) {
+			game.enterState(menus.MainMenu.ID, new FadeInTransition(), new FadeOutTransition());
+		}
 		if(scoreTime){
 			if(!maj && !(key==Input.KEY_LSHIFT &&!(key==Input.KEY_ENTER))) {
 				name+=c;
@@ -396,13 +419,15 @@ public class World extends BasicGameState {
 			switch (key) {
 
 			case Input.KEY_BACK://.KEY_RETURN:
-				name=name.substring(0, name.length()-2);
+				if (name.length()>=2) {
+					name=name.substring(0, name.length()-2);
+				}
 				break;
 			case Input.KEY_ENTER :
 				name=name.replace("'", "''");
 				name=name.substring(0, name.length()-1);
 
-				Dao.addScore(name, score);
+				// Dao.addScore(name, score);
 				scoreTime=false;
 				break;
 			case Input.KEY_LSHIFT:
@@ -432,7 +457,7 @@ public class World extends BasicGameState {
 			}
 		} else {
 			if(pauseCompt==1 && key==Input.KEY_ENTER) {
-				game.enterState(MainMenu.ID,new FadeOutTransition(), new FadeInTransition());
+				game.enterState(menus.MainMenu.ID,new FadeOutTransition(), new FadeInTransition());
 			}else if(key==Input.KEY_Z || key==Input.KEY_S) {
 				pauseCompt=1-pauseCompt;
 				if(pauseCompt==0) {
@@ -446,6 +471,7 @@ public class World extends BasicGameState {
 		}
 	}
 
+	@Override
 	public int getID() {
 		return ID;
 	}

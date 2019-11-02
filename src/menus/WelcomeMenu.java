@@ -30,7 +30,7 @@ public class WelcomeMenu extends Menu implements OnClickListener{
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		try {
-			Mbackground=new Music("musics/menu.ogg");
+			Mbackground=new Music("musics/rogueLikeAVirgin/menu.ogg");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

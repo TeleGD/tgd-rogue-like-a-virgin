@@ -1,4 +1,4 @@
-package entity;
+package games.rogueLikeAVirgin.entity;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -140,7 +140,7 @@ public abstract class Entity {
 	public void move(int dt){
 		x += speedX*dt;
 		y += speedY*dt;
-		hitbox.setLocation((float)x, (float)y);
+		hitbox.setLocation(x, y);
 		if(x > Main.longueur || y > Main.hauteur || x < 0 || y < 0){
 			alreadyDead = true;
 		}
@@ -157,7 +157,7 @@ public abstract class Entity {
 	}
 
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		g.drawImage(sprite,(float) x,(float) y);
+		g.drawImage(sprite,x,y);
 	}
 
 }

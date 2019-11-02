@@ -1,4 +1,4 @@
-package entity.enemies;
+package games.rogueLikeAVirgin.entity.enemies;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -7,9 +7,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
-import entity.Entity;
-import entity.Projectile;
-import general.World;
+import games.rogueLikeAVirgin.World;
+import games.rogueLikeAVirgin.entity.Entity;
+import games.rogueLikeAVirgin.entity.Projectile;
 
 public abstract class Enemy extends Entity {
 
@@ -19,7 +19,7 @@ public abstract class Enemy extends Entity {
 		this.atk=1;
 		World.enemies.add(this);
 		try {
-			this.sprite=new Image("images/RogueLike/blobBas.png");
+			this.sprite=new Image("images/rogueLikeAVirgin/blobBas.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -37,14 +37,17 @@ public abstract class Enemy extends Entity {
 		World.score += 20;
 	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
 	}
 
+	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
 	}
 
+	@Override
 	public abstract void move(int delta);
 
 

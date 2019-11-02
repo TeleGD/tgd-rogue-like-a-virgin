@@ -13,7 +13,6 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import general.Main;
-import general.World;
 import general.utils.FontUtils;
 
 public class NameMenu extends BasicGameState{
@@ -24,7 +23,7 @@ public class NameMenu extends BasicGameState{
 
 	@Override
 	public void init(GameContainer arg0, StateBasedGame game) throws SlickException {
-		fontTitrePrincipal=FontUtils.loadFont("iCrack.ttf",Font.PLAIN,55,false);
+		fontTitrePrincipal=FontUtils.loadFont("rogueLikeAVirgin/iCrack.ttf",Font.PLAIN,55,false);
 		compt =0;
 	}
 
@@ -32,7 +31,7 @@ public class NameMenu extends BasicGameState{
 	public void enter(GameContainer arg0, StateBasedGame game) throws SlickException {
 		game.addState(new WelcomeMenu());
 		game.addState(new MainMenu());
-		game.addState(new World());
+		game.addState(new games.rogueLikeAVirgin.World());
 		game.addState(new ScoreMenu(game));
 		game.addState(new CreditsMenu());
 	}
@@ -41,20 +40,20 @@ public class NameMenu extends BasicGameState{
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics g) throws SlickException {
 		g.setColor(Color.white);
 		g.setFont(fontTitrePrincipal);
-		g.drawString("Rogue Like A Virgin",(Main.longueur-fontTitrePrincipal.getWidth("Rogue Like A Virgin"))/2 , (Main.hauteur-fontTitrePrincipal.getHeight("Rogue Like A Virgin"))/2);
+		g.drawString("Rogue Like a Virgin",(Main.longueur-fontTitrePrincipal.getWidth("Rogue Like a Virgin"))/2 , (Main.hauteur-fontTitrePrincipal.getHeight("Rogue Like a Virgin"))/2);
 	}
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame game, int arg2) throws SlickException {
 		compt++;
 		if(compt>15) {
-			game.enterState(WelcomeMenu.ID,new FadeOutTransition(),new FadeInTransition());
+			game.enterState(MainMenu.ID,new FadeOutTransition(),new FadeInTransition());
 		}
 
 		if (compt==2) {
 			game.getState(WelcomeMenu.ID).init(arg0, game);
 			game.getState(MainMenu.ID).init(arg0, game);
-			game.getState(World.ID).init(arg0, game);
+			game.getState(games.rogueLikeAVirgin.World.ID).init(arg0, game);
 			game.getState(ScoreMenu.ID).init(arg0, game);
 			game.getState(CreditsMenu.ID).init(arg0, game);
 		}

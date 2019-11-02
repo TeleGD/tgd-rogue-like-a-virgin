@@ -1,11 +1,11 @@
-package map;
+package games.rogueLikeAVirgin.map;
 
 import java.util.Random;
 
 import org.newdawn.slick.SlickException;
 
-import entity.enemies.*;
-import general.World;
+import games.rogueLikeAVirgin.World;
+import games.rogueLikeAVirgin.entity.enemies.*;
 
 public class Generation {
 
@@ -170,19 +170,19 @@ public class Generation {
 			//generation des salles normales
 			for (int i=0;i<type*2;i++) {
 
-				float x=(float) ((float) 50+Math.random()*(720-72-50));
-				float y=(float) ((float) 50+Math.random()*(720-72-50));
-				float x2=(float) ((float) 50+Math.random()*(720-72-50));
-				float y2=(float) ((float) 50+Math.random()*(720-72-50));
-				float x3=(float) ((float) 50+Math.random()*(720-72-50));
-				float y3=(float) ((float) 50+Math.random()*(720-72-50));
+				float x=(float) (50+Math.random()*(720-72-50));
+				float y=(float) (50+Math.random()*(720-72-50));
+				float x2=(float) (50+Math.random()*(720-72-50));
+				float y2=(float) (50+Math.random()*(720-72-50));
+				float x3=(float) (50+Math.random()*(720-72-50));
+				float y3=(float) (50+Math.random()*(720-72-50));
 				while (c[(int)x/36][(int)y/36] instanceof Mur) {
-					x=(float) ((float) 50+Math.random()*(720-36-50));
-					y=(float) ((float) 50+Math.random()*(720-36-50));
+					x=(float) (50+Math.random()*(720-36-50));
+					y=(float) (50+Math.random()*(720-36-50));
 				}
 				while (c[(int)x2/36][(int)y2/36] instanceof Mur) {
-					x2=(float) ((float) 50+Math.random()*(720-36-50));
-					y2=(float) ((float) 50+Math.random()*(720-36-50));
+					x2=(float) (50+Math.random()*(720-36-50));
+					y2=(float) (50+Math.random()*(720-36-50));
 				}
 				/*
 				 * proba de faire apparaitre un faible monstre: 1/type mais a voir apres
@@ -203,11 +203,11 @@ public class Generation {
 			float x,y;
 			for (int i=0;i<6;i++) {
 
-				x=(float) ((float) 50+Math.random()*(720-36-50));
-				y=(float) ((float) 50+Math.random()*(720-36-50));
+				x=(float) (50+Math.random()*(720-36-50));
+				y=(float) (50+Math.random()*(720-36-50));
 				while (c[(int)x/36][(int)y/36] instanceof Mur) {
-					x=(float) ((float) 50+Math.random()*(720-36-50));
-					y=(float) ((float) 50+Math.random()*(720-36-50));
+					x=(float) (50+Math.random()*(720-36-50));
+					y=(float) (50+Math.random()*(720-36-50));
 				}
 				new Ghost2(x,y);
 			}

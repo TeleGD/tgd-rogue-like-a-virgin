@@ -1,4 +1,4 @@
-package map;
+package games.rogueLikeAVirgin.map;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -8,7 +8,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 
-import entity.Entity;
+import games.rogueLikeAVirgin.entity.Entity;
 
 public abstract class Case {
 

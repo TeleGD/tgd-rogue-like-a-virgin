@@ -1,4 +1,4 @@
-package entity.enemies;
+package games.rogueLikeAVirgin.entity.enemies;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -10,10 +10,10 @@ public class Enemy2 extends Enemy1{
 		super(x, y);
 		this.hp=3;
 		try {
-			this.imgB=new Image("images/RogueLike/blobRoseBas.png");
-			this.imgT=new Image("images/RogueLike/blobRoseHaut.png");
-			this.imgR=new Image("images/RogueLike/blobRoseDroite.png");
-			this.imgL=new Image("images/RogueLike/blobRoseGauche.png");
+			this.imgB=new Image("images/rogueLikeAVirgin/blobRoseBas.png");
+			this.imgT=new Image("images/rogueLikeAVirgin/blobRoseHaut.png");
+			this.imgR=new Image("images/rogueLikeAVirgin/blobRoseDroite.png");
+			this.imgL=new Image("images/rogueLikeAVirgin/blobRoseGauche.png");
 
 			this.sprite=imgB;
 		} catch (SlickException e) {

@@ -1,9 +1,9 @@
-package map;
+package games.rogueLikeAVirgin.map;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import general.World;
+import games.rogueLikeAVirgin.World;
 
 public class CaseVide extends Case{
 	public CaseVide(int x,int y,int difficulte){

@@ -1,4 +1,4 @@
-package entity;
+package games.rogueLikeAVirgin.entity;
 
 
 import org.newdawn.slick.GameContainer;
@@ -62,6 +62,7 @@ public class ProjectileSplit extends Projectile {
 		this.recursive = recursive;
 	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		checkForCollision();
 		move(delta);

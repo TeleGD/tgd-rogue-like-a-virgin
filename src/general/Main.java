@@ -1,7 +1,5 @@
 package general;
 
-import java.io.File;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -24,7 +22,7 @@ public class Main extends StateBasedGame{
 
 
 	public Main() {
-		super("Rogue Like A Virgin");
+		super("Rogue Like a Virgin");
 	}
 
 

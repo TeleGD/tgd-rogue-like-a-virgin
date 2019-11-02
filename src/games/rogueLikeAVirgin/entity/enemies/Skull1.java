@@ -1,4 +1,4 @@
-package entity.enemies;
+package games.rogueLikeAVirgin.entity.enemies;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -8,39 +8,37 @@ import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
-import entity.Projectile;
-import entity.ProjectileSplit;
-import general.World;
-import map.Case;
-import map.Mur;
+import games.rogueLikeAVirgin.World;
+import games.rogueLikeAVirgin.entity.Projectile;
+import games.rogueLikeAVirgin.map.Case;
+import games.rogueLikeAVirgin.map.Mur;
 
-public class Boss extends Enemy{
+public class Skull1 extends Enemy{
 
-	private Polygon zoneR,zoneL,zoneT,zoneB;
-	private double speed;
+	protected Polygon zoneR,zoneL,zoneT,zoneB;
+	protected double speed;
 	private int compt;
 
-	public Boss(float x, float y) {
+	public Skull1(float x, float y) {
 		super(x, y);
-		hp=10;
-		compt=0;
+		hp=1;
 		try {
-			this.imgB=new Image("images/RogueLike/bossBas.png");
-			this.imgT=new Image("images/RogueLike/bossHaut.png");
-			this.imgR=new Image("images/RogueLike/bossDroite.png");
-			this.imgL=new Image("images/RogueLike/bossGauche.png");
+			this.imgB=new Image("images/rogueLikeAVirgin/squeletteBas.png");
+			this.imgT=new Image("images/rogueLikeAVirgin/squeletteHaut.png");
+			this.imgR=new Image("images/rogueLikeAVirgin/squeletteDroite.png");
+			this.imgL=new Image("images/rogueLikeAVirgin/squeletteGauche.png");
 
 			this.sprite=imgB;
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		this.width=72;
-		this.height=72;
+		this.width=36;
+		this.height=36;
 		zoning();
 		this.hitbox=new Rectangle (x,y,width,height);
-		speed = 0.15;
-
+		speed = 0.07;
 	}
+
 
 	public void zoning() {
 		// creating the zones used to know the direction to go
@@ -63,21 +61,29 @@ public class Boss extends Enemy{
 
 	}
 
+	@Override
 	public void move(int delta) {
 
-		if(zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+		if (Math.pow(Math.pow((World.player.getX()+World.player.getWidth()/2)-x, 2)+Math.pow((World.player.getY()+World.player.getHeight()/2)-y, 2),0.5)>=200){
+			if(zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+				speedX=0;
+				speedY=-speed;
+			}else if(zoneB.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+				speedX=0;
+				speedY=speed;
+			}else if(zoneL.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+				speedX=-speed;
+				speedY=0;
+			}else {
+				speedX=speed;
+				speedY=0;
+			}
+		} else {
 			speedX=0;
-			speedY=-speed;
-		}else if(zoneB.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
-			speedX=0;
-			speedY=speed;
-		}else if(zoneL.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
-			speedX=-speed;
-			speedY=0;
-		}else {
-			speedX=speed;
 			speedY=0;
 		}
+
+
 
 
 		/*il faut voir pour les murs et bouger en cons�quence
@@ -89,9 +95,8 @@ public class Boss extends Enemy{
 			//going to the right
 			int a= (int) (x+speedX*delta+width)/36; //right border of the hitbox if we continue the movement (number in the grid)
 			int b= (int) (y/36); //top border of the hitbox if we continue the movement (number in the grid)
-			int b1= (int) (y+height/2)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
-			int b2= (int) (y+height)/36;
-			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)||(c[a][b2] instanceof Mur)) {
+			int b1= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
+			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)) {
 				speedX=0;
 				if(World.player.getY()>y) {
 					speedY=speed;
@@ -104,9 +109,8 @@ public class Boss extends Enemy{
 			//going to the left
 			int a= (int) (x+speedX*delta)/36; //left border of the hitbox if we continue the movement (number in the grid)
 			int b= (int) (y/36); //top border of the hitbox if we continue the movement (number in the grid)
-			int b1= (int) (y+height/2)/36;
-			int b2= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
-			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)|| (c[a][b2] instanceof Mur)) {
+			int b1= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
+			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)) {
 				speedX=0;
 				if(World.player.getY()>y) {
 					speedY=speed;
@@ -119,9 +123,8 @@ public class Boss extends Enemy{
 			//going down
 			int a= (int) (y+speedY*delta+height)/36; //left border of the hitbox if we continue the movement (number in the grid)
 			int b= (int) (x/36); //top border of the hitbox if we continue the movement (number in the grid)
-			int b1= (int) (x+width/2)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
-			int b2= (int) (x+width)/36;
-			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)||(c[b2][a]instanceof Mur)) {
+			int b1= (int) (x+width)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
+			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)) {
 				speedY=0;
 				if(World.player.getX()>x) {
 					speedX=speed;
@@ -134,9 +137,8 @@ public class Boss extends Enemy{
 			//going top
 			int a= (int) (y+speedY*delta)/36; //left border of the hitbox if we continue the movement (number in the grid)
 			int b= (int) (x/36); //top border of the hitbox if we continue the movement (number in the grid)
-			int b1= (int) (x+width/2)/36;
-			int b2= (int) (x+width)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
-			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)||(c[b2][a]instanceof Mur)) {
+			int b1= (int) (x+width)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
+			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)) {
 				speedY=0;
 				if(World.player.getX()>x) {
 					speedX=speed;
@@ -146,15 +148,16 @@ public class Boss extends Enemy{
 			}
 		}
 
-		if(speedX>0) {
-			sprite=imgR;
-		}else if (speedX<0) {
-			sprite=imgL;
-		}else if(speedY>0) {
-			sprite=imgB;
-		}else {
+		if((zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight()))) {
 			sprite=imgT;
+		}else if (zoneB.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+			sprite=imgB;
+		}else if(zoneL.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+			sprite=imgL;
+		}else {
+			sprite=imgR;
 		}
+
 
 		x+=speedX*delta;
 		y+=speedY*delta;
@@ -162,52 +165,25 @@ public class Boss extends Enemy{
 		hitbox.setY(y);
 	}
 
-	@Override
-	public void checkForCollision() {
-		if(hitbox.intersects(World.player.getShape())){
-			if(hp <= 0) alreadyDead = true;
-			return;
-		}
-		for(Projectile p : World.projectiles){
-			if(p.getFriendly()){
-				if(hitbox.intersects(p.getShape())){
-					this.setHP(hp-Math.max(p.getAtk()-def, 0));
-					if(hp <= 0) alreadyDead = true;
-					p.die();
-					return;
-				}
-			}
-
-		}
-	}
-
 	private void shoot() {
-		new ProjectileSplit(this.x+width/2,this.y+height/2,0.2f,0,false,10,3);
-		new ProjectileSplit(this.x+width/2,this.y+height/2,-0.2f,0,false,10,3);
-		new ProjectileSplit(this.x+width/2,this.y+height/2,0,0.2f,false,10,3);
-		new ProjectileSplit(this.x+width/2,this.y+height/2,0,-0.2f,false,10,3);
+		new Projectile(this.x+width/2,this.y+height/2,false,(World.player.getX()-x)/1500,(World.player.getY()-y)/1500);
 	}
 
+	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
 		zoning();
-		if(compt>40) {
+		//move(delta);
+		if(compt>60) {
 			compt=0;
 			shoot();
 		}
 		compt++;
-		//move(delta);
-	}
-
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-		super.render(container, game, g);
-		g.draw(hitbox);
 	}
 
 	@Override
-	public void die() {
-		super.die();
-		World.score += 230;
-		World.player.setCoin(World.player.getCoin()+100);
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		super.render(container, game, g);
 	}
+
 }

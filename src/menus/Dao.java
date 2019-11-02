@@ -1,4 +1,4 @@
-package general;
+package menus;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Dao {
 
-	// Acc�der � la BD
+	// Accéder à la BD
 	public static void openDataBase() {
 		@SuppressWarnings("unused")
 		Connection c = null;

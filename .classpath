@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="tgd-cn_multirl/res/natives"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="tgd-rogue-like-a-virgin/res/natives"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="res"/>

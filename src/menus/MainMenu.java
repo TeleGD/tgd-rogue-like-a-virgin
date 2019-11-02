@@ -7,7 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import general.World;
+import games.rogueLikeAVirgin.World;
 
 
 
@@ -17,9 +17,9 @@ public class MainMenu extends Menu{
 	public static int ID = -3;
 
 	public MainMenu(){
-		super.setTitrePrincipal("Rogue Like A Virgin");
+		super.setTitrePrincipal("Rogue Like a Virgin");
 		super.setTitreSecondaire("Main Menu");
-		super.setItems("Play","Scores","Credits", "Quit");
+		super.setItems("Play","Scores (à débugguer)","Credits", "Quit");
 		super.setEnableClignote(false);
 		super.setCouleurClignote(Color.red);
 		super.setTempsClignote(400);
@@ -40,23 +40,22 @@ public class MainMenu extends Menu{
 		switch (position) {
 		case 0:
 			World.reset();
-			game.enterState(World.ID, new FadeOutTransition(),
+			game.enterState(games.rogueLikeAVirgin.World.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			//background.stop();
 			break;
-		case 1:
+		/* case 1:
 			//Score board
 			game.enterState(ScoreMenu.ID, new FadeOutTransition(),
 					new FadeInTransition());
-
-
-			break;
+			break; */
 		case 2:
 			game.enterState(CreditsMenu.ID, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 		case 3:
-			System.exit(0);
+			game.enterState(WelcomeMenu.ID, new FadeOutTransition(),
+					new FadeInTransition());
 			break;
 		}
 	}

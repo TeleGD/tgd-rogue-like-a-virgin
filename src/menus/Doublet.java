@@ -1,4 +1,4 @@
-package general;
+package menus;
 
 public class Doublet {
 

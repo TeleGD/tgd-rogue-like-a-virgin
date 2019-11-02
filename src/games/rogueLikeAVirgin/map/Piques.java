@@ -1,10 +1,10 @@
-package map;
+package games.rogueLikeAVirgin.map;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import entity.Entity;
-import general.World;
+import games.rogueLikeAVirgin.World;
+import games.rogueLikeAVirgin.entity.Entity;
 
 public class Piques extends Case {
 

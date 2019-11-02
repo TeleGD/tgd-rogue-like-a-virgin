@@ -1,4 +1,4 @@
-package map;
+package games.rogueLikeAVirgin.map;
 
 import java.util.Random;
 
@@ -7,10 +7,10 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import entity.Entity;
-import entity.Item;
-import entity.Player;
-import general.World;
+import games.rogueLikeAVirgin.World;
+import games.rogueLikeAVirgin.entity.Entity;
+import games.rogueLikeAVirgin.entity.Item;
+import games.rogueLikeAVirgin.entity.Player;
 
 public class Porte extends Case {
 

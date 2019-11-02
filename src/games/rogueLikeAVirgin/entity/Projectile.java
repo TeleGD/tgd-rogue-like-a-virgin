@@ -1,14 +1,14 @@
-package entity;
+package games.rogueLikeAVirgin.entity;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-import general.World;
-import map.Bords;
-import map.Case;
-import map.Mur;
-import map.Porte;
+import games.rogueLikeAVirgin.World;
+import games.rogueLikeAVirgin.map.Bords;
+import games.rogueLikeAVirgin.map.Case;
+import games.rogueLikeAVirgin.map.Mur;
+import games.rogueLikeAVirgin.map.Porte;
 
 public class Projectile extends Entity{
 
