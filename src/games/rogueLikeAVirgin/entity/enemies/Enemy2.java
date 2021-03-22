@@ -1,24 +1,22 @@
 package games.rogueLikeAVirgin.entity.enemies;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+
+import app.AppLoader;
+
+import games.rogueLikeAVirgin.World;
 
 public class Enemy2 extends Enemy1{
 
-	public Enemy2(float x, float y) {
-		super(x, y);
+	public Enemy2(World world, float x, float y) {
+		super(world, x, y);
 		this.hp=3;
-		try {
-			this.imgB=new Image("images/rogueLikeAVirgin/blobRoseBas.png");
-			this.imgT=new Image("images/rogueLikeAVirgin/blobRoseHaut.png");
-			this.imgR=new Image("images/rogueLikeAVirgin/blobRoseDroite.png");
-			this.imgL=new Image("images/rogueLikeAVirgin/blobRoseGauche.png");
+		this.imgB=AppLoader.loadPicture("/images/rogueLikeAVirgin/blobRoseBas.png");
+		this.imgT=AppLoader.loadPicture("/images/rogueLikeAVirgin/blobRoseHaut.png");
+		this.imgR=AppLoader.loadPicture("/images/rogueLikeAVirgin/blobRoseDroite.png");
+		this.imgL=AppLoader.loadPicture("/images/rogueLikeAVirgin/blobRoseGauche.png");
 
-			this.sprite=imgB;
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		this.sprite=imgB;
 		this.width=36;
 		this.height=36;
 		zoning();

@@ -1,19 +1,21 @@
 package games.rogueLikeAVirgin;
 
-import java.io.File;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.Music;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+
+import app.AppLoader;
+import app.ui.Button;
+import app.ui.TGDComponent;
+import app.ui.TGDComponent.OnClickListener;
 
 import games.rogueLikeAVirgin.entity.Item;
 import games.rogueLikeAVirgin.entity.Player;
@@ -21,68 +23,57 @@ import games.rogueLikeAVirgin.entity.Projectile;
 import games.rogueLikeAVirgin.entity.enemies.Enemy;
 import games.rogueLikeAVirgin.map.Generation;
 import games.rogueLikeAVirgin.map.Salle;
-import general.ui.Button;
-import general.ui.TGDComponent;
-import general.ui.TGDComponent.OnClickListener;
 
 public class World extends BasicGameState {
 
-	public static int ID=2;
+	public static int longueur = 1280;
+	public static int hauteur = 720;
 
-	public final static String GAME_NAME="Rogue Like a Virgin";
+	private int ID;
+	private int state;
 
-	public final static String GAME_FOLDER_NAME="rogueLikeAVirgin";
-	public final static String DIRECTORY_SOUNDS="sounds"+File.separator+GAME_FOLDER_NAME+File.separator;
-	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
-	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
-
-
-	public static ArrayList<Enemy> enemies,enemiesTmp;
-	public static ArrayList<Projectile> projectiles,projectilesTmp;
-	public static Player player;
-	public static ArrayList<Item> item;
-	public static Salle map;
-	public static Enemy Nico;
-	public static int score;
+	public ArrayList<Enemy> enemies,enemiesTmp;
+	public ArrayList<Projectile> projectiles,projectilesTmp;
+	public Player player;
+	public ArrayList<Item> item;
+	public Salle map;
+	public Enemy Nico;
+	public int score;
+	public Generation generation;
 
 	private Image coeur,coin;
 	private Button jouer,atkUp,speedUp,delayUp,oneUp,rejouer,pauseMode, exit ;
 	private int atkCoin,speedCoin,delayCoin,oneCoin;
 	private boolean gameOn,gameOver;
-	private static Sound saxGuy;
+	private Audio saxGuy;
 
-	private static Music mainMusic;
-	private static boolean scoreTime;
-	public static String name;
-	private StateBasedGame game;
+	private Audio mainMusic;
+	private float mainMusicPos;
+	private boolean scoreTime;
+	public String name;
 	private int pauseCompt;
 	private boolean pause,maj;
+	private StateBasedGame game;
+
+	public World(int ID) {
+		this.ID = ID;
+		this.state = 0;
+	}
 
 	@Override
-	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
-		//Ici ne mettre que des initialisations de variables
-		gameOn = false;
-		gameOver = false;
-		score = 0;
-		saxGuy=new Sound("musics/rogueLikeAVirgin/boss.ogg");
-		mainMusic=new Music("musics/rogueLikeAVirgin/music.ogg");
-		//Il faudra voir s'il faut bouger ces inits dans enter(...) si ca prend trop de temps
-		enemies = new ArrayList<Enemy>();
-		enemiesTmp = new ArrayList<Enemy>();
-		projectiles = new ArrayList<Projectile>();
-		projectilesTmp = new ArrayList<Projectile>();
-		item = new ArrayList<Item>();
-		map =  Generation.genereSalle(0, 20,20 ,0);
-		atkCoin = 10;
-		speedCoin = 5;
-		delayCoin = 10;
-		oneCoin = 1;
-		scoreTime=false;
-		this.game=arg1;
-		maj=false;
+	public int getID() {
+		return this.ID;
+	}
 
-		coeur = new Image(World.DIRECTORY_IMAGES+"vie.png");
-		coin = new Image(World.DIRECTORY_IMAGES+"itemCoin.png");
+	@Override
+	public void init(GameContainer container, StateBasedGame arg1) {
+		/* Méthode exécutée une unique fois au chargement du programme */
+		this.game=arg1;
+		saxGuy=AppLoader.loadAudio("/sounds/rogueLikeAVirgin/boss.ogg");
+		mainMusic=AppLoader.loadAudio("/musics/rogueLikeAVirgin/music.ogg");
+
+		coeur = AppLoader.loadPicture("/images/rogueLikeAVirgin/vie.png");
+		coin = AppLoader.loadPicture("/images/rogueLikeAVirgin/itemCoin.png");
 
 		jouer = new Button("Play",container,786,294,TGDComponent.AUTOMATIC,TGDComponent.AUTOMATIC);
 		jouer.setTextSize(32);
@@ -95,7 +86,6 @@ public class World extends BasicGameState {
 			@Override
 			public void onClick(TGDComponent componenent) {
 				startGame();
-
 			}});
 
 		rejouer = new Button("Try again",container,786,234,TGDComponent.AUTOMATIC,TGDComponent.AUTOMATIC);
@@ -108,13 +98,8 @@ public class World extends BasicGameState {
 
 			@Override
 			public void onClick(TGDComponent componenent) {
-				try {
-					startAgain();
-				} catch (SlickException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+				initGame();
+				startGame();
 			}});
 
 		pauseMode = new Button("Continue",container,786,234,TGDComponent.AUTOMATIC,TGDComponent.AUTOMATIC);
@@ -130,7 +115,7 @@ public class World extends BasicGameState {
 				if(pauseCompt==0) {
 					pause=false;
 				}else {
-					game.enterState(menus.MainMenu.ID, new FadeInTransition(), new FadeOutTransition());
+					game.enterState(1 /* MainMenu */, new FadeInTransition(), new FadeOutTransition());
 				}
 
 			}});
@@ -145,7 +130,7 @@ public class World extends BasicGameState {
 
 			@Override
 			public void onClick(TGDComponent componenent) {
-				game.enterState(menus.MainMenu.ID, new FadeInTransition(), new FadeOutTransition());
+				game.enterState(1 /* MainMenu */, new FadeInTransition(), new FadeOutTransition());
 			}});
 
 		atkUp = new Button("Puissance Up",container,780,570,TGDComponent.AUTOMATIC,30);
@@ -158,7 +143,7 @@ public class World extends BasicGameState {
 			public void onClick(TGDComponent componenent) {
 				if (player.getCoin()>=atkCoin){
 					player.setCoin(player.getCoin()-atkCoin);
-					World.player.setAtk(World.player.getAtk()+1);
+					player.setAtk(player.getAtk()+1);
 					if (atkCoin > 499999){
 						atkCoin = 999999;
 					}else{
@@ -178,7 +163,7 @@ public class World extends BasicGameState {
 			public void onClick(TGDComponent componenent) {
 				if (player.getCoin()>=speedCoin){
 					player.setCoin(player.getCoin()-speedCoin);
-					World.player.setSpeed(World.player.getSpeed()*1.1);
+					player.setSpeed(player.getSpeed()*1.1);
 					if (speedCoin > 499999){
 						speedCoin = 999999;
 					}else{
@@ -198,8 +183,8 @@ public class World extends BasicGameState {
 			public void onClick(TGDComponent componenent) {
 				if (player.getCoin()>=delayCoin){
 					player.setCoin(player.getCoin()-delayCoin);
-					if(World.player.getPeriode() >= 10)
-						World.player.setPeriod(World.player.getPeriode()-5);
+					if(player.getPeriode() >= 10)
+						player.setPeriod(player.getPeriode()-5);
 					if (delayCoin > 333334){
 						delayCoin = 999999;
 					}else{
@@ -219,8 +204,8 @@ public class World extends BasicGameState {
 			public void onClick(TGDComponent componenent) {
 				if (player.getCoin()>=oneCoin){
 					player.setCoin(player.getCoin()-oneCoin);
-					if(World.player.getHp() <= 19)
-						World.player.setHp(World.player.getHp()+1);
+					if(player.getHp() <= 19)
+						player.setHp(player.getHp()+1);
 					if (oneCoin != 999999){
 						oneCoin = oneCoin+1;
 					}
@@ -231,39 +216,50 @@ public class World extends BasicGameState {
 	}
 
 	@Override
-	public void enter(GameContainer container, StateBasedGame game) throws SlickException{
-		//Ici mettre tous les chargement d'image, creation de perso/decor et autre truc qui mettent du temps
-
-		mainMusic.play();
+	public void enter(GameContainer container, StateBasedGame game) {
+		/* Méthode exécutée à l'apparition de la page */
+		if (this.state == 0) {
+			this.play(container, game);
+		} else if (this.state == 2) {
+			this.resume(container, game);
+		}
+		mainMusic.playAsMusic(1f, .3f, true);
 	}
 
-	public static void changeMap(Salle s){
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) {
+		/* Méthode exécutée à la disparition de la page */
+		if (this.state == 1) {
+			this.pause(container, game);
+		} else if (this.state == 3) {
+			this.stop(container, game);
+			this.state = 0; // TODO: remove
+		}
+	}
+
+	public void changeMap(Salle s){
 		map = s;
 	}
 
 	public void startGame(){
 		gameOn = true;
-		pause=false;
-		try {
-			player = new Player();
-			score = 0;
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
-	public void startAgain() throws SlickException{
+	public void initGame() {
 		score = 0;
-		gameOn = true;
+		gameOn = false;
 		gameOver = false;
+		pause = false;
+		pauseCompt = 0;
 		enemies = new ArrayList<Enemy>();
 		enemiesTmp = new ArrayList<Enemy>();
 		projectiles = new ArrayList<Projectile>();
 		projectilesTmp = new ArrayList<Projectile>();
 		item = new ArrayList<Item>();
-		map = Generation.genereNewSalle(0, 1, 1);
-		player.setMap(World.map.getCases());
+		generation = new Generation(this);
+		map =  generation.genereSalle(0, 20,20 ,0);
+		player = new Player(this);
+		player.setMap(map.getCases());
 		player.setX(10*36);
 		player.setY(10*36);
 		player.getHitbox().setX(10*36+4);
@@ -272,12 +268,14 @@ public class World extends BasicGameState {
 		speedCoin = 5;
 		delayCoin = 10;
 		oneCoin = 1;
-		player = new Player();
-		mainMusic.play();
+		scoreTime=false;
+		maj=false;
+		mainMusic.playAsMusic(1f, .3f, true);
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
+		/* Méthode exécutée environ 60 fois par seconde */
 		map.render(container, game, g);
 		for(Item i : item){
 			i.render(container, game, g);
@@ -303,7 +301,7 @@ public class World extends BasicGameState {
 				for(Projectile p : projectiles){
 					p.render(container, game, g);
 				}
-				for (int i = 0; i < World.player.getHp(); i++){
+				for (int i = 0; i < player.getHp(); i++){
 					if ( i < 10 ){
 						g.drawImage(coeur, 756+i*50, 36);
 					} else {
@@ -318,11 +316,11 @@ public class World extends BasicGameState {
 
 					g.setLineWidth(36);
 					g.setColor(Color.white);
-					g.drawString("Speed : "+(Math.floor(World.player.getSpeed()*100)/100), 756, 100+((World.player.getHp()-1)/10)*50);
-					g.drawString("Power : "+World.player.getAtk(), 756, 150+((World.player.getHp()-1)/10)*50);
-					g.drawString("Cadence de tir : "+World.player.getPeriode(), 756, 200+((World.player.getHp()-1)/10)*50);
+					g.drawString("Speed : "+(Math.floor(player.getSpeed()*100)/100), 756, 100+((player.getHp()-1)/10)*50);
+					g.drawString("Power : "+player.getAtk(), 756, 150+((player.getHp()-1)/10)*50);
+					g.drawString("Cadence de tir : "+player.getPeriode(), 756, 200+((player.getHp()-1)/10)*50);
 					g.drawString("Score : "+score, 900, 320);
-					g.drawString("Money : "+World.player.getCoin(), 936, 500);
+					g.drawString("Money : "+player.getCoin(), 936, 500);
 					if (player.getCoin() == 0){
 						g.drawImage(coin, 1044, 491);
 					} else {
@@ -364,7 +362,13 @@ public class World extends BasicGameState {
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
+		/* Méthode exécutée environ 60 fois par seconde */
+		// Input input = container.getInput();
+		// if (input.isKeyDown(Input.KEY_ESCAPE)) {
+		// 	this.setState(1);
+		// 	game.enterState(2, new FadeOutTransition(), new FadeInTransition());
+		// }
 		if (gameOn){
 			if(!pause) {
 				player.update(container, game, delta);
@@ -390,6 +394,31 @@ public class World extends BasicGameState {
 
 	}
 
+	public void play(GameContainer container, StateBasedGame game) {
+		/* Méthode exécutée une unique fois au début du jeu */
+		this.initGame();
+	}
+
+	public void pause(GameContainer container, StateBasedGame game) {
+		/* Méthode exécutée lors de la mise en pause du jeu */
+	}
+
+	public void resume(GameContainer container, StateBasedGame game) {
+		/* Méthode exécutée lors de la reprise du jeu */
+	}
+
+	public void stop(GameContainer container, StateBasedGame game) {
+		/* Méthode exécutée une unique fois à la fin du jeu */
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public int getState() {
+		return this.state;
+	}
+
 	@Override
 	public void keyReleased(int key, char c) {
 		if (gameOn){
@@ -405,7 +434,7 @@ public class World extends BasicGameState {
 	@Override
 	public void keyPressed(int key, char c) {
 		if ((pause || gameOver) && key == Input.KEY_ESCAPE) {
-			game.enterState(menus.MainMenu.ID, new FadeInTransition(), new FadeOutTransition());
+			game.enterState(1 /* MainMenu */, new FadeInTransition(), new FadeOutTransition());
 		}
 		if(scoreTime){
 			if(!maj && !(key==Input.KEY_LSHIFT &&!(key==Input.KEY_ENTER))) {
@@ -448,16 +477,12 @@ public class World extends BasicGameState {
 			}
 			if (!gameOn && gameOver){
 				if (key==Input.KEY_ENTER){
-					try {
-						startAgain();
-					} catch (SlickException e) {
-						e.printStackTrace();
-					}
+					initGame();
 				}
 			}
 		} else {
 			if(pauseCompt==1 && key==Input.KEY_ENTER) {
-				game.enterState(menus.MainMenu.ID,new FadeOutTransition(), new FadeInTransition());
+				game.enterState(1 /* MainMenu */,new FadeOutTransition(), new FadeInTransition());
 			}else if(key==Input.KEY_Z || key==Input.KEY_S) {
 				pauseCompt=1-pauseCompt;
 				if(pauseCompt==0) {
@@ -471,34 +496,29 @@ public class World extends BasicGameState {
 		}
 	}
 
-	@Override
-	public int getID() {
-		return ID;
+	public void stopMusic() {
+		mainMusicPos = mainMusic.getPosition();
+		mainMusic.stop();
 	}
 
-	public static void reset() {
-		// TODO Auto-generated method stub
+	public void resumeMusic() {
+		mainMusic.playAsMusic(1, .3f, true);
+		mainMusic.setPosition(mainMusicPos);
+	}
+	public boolean isSaxGuy() {
+		return saxGuy.isPlaying();
 	}
 
-	public static void stopMusic() {
-		mainMusic.pause();
-	}
-
-	public static void resumeMusic() {
-		mainMusic.resume();
-	}
-	public static boolean isSaxGuy() {
-		return saxGuy.playing();
-	}
-
-	public static void changeMusic() {
-		if(saxGuy.playing()) {
+	public void changeMusic() {
+		if(saxGuy.isPlaying()) {
 			saxGuy.stop();
 			System.out.println("on a bien");
-			mainMusic.resume();
+			mainMusic.playAsMusic(1, .3f, true);
+			mainMusic.setPosition(mainMusicPos);
 		}else {
-			mainMusic.pause();
-			saxGuy.play();
+			mainMusicPos = mainMusic.getPosition();
+			mainMusic.stop();
+			saxGuy.playAsSoundEffect(1, .3f, false);
 		}
 	}
 }

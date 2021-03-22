@@ -1,4 +1,4 @@
-package menus;
+package games.rogueLikeAVirgin.menus;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -2,11 +2,11 @@ package games.rogueLikeAVirgin.entity.enemies;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppLoader;
 
 import games.rogueLikeAVirgin.World;
 import games.rogueLikeAVirgin.entity.Projectile;
@@ -20,20 +20,16 @@ public class Boss extends Enemy{
 	private double speed;
 	private int compt;
 
-	public Boss(float x, float y) {
-		super(x, y);
+	public Boss(World world, float x, float y) {
+		super(world, x, y);
 		hp=10;
 		compt=0;
-		try {
-			this.imgB=new Image("images/rogueLikeAVirgin/bossBas.png");
-			this.imgT=new Image("images/rogueLikeAVirgin/bossHaut.png");
-			this.imgR=new Image("images/rogueLikeAVirgin/bossDroite.png");
-			this.imgL=new Image("images/rogueLikeAVirgin/bossGauche.png");
+		this.imgB=AppLoader.loadPicture("/images/rogueLikeAVirgin/bossBas.png");
+		this.imgT=AppLoader.loadPicture("/images/rogueLikeAVirgin/bossHaut.png");
+		this.imgR=AppLoader.loadPicture("/images/rogueLikeAVirgin/bossDroite.png");
+		this.imgL=AppLoader.loadPicture("/images/rogueLikeAVirgin/bossGauche.png");
 
-			this.sprite=imgB;
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		this.sprite=imgB;
 		this.width=72;
 		this.height=72;
 		zoning();
@@ -66,13 +62,13 @@ public class Boss extends Enemy{
 	@Override
 	public void move(int delta) {
 
-		if(zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+		if(zoneT.contains(this.world.player.getX()+this.world.player.getWidth(), this.world.player.getY()+this.world.player.getHeight())) {
 			speedX=0;
 			speedY=-speed;
-		}else if(zoneB.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+		}else if(zoneB.contains(this.world.player.getX()+this.world.player.getWidth(), this.world.player.getY()+this.world.player.getHeight())) {
 			speedX=0;
 			speedY=speed;
-		}else if(zoneL.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+		}else if(zoneL.contains(this.world.player.getX()+this.world.player.getWidth(), this.world.player.getY()+this.world.player.getHeight())) {
 			speedX=-speed;
 			speedY=0;
 		}else {
@@ -84,7 +80,7 @@ public class Boss extends Enemy{
 		/*il faut voir pour les murs et bouger en cons�quence
 		 *
 		 * */
-		Case[][] c=World.map.getCases();
+		Case[][] c=this.world.map.getCases();
 
 		if (speedX>0){
 			//going to the right
@@ -94,7 +90,7 @@ public class Boss extends Enemy{
 			int b2= (int) (y+height)/36;
 			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)||(c[a][b2] instanceof Mur)) {
 				speedX=0;
-				if(World.player.getY()>y) {
+				if(this.world.player.getY()>y) {
 					speedY=speed;
 				}else {
 					speedY=-speed;
@@ -109,7 +105,7 @@ public class Boss extends Enemy{
 			int b2= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
 			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)|| (c[a][b2] instanceof Mur)) {
 				speedX=0;
-				if(World.player.getY()>y) {
+				if(this.world.player.getY()>y) {
 					speedY=speed;
 				}else {
 					speedY=-speed;
@@ -124,7 +120,7 @@ public class Boss extends Enemy{
 			int b2= (int) (x+width)/36;
 			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)||(c[b2][a]instanceof Mur)) {
 				speedY=0;
-				if(World.player.getX()>x) {
+				if(this.world.player.getX()>x) {
 					speedX=speed;
 				}else {
 					speedX=-speed;
@@ -139,7 +135,7 @@ public class Boss extends Enemy{
 			int b2= (int) (x+width)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
 			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)||(c[b2][a]instanceof Mur)) {
 				speedY=0;
-				if(World.player.getX()>x) {
+				if(this.world.player.getX()>x) {
 					speedX=speed;
 				}else {
 					speedX=-speed;
@@ -165,11 +161,11 @@ public class Boss extends Enemy{
 
 	@Override
 	public void checkForCollision() {
-		if(hitbox.intersects(World.player.getShape())){
+		if(hitbox.intersects(this.world.player.getShape())){
 			if(hp <= 0) alreadyDead = true;
 			return;
 		}
-		for(Projectile p : World.projectiles){
+		for(Projectile p : this.world.projectiles){
 			if(p.getFriendly()){
 				if(hitbox.intersects(p.getShape())){
 					this.setHP(hp-Math.max(p.getAtk()-def, 0));
@@ -183,14 +179,14 @@ public class Boss extends Enemy{
 	}
 
 	private void shoot() {
-		new ProjectileSplit(this.x+width/2,this.y+height/2,0.2f,0,false,10,3);
-		new ProjectileSplit(this.x+width/2,this.y+height/2,-0.2f,0,false,10,3);
-		new ProjectileSplit(this.x+width/2,this.y+height/2,0,0.2f,false,10,3);
-		new ProjectileSplit(this.x+width/2,this.y+height/2,0,-0.2f,false,10,3);
+		new ProjectileSplit(this.world, this.x+width/2,this.y+height/2,0.2f,0,false,10,3);
+		new ProjectileSplit(this.world, this.x+width/2,this.y+height/2,-0.2f,0,false,10,3);
+		new ProjectileSplit(this.world, this.x+width/2,this.y+height/2,0,0.2f,false,10,3);
+		new ProjectileSplit(this.world, this.x+width/2,this.y+height/2,0,-0.2f,false,10,3);
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		super.update(container, game, delta);
 		zoning();
 		if(compt>40) {
@@ -202,7 +198,7 @@ public class Boss extends Enemy{
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		super.render(container, game, g);
 		g.draw(hitbox);
 	}
@@ -210,7 +206,7 @@ public class Boss extends Enemy{
 	@Override
 	public void die() {
 		super.die();
-		World.score += 230;
-		World.player.setCoin(World.player.getCoin()+100);
+		this.world.score += 230;
+		this.world.player.setCoin(this.world.player.getCoin()+100);
 	}
 }

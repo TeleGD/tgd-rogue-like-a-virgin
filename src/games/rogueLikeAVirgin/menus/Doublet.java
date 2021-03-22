@@ -1,4 +1,4 @@
-package menus;
+package games.rogueLikeAVirgin.menus;
 
 public class Doublet {
 

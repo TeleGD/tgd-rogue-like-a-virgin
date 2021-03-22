@@ -2,8 +2,9 @@ package games.rogueLikeAVirgin.entity;
 
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import games.rogueLikeAVirgin.World;
 
 public class ProjectileSplit extends Projectile {
 	int t,tMax, frag;
@@ -11,15 +12,15 @@ public class ProjectileSplit extends Projectile {
 	Projectile child;
 	double speed,angle;
 
-	public ProjectileSplit(float x, float y, float speedX,float speedY, boolean friendly,int dt,int fragments) {
-		super(x,y,friendly,speedX,speedY);
+	public ProjectileSplit(World world, float x, float y, float speedX,float speedY, boolean friendly,int dt,int fragments) {
+		super(world, x,y,friendly,speedX,speedY);
 		tMax=dt;
 		t=dt;
 		frag=fragments;
 	}
 
-	public ProjectileSplit(int i, int j,double speedX,double speedY, boolean friendly, int dt){
-		super(i,j,friendly);
+	public ProjectileSplit(World world, int i, int j,double speedX,double speedY, boolean friendly, int dt){
+		super(world, i,j,friendly);
 		t = dt;
 		tMax = dt;
 		frag = 2;
@@ -28,8 +29,8 @@ public class ProjectileSplit extends Projectile {
 		this.speedY = speedY;
 	}
 
-	public ProjectileSplit(int i, int j,double speedX,double speedY, boolean friendly, int dt, int fragments){
-		super(i,j,friendly);
+	public ProjectileSplit(World world, int i, int j,double speedX,double speedY, boolean friendly, int dt, int fragments){
+		super(world, i,j,friendly);
 		t = dt;
 		tMax = dt;
 		frag = fragments;
@@ -38,8 +39,8 @@ public class ProjectileSplit extends Projectile {
 		this.speedY = speedY;
 	}
 
-	public ProjectileSplit(int i, int j,double speedX,double speedY, boolean friendly, int dt, int fragments, boolean recursive){
-		super(i,j,friendly);
+	public ProjectileSplit(World world, int i, int j,double speedX,double speedY, boolean friendly, int dt, int fragments, boolean recursive){
+		super(world, i,j,friendly);
 		if(dt > 0){
 			t = dt;
 			tMax = dt;
@@ -63,7 +64,7 @@ public class ProjectileSplit extends Projectile {
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		checkForCollision();
 		move(delta);
 		t -= delta;
@@ -81,7 +82,7 @@ public class ProjectileSplit extends Projectile {
 		if(t<=0) {
 			for(int a=1;a<=frag;a++) {
 				angle = -90+a*180/(frag-1);
-				new Projectile(x,y,friendly,speedX*Math.cos(angle)-speedY*Math.sin(angle),speedY*Math.cos(angle)+speedX*Math.sin(angle));
+				new Projectile(this.world, x,y,friendly,speedX*Math.cos(angle)-speedY*Math.sin(angle),speedY*Math.cos(angle)+speedX*Math.sin(angle));
 			}
 			alreadyDead=true;
 		}

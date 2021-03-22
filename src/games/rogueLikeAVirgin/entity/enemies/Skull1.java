@@ -2,11 +2,11 @@ package games.rogueLikeAVirgin.entity.enemies;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppLoader;
 
 import games.rogueLikeAVirgin.World;
 import games.rogueLikeAVirgin.entity.Projectile;
@@ -19,19 +19,15 @@ public class Skull1 extends Enemy{
 	protected double speed;
 	private int compt;
 
-	public Skull1(float x, float y) {
-		super(x, y);
+	public Skull1(World world, float x, float y) {
+		super(world, x, y);
 		hp=1;
-		try {
-			this.imgB=new Image("images/rogueLikeAVirgin/squeletteBas.png");
-			this.imgT=new Image("images/rogueLikeAVirgin/squeletteHaut.png");
-			this.imgR=new Image("images/rogueLikeAVirgin/squeletteDroite.png");
-			this.imgL=new Image("images/rogueLikeAVirgin/squeletteGauche.png");
+		this.imgB=AppLoader.loadPicture("/images/rogueLikeAVirgin/squeletteBas.png");
+		this.imgT=AppLoader.loadPicture("/images/rogueLikeAVirgin/squeletteHaut.png");
+		this.imgR=AppLoader.loadPicture("/images/rogueLikeAVirgin/squeletteDroite.png");
+		this.imgL=AppLoader.loadPicture("/images/rogueLikeAVirgin/squeletteGauche.png");
 
-			this.sprite=imgB;
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		this.sprite=imgB;
 		this.width=36;
 		this.height=36;
 		zoning();
@@ -64,14 +60,14 @@ public class Skull1 extends Enemy{
 	@Override
 	public void move(int delta) {
 
-		if (Math.pow(Math.pow((World.player.getX()+World.player.getWidth()/2)-x, 2)+Math.pow((World.player.getY()+World.player.getHeight()/2)-y, 2),0.5)>=200){
-			if(zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+		if (Math.pow(Math.pow((this.world.player.getX()+this.world.player.getWidth()/2)-x, 2)+Math.pow((this.world.player.getY()+this.world.player.getHeight()/2)-y, 2),0.5)>=200){
+			if(zoneT.contains(this.world.player.getX()+this.world.player.getWidth(), this.world.player.getY()+this.world.player.getHeight())) {
 				speedX=0;
 				speedY=-speed;
-			}else if(zoneB.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+			}else if(zoneB.contains(this.world.player.getX()+this.world.player.getWidth(), this.world.player.getY()+this.world.player.getHeight())) {
 				speedX=0;
 				speedY=speed;
-			}else if(zoneL.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+			}else if(zoneL.contains(this.world.player.getX()+this.world.player.getWidth(), this.world.player.getY()+this.world.player.getHeight())) {
 				speedX=-speed;
 				speedY=0;
 			}else {
@@ -89,7 +85,7 @@ public class Skull1 extends Enemy{
 		/*il faut voir pour les murs et bouger en cons�quence
 		 *
 		 * */
-		Case[][] c=World.map.getCases();
+		Case[][] c=this.world.map.getCases();
 
 		if (speedX>0){
 			//going to the right
@@ -98,7 +94,7 @@ public class Skull1 extends Enemy{
 			int b1= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
 			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)) {
 				speedX=0;
-				if(World.player.getY()>y) {
+				if(this.world.player.getY()>y) {
 					speedY=speed;
 				}else {
 					speedY=-speed;
@@ -112,7 +108,7 @@ public class Skull1 extends Enemy{
 			int b1= (int) (y+height)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
 			if((c[a][b] instanceof Mur)||(c[a][b1] instanceof Mur)) {
 				speedX=0;
-				if(World.player.getY()>y) {
+				if(this.world.player.getY()>y) {
 					speedY=speed;
 				}else {
 					speedY=-speed;
@@ -126,7 +122,7 @@ public class Skull1 extends Enemy{
 			int b1= (int) (x+width)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
 			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)) {
 				speedY=0;
-				if(World.player.getX()>x) {
+				if(this.world.player.getX()>x) {
 					speedX=speed;
 				}else {
 					speedX=-speed;
@@ -140,7 +136,7 @@ public class Skull1 extends Enemy{
 			int b1= (int) (x+width)/36; //bottom border of the hitbox if we continue the movement (number in the grid)
 			if((c[b][a] instanceof Mur)||(c[b1][a] instanceof Mur)) {
 				speedY=0;
-				if(World.player.getX()>x) {
+				if(this.world.player.getX()>x) {
 					speedX=speed;
 				}else {
 					speedX=-speed;
@@ -148,11 +144,11 @@ public class Skull1 extends Enemy{
 			}
 		}
 
-		if((zoneT.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight()))) {
+		if((zoneT.contains(this.world.player.getX()+this.world.player.getWidth(), this.world.player.getY()+this.world.player.getHeight()))) {
 			sprite=imgT;
-		}else if (zoneB.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+		}else if (zoneB.contains(this.world.player.getX()+this.world.player.getWidth(), this.world.player.getY()+this.world.player.getHeight())) {
 			sprite=imgB;
-		}else if(zoneL.contains(World.player.getX()+World.player.getWidth(), World.player.getY()+World.player.getHeight())) {
+		}else if(zoneL.contains(this.world.player.getX()+this.world.player.getWidth(), this.world.player.getY()+this.world.player.getHeight())) {
 			sprite=imgL;
 		}else {
 			sprite=imgR;
@@ -166,11 +162,11 @@ public class Skull1 extends Enemy{
 	}
 
 	private void shoot() {
-		new Projectile(this.x+width/2,this.y+height/2,false,(World.player.getX()-x)/1500,(World.player.getY()-y)/1500);
+		new Projectile(this.world, this.x+width/2,this.y+height/2,false,(this.world.player.getX()-x)/1500,(this.world.player.getY()-y)/1500);
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		super.update(container, game, delta);
 		zoning();
 		//move(delta);
@@ -182,7 +178,7 @@ public class Skull1 extends Enemy{
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		super.render(container, game, g);
 	}
 

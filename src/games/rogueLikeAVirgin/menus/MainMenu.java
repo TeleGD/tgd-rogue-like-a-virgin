@@ -1,22 +1,27 @@
-package menus;
+package games.rogueLikeAVirgin.menus;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-import games.rogueLikeAVirgin.World;
-
-
-
-
 public class MainMenu extends Menu{
 
-	public static int ID = -3;
+	private int ID;
 
-	public MainMenu(){
+	public MainMenu(int ID) {
+		this.ID = ID;
+	}
+
+	@Override
+	public int getID() {
+		return ID;
+	}
+
+	@Override
+	public void init(GameContainer container, StateBasedGame game) {
+		super.init(container, game);
 		super.setTitrePrincipal("Rogue Like a Virgin");
 		super.setTitreSecondaire("Main Menu");
 		super.setItems("Play","Scores (à débugguer)","Credits", "Quit");
@@ -27,7 +32,7 @@ public class MainMenu extends Menu{
 
 
 	@Override
-	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+	public void enter(GameContainer container, StateBasedGame game) {
 	}
 
 	@Override
@@ -39,30 +44,23 @@ public class MainMenu extends Menu{
 	public void onOptionItemSelected(int position) {
 		switch (position) {
 		case 0:
-			World.reset();
-			game.enterState(games.rogueLikeAVirgin.World.ID, new FadeOutTransition(),
+			game.enterState(3 /* World */, new FadeOutTransition(),
 					new FadeInTransition());
 			//background.stop();
 			break;
-		/* case 1:
+		case 1:
 			//Score board
-			game.enterState(ScoreMenu.ID, new FadeOutTransition(),
-					new FadeInTransition());
-			break; */
+			// game.enterState(4 /* ScoreMenu */, new FadeOutTransition(),
+			//		new FadeInTransition());
+			break;
 		case 2:
-			game.enterState(CreditsMenu.ID, new FadeOutTransition(),
+			game.enterState(5 /* CreditsMenu */, new FadeOutTransition(),
 					new FadeInTransition());
 			break;
 		case 3:
-			game.enterState(WelcomeMenu.ID, new FadeOutTransition(),
-					new FadeInTransition());
+			container.exit();
 			break;
 		}
-	}
-
-	@Override
-	public int getID() {
-		return ID;
 	}
 
 }

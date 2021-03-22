@@ -4,9 +4,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppLoader;
 
 import games.rogueLikeAVirgin.World;
 import games.rogueLikeAVirgin.entity.enemies.Enemy;
@@ -66,16 +67,17 @@ public class Player extends Entity {
 		this.invincibleTimerMax = invincibleTimerMax;
 	}
 
-	public Player() throws SlickException{
-		World.player = this;
+	public Player(World world) {
+		super(world);
+		this.world.player = this;
 		x=342;
 		y=342;
 		tryX = x;
 		tryY = y;
-		spriteU = new Image(World.DIRECTORY_IMAGES+"playerHaut.png");
-		spriteR = new Image(World.DIRECTORY_IMAGES+"playerDroite.png");
-		spriteD = new Image(World.DIRECTORY_IMAGES+"playerBas.png");
-		spriteL = new Image(World.DIRECTORY_IMAGES+"playerGauche.png");
+		spriteU = AppLoader.loadPicture("/images/rogueLikeAVirgin/playerHaut.png");
+		spriteR = AppLoader.loadPicture("/images/rogueLikeAVirgin/playerDroite.png");
+		spriteD = AppLoader.loadPicture("/images/rogueLikeAVirgin/playerBas.png");
+		spriteL = AppLoader.loadPicture("/images/rogueLikeAVirgin/playerGauche.png");
 		width=36;
 		height=36;
 		hitbox = new Rectangle(x+4,y+4,width-8,height-8);
@@ -87,7 +89,7 @@ public class Player extends Entity {
 		tir=false;
 		projSpeed=0.4;
 		hp = 5;
-		c = World.map.getCases();
+		c = this.world.map.getCases();
 		aTouchePique=0;
 		coin = 0;
 		atk = 1;
@@ -99,7 +101,7 @@ public class Player extends Entity {
 
 	@Override
 	public void die() {
-		games.rogueLikeAVirgin.World.stopMusic();
+		this.world.stopMusic();
 
 	}
 
@@ -193,7 +195,7 @@ public class Player extends Entity {
 
 		}//*/
 
-		for(Enemy e : World.enemies){
+		for(Enemy e : this.world.enemies){
 			if(hitbox.intersects(e.getShape())){
 				if(!invincible) {
 					this.setHP(hp-Math.max(e.getAtk()-def, 0));
@@ -204,7 +206,7 @@ public class Player extends Entity {
 				return;
 			}
 		}
-		for(Projectile p : World.projectiles){
+		for(Projectile p : this.world.projectiles){
 			if(!p.getFriendly()){
 				if(hitbox.intersects(p.getShape())){
 					if(!invincible) {
@@ -216,38 +218,38 @@ public class Player extends Entity {
 				}
 			}
 		}
-		if(World.item != null){
-			for (int i = 0; i < World.item.size(); i++ ){
-				if(hitbox.intersects(World.item.get(i).getShape())){
-					switch (World.item.get(i).type) {
+		if(this.world.item != null){
+			for (int i = 0; i < this.world.item.size(); i++ ){
+				if(hitbox.intersects(this.world.item.get(i).getShape())){
+					switch (this.world.item.get(i).type) {
 					case "SpeedUp":
 						speed *= 1.3;
-						World.score += 20;
+						this.world.score += 20;
 						break;
 					case "SpeedDown":
 						speed /= 1.3;
-						World.score += 20;
+						this.world.score += 20;
 						break;
 					case "HpUp":
 						if(hp <= 19)
 							hp++;
-						World.score += 20;
+						this.world.score += 20;
 						break;
 					case "FireRateUp":
 						if(periodeTir >= 10)
 							periodeTir -= 10;
-						World.score += 20;
+						this.world.score += 20;
 						break;
 					case "FireRateDown":
 						periodeTir += 10;
-						World.score += 20;
+						this.world.score += 20;
 						break;
 					case "Coin":
 						setCoin(getCoin()+10);
-						World.score += 20;
+						this.world.score += 20;
 						break;
 					}
-					World.item.remove(i);
+					this.world.item.remove(i);
 					return;
 				}
 			}
@@ -439,7 +441,7 @@ public class Player extends Entity {
 		}
 
 		if (tir && attenteTir==0) {
-			new Projectile(x+width/2-8,y+height/2-8,true,projSpeedX,projSpeedY,this.atk);
+			new Projectile(this.world, x+width/2-8,y+height/2-8,true,projSpeedX,projSpeedY,this.atk);
 			attenteTir=periodeTir;
 		}
 		if (attenteTir>0) {
@@ -462,7 +464,7 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		tryX = x;
 		tryY = y;
 		tmpSpeedX = speedX;
@@ -482,7 +484,7 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		setDir();
 		g.drawImage(sprite,x,y);
 		//g.draw(hitbox);

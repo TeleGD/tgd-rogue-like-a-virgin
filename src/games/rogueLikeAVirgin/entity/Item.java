@@ -4,10 +4,10 @@ import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppLoader;
 
 import games.rogueLikeAVirgin.World;
 import games.rogueLikeAVirgin.map.Case;
@@ -18,36 +18,37 @@ public class Item extends Entity {
 
 	String type;
 
-	public Item() throws SlickException{
-		World.item.add(this);
+	public Item(World world) {
+		super(world);
+		this.world.item.add(this);
 		Random r = new Random();
 		switch (r.nextInt(8)) {
         case 0:
         	type = "SpeedUp";
-        	sprite = new Image(World.DIRECTORY_IMAGES+"itemSpeedUp.png");
+        	sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/itemSpeedUp.png");
             break;
         case 1:
         	type = "SpeedDown";
-        	sprite = new Image(World.DIRECTORY_IMAGES+"itemSpeedDown.png");
+        	sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/itemSpeedDown.png");
             break;
         case 2:
         	type = "HpUp";
-        	sprite = new Image(World.DIRECTORY_IMAGES+"itemHpUp.png");
+        	sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/itemHpUp.png");
             break;
 		case 3:
 			type = "FireRateUp";
-        	sprite = new Image(World.DIRECTORY_IMAGES+"itemFireRateUp.png");
+        	sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/itemFireRateUp.png");
             break;
 		case 4:
 			type = "FireRateDown";
-        	sprite = new Image(World.DIRECTORY_IMAGES+"itemFireRateDown.png");
+        	sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/itemFireRateDown.png");
             break;
         default:
         	type = "Coin";
-        	sprite = new Image(World.DIRECTORY_IMAGES+"itemCoin.png");
+        	sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/itemCoin.png");
         	break;
 		}
-		Case[][] c = World.map.getCases();
+		Case[][] c = this.world.map.getCases();
     	boolean caseNotFound = true;
     	int posx;
     	int posy;
@@ -71,12 +72,12 @@ public class Item extends Entity {
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		g.drawImage(sprite,x,y);
 	}
 

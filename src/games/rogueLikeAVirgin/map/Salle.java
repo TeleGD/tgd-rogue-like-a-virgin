@@ -2,7 +2,6 @@ package games.rogueLikeAVirgin.map;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Salle {
@@ -25,7 +24,7 @@ public class Salle {
 		}
 	}
 
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		for(int i =0;i<hauteur;i++){
 			for(int j=0;j<largeur;j++){
 				cases[i][j].update(container,game,delta);
@@ -33,7 +32,7 @@ public class Salle {
 		}
 	}
 
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		for(int i =0;i<hauteur;i++){
 			for(int j=0;j<largeur;j++){
 				cases[i][j].render(container,game,g);

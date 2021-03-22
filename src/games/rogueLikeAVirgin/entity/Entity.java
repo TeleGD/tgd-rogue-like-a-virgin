@@ -3,19 +3,24 @@ package games.rogueLikeAVirgin.entity;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.StateBasedGame;
 
-import general.Main;
+import games.rogueLikeAVirgin.World;
 
 public abstract class Entity {
+
+	protected World world;
 	protected float x,y;
 	protected int width,height,dirX,dirY,hp,atk,def;
 	protected double speedX,speedY;
 	protected boolean alreadyDead;
 	protected Shape hitbox;
 	protected Image sprite;
+
+	public Entity(World world) {
+		this.world = world;
+	}
 
 	public float getX(){
 		return x;
@@ -141,7 +146,7 @@ public abstract class Entity {
 		x += speedX*dt;
 		y += speedY*dt;
 		hitbox.setLocation(x, y);
-		if(x > Main.longueur || y > Main.hauteur || x < 0 || y < 0){
+		if(x > World.longueur || y > World.hauteur || x < 0 || y < 0){
 			alreadyDead = true;
 		}
 	}
@@ -150,13 +155,13 @@ public abstract class Entity {
 
 	public abstract void checkForCollision();
 
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 		checkForCollision();
 		move(delta);
 		if(alreadyDead) die();
 	}
 
-	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) {
 		g.drawImage(sprite,x,y);
 	}
 

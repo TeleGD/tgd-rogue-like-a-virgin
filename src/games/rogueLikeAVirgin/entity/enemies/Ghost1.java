@@ -1,27 +1,25 @@
 package games.rogueLikeAVirgin.entity.enemies;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+
+import app.AppLoader;
+
+import games.rogueLikeAVirgin.World;
 
 public class Ghost1 extends Enemy{
 
 	protected int compt;
-	public Ghost1(float x,float y) {
-		super(x,y);
+	public Ghost1(World world, float x,float y) {
+		super(world, x,y);
 		hp=1;
 		atk=2;
 		compt=0;
-		try {
-			this.imgB=new Image("images/rogueLikeAVirgin/fantomeBas.png");
-			this.imgT=new Image("images/rogueLikeAVirgin/fantomeHaut.png");
-			this.imgR=new Image("images/rogueLikeAVirgin/fantomeDroite.png");
-			this.imgL=new Image("images/rogueLikeAVirgin/fantomeGauche.png");
+		this.imgB=AppLoader.loadPicture("/images/rogueLikeAVirgin/fantomeBas.png");
+		this.imgT=AppLoader.loadPicture("/images/rogueLikeAVirgin/fantomeHaut.png");
+		this.imgR=AppLoader.loadPicture("/images/rogueLikeAVirgin/fantomeDroite.png");
+		this.imgL=AppLoader.loadPicture("/images/rogueLikeAVirgin/fantomeGauche.png");
 
-			this.sprite=imgB;
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		this.sprite=imgB;
 		this.width=36;
 		this.height=36;
 		this.hitbox=new Rectangle (x+4,y+5,width-7,height-10);
@@ -29,7 +27,7 @@ public class Ghost1 extends Enemy{
 
 	@Override
 	public void move(int delta) {
-		//se d�place aleatoirement et ne tient pas compte des murs
+		//se déplace aleatoirement et ne tient pas compte des murs
 		compt++;
 		if(compt>50) {
 			//a la fin du compteur on choisis une nouvelle direction

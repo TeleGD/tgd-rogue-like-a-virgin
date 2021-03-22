@@ -3,9 +3,9 @@ package games.rogueLikeAVirgin.map;
 import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppLoader;
 
 import games.rogueLikeAVirgin.World;
 import games.rogueLikeAVirgin.entity.Entity;
@@ -14,16 +14,13 @@ import games.rogueLikeAVirgin.entity.Player;
 
 public class Porte extends Case {
 
+	private World world;
 	int rotation;
 
-	public Porte(int x, int y,int difficulte) {
+	public Porte(World world, int x, int y,int difficulte) {
 		super(x, y,difficulte);
-		try {
-			sprite = new Image(World.DIRECTORY_IMAGES+"door"+getCouleur()+".png");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.world = world;
+		sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/door"+getCouleur()+".png");
 
 		//System.out.println("porte " + getCouleur() + " x : " + x + "   y " + y);
 	}
@@ -36,20 +33,20 @@ public class Porte extends Case {
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) {
 
-		int pX = Math.round(World.player.getX()/36);
-		int pY = Math.round(World.player.getY()/36);
+		int pX = Math.round(this.world.player.getX()/36);
+		int pY = Math.round(this.world.player.getY()/36);
 
 
 		if(pY == this.y && pX == this.x){
-			World.changeMap(Generation.genereNewSalle(niveau, y, x));
-			World.player.setMap(World.map.getCases());
-			World.score += niveau * niveau * 10;
+			this.world.changeMap(this.world.generation.genereNewSalle(niveau, y, x));
+			this.world.player.setMap(this.world.map.getCases());
+			this.world.score += niveau * niveau * 10;
 			Random r = new Random();
 			int prob = r.nextInt(3);
 			if(prob == 0)
-				new Item();
+				new Item(this.world);
 
 		if(pX == 0)
 			pX = 18;
@@ -61,10 +58,10 @@ public class Porte extends Case {
 			pY = 1;
 
 
-			World.player.setX(pX*36);
-			World.player.setY(pY*36);
-			World.player.getHitbox().setX(pX*36+4);
-			World.player.getHitbox().setY(pY*36+4);
+			this.world.player.setX(pX*36);
+			this.world.player.setY(pY*36);
+			this.world.player.getHitbox().setX(pX*36+4);
+			this.world.player.getHitbox().setY(pY*36+4);
 		}
 	}
 

@@ -2,22 +2,25 @@ package games.rogueLikeAVirgin.map;
 
 import java.util.Random;
 
-import org.newdawn.slick.SlickException;
-
 import games.rogueLikeAVirgin.World;
 import games.rogueLikeAVirgin.entity.enemies.*;
 
 public class Generation {
 
-	public static int difficulte;
+	private World world;
+	public int difficulte;
 
-	static int hauteur;
-	static int largeur;
+	int hauteur;
+	int largeur;
 
-	static int difficulteMax = 5;
+	int difficulteMax = 5;
+
+	public Generation(World world) {
+		this.world = world;
+	}
 
 
-	public static Salle genereNewSalle(int niveau, int posx, int posy) throws SlickException{
+	public Salle genereNewSalle(int niveau, int posx, int posy) {
 		@SuppressWarnings("unused")
 		int fermee = 0;
 
@@ -38,25 +41,25 @@ public class Generation {
 			fermee = 1;
 		}
 
-		World.enemies.clear();
-		World.enemiesTmp.clear();
-		World.projectiles.clear();
-		World.projectilesTmp.clear();
-		World.item.clear();
+		this.world.enemies.clear();
+		this.world.enemiesTmp.clear();
+		this.world.projectiles.clear();
+		this.world.projectilesTmp.clear();
+		this.world.item.clear();
 
 		return genereSalle( niveau,  largeur,  hauteur,0);
 	}
 
 
 	//porte fermee : 0 rien | 1 : gauche | 2 : droite | 3 : bas | 4 : haut
-	public static Salle genereSalle(int niveau, int plargeur, int phauteur,int porteFermee) throws SlickException {
+	public Salle genereSalle(int niveau, int plargeur, int phauteur,int porteFermee) {
 		if(niveau==6) {
-			if(!World.isSaxGuy()) {
-				World.changeMusic();
+			if(!this.world.isSaxGuy()) {
+				this.world.changeMusic();
 			}
 		}else {
-			if(World.isSaxGuy()) {
-				World.changeMusic();
+			if(this.world.isSaxGuy()) {
+				this.world.changeMusic();
 			}
 		}
 		hauteur = phauteur;
@@ -101,7 +104,7 @@ public class Generation {
 	}
 
 
-	private static Case[][] posePortes(Case[][] map, int fermee){
+	private Case[][] posePortes(Case[][] map, int fermee){
 		Random r = new Random();
 		int diffPorte = r.nextInt(difficulteMax);
 
@@ -112,8 +115,8 @@ public class Generation {
 		if(fermee != 1){
 			if(diffPorte == r.nextInt(15))
 				diffPorte = 6;
-			map[0][l] = new Porte(0, l, diffPorte);
-			map[0][l+1] = new Porte(0, l+1, diffPorte);
+			map[0][l] = new Porte(this.world, 0, l, diffPorte);
+			map[0][l+1] = new Porte(this.world, 0, l+1, diffPorte);
 		}
 
 
@@ -122,8 +125,8 @@ public class Generation {
 			diffPorte = r.nextInt(difficulteMax);
 			if(diffPorte == r.nextInt(15))
 				diffPorte = 6;
-			map[hauteur-1][l] = new Porte(hauteur-1, l, diffPorte);
-			map[hauteur-1][l+1] = new Porte(hauteur-1, l+1, diffPorte);
+			map[hauteur-1][l] = new Porte(this.world, hauteur-1, l, diffPorte);
+			map[hauteur-1][l+1] = new Porte(this.world, hauteur-1, l+1, diffPorte);
 		}
 
 
@@ -132,8 +135,8 @@ public class Generation {
 			diffPorte = r.nextInt(difficulteMax);
 			if(diffPorte == r.nextInt(15))
 				diffPorte = 6;
-			map[h][0] = new Porte(h, 0, diffPorte);
-			map[h+1][0] = new Porte(h+1, 0, diffPorte);
+			map[h][0] = new Porte(this.world, h, 0, diffPorte);
+			map[h+1][0] = new Porte(this.world, h+1, 0, diffPorte);
 		}
 
 
@@ -142,8 +145,8 @@ public class Generation {
 			diffPorte = r.nextInt(difficulteMax);
 			if(diffPorte == r.nextInt(15))
 				diffPorte = 6;
-			map[h][largeur-1] = new Porte(h, largeur-1, diffPorte);
-			map[h+1][largeur-1] = new Porte(h+1, largeur-1, diffPorte);
+			map[h][largeur-1] = new Porte(this.world, h, largeur-1, diffPorte);
+			map[h+1][largeur-1] = new Porte(this.world, h+1, largeur-1, diffPorte);
 		}
 
 
@@ -161,7 +164,7 @@ public class Generation {
 	}
 
 
-	public static void genereEnemies(int type,Case[][] c) {
+	public void genereEnemies(int type,Case[][] c) {
 		/*type est la difficulte de la salle
 		 * 1 a 5: difficulte croissante
 		 * 6: Boss
@@ -189,13 +192,13 @@ public class Generation {
 				 */
 				if(Math.random()<(float)1/type) {
 
-					new Enemy1(x,y);
-					new Ghost1(x3,y3);
-					new Skull1(x2,y2);
+					new Enemy1(this.world, x,y);
+					new Ghost1(this.world, x3,y3);
+					new Skull1(this.world, x2,y2);
 				}else {
-					new Enemy2(x,y);
-					new Ghost2(x3,y3);
-					new Skull2(x2,y2);
+					new Enemy2(this.world, x,y);
+					new Ghost2(this.world, x3,y3);
+					new Skull2(this.world, x2,y2);
 				}
 			}
 
@@ -209,10 +212,10 @@ public class Generation {
 					x=(float) (50+Math.random()*(720-36-50));
 					y=(float) (50+Math.random()*(720-36-50));
 				}
-				new Ghost2(x,y);
+				new Ghost2(this.world, x,y);
 			}
 
-			new Boss(400,400);
+			new Boss(this.world, 400,400);
 		}
 
 

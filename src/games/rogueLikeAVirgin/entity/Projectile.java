@@ -1,8 +1,8 @@
 package games.rogueLikeAVirgin.entity;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+
+import app.AppLoader;
 
 import games.rogueLikeAVirgin.World;
 import games.rogueLikeAVirgin.map.Bords;
@@ -14,12 +14,14 @@ public class Projectile extends Entity{
 
 	protected boolean friendly;
 
-	public Projectile(){
-		World.projectiles.add(this);
+	public Projectile(World world){
+		super(world);
+		this.world.projectiles.add(this);
 		atk = 1;
 	}
 
-	public Projectile(float x, float y, boolean friendly,double vitX,double vitY){
+	public Projectile(World world, float x, float y, boolean friendly,double vitX,double vitY){
+		super(world);
 		this.friendly = friendly;
 		this.x = x;
 		this.y = y;
@@ -27,26 +29,19 @@ public class Projectile extends Entity{
 		width = 16;
 		//On reduit la hitbox pour pouvoir passer sans problemes dans des espaces d'une case de large
 		hitbox = new Rectangle(x+4,y+4,width-8,height-8);
-		World.projectiles.add(this);
+		this.world.projectiles.add(this);
 		atk = 1;
 		speedX=vitX;
 		speedY=vitY;
 		if(friendly){
-			try {
-				sprite = new Image(World.DIRECTORY_IMAGES+"coeur.png");
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
+			sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/coeur.png");
 		}else{
-			try {
-				sprite = new Image(World.DIRECTORY_IMAGES+"carreau.png");
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
+			sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/carreau.png");
 		}
 	}
 
-	public Projectile(float x, float y, boolean friendly,double vitX,double vitY,int atk){
+	public Projectile(World world, float x, float y, boolean friendly,double vitX,double vitY,int atk){
+		super(world);
 		this.friendly = friendly;
 		this.x = x;
 		this.y = y;
@@ -55,45 +50,30 @@ public class Projectile extends Entity{
 		width = 16;
 		//On reduit la hitbox pour pouvoir passer sans problemes dans des espaces d'une case de large
 		hitbox = new Rectangle(x+4,y+4,width-8,height-8);
-		World.projectiles.add(this);
+		this.world.projectiles.add(this);
 		speedX=vitX;
 		speedY=vitY;
 		if(friendly){
-			try {
-				sprite = new Image(World.DIRECTORY_IMAGES+"coeur.png");
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
+			sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/coeur.png");
 		}else{
-			try {
-				sprite = new Image(World.DIRECTORY_IMAGES+"carreau.png");
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
+			sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/carreau.png");
 		}
 	}
 
-	public Projectile(int i, int j, boolean friendly){
+	public Projectile(World world, int i, int j, boolean friendly){
+		super(world);
 		this.friendly = friendly;
 		this.x = 36*i;
 		this.y = 36*j;
 		height = 16;
 		width = 16;
 		hitbox = new Rectangle(x,y,width,height);
-		World.projectiles.add(this);
+		this.world.projectiles.add(this);
 		atk = 1;
 		if(friendly){
-			try {
-				sprite = new Image(World.DIRECTORY_IMAGES+"coeur.png");
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
+			sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/coeur.png");
 		}else{
-			try {
-				sprite = new Image(World.DIRECTORY_IMAGES+"carreau.png");
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
+			sprite = AppLoader.loadPicture("/images/rogueLikeAVirgin/carreau.png");
 		}
 	}
 
@@ -107,13 +87,13 @@ public class Projectile extends Entity{
 
 	@Override
 	public void die() {
-		World.projectiles.remove(this);
+		this.world.projectiles.remove(this);
 	}
 
 	@Override
 	public void checkForCollision() {
 		int tmpI,tmpJ;
-		Case[][] c = World.map.getCases();
+		Case[][] c = this.world.map.getCases();
 		tmpI = (int) x/36;
 		tmpJ = (int) y/36;
 		for(int deltaI = -1; deltaI < 2; deltaI++){
