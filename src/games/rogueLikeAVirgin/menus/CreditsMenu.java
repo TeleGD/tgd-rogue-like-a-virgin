@@ -1,6 +1,5 @@
 package games.rogueLikeAVirgin.menus;
 
-import java.awt.Font;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
@@ -37,7 +36,7 @@ public class CreditsMenu extends BasicGameState{
 	@Override
 	public void init(GameContainer arg0, StateBasedGame game) {
 		font=AppLoader.loadFont("/fonts/rogueLikeAVirgin/iCrack.ttf",AppFont.PLAIN,55);
-		font2=AppLoader.loadFont("/fonts/rogueLikeAVirgin/INFECTED.ttf",Font.PLAIN,35);
+		font2=AppLoader.loadFont("/fonts/rogueLikeAVirgin/INFECTED.ttf",AppFont.PLAIN,35);
 		names=new ArrayList<String>();
 		names.add("S.Rimlinger");
 		names.add("A.Sochala");
@@ -76,7 +75,7 @@ public class CreditsMenu extends BasicGameState{
 	@Override
 	public void keyPressed(int key, char c) {
 		if(key==Input.KEY_ENTER) {
-			game.enterState(1 /* MainMenu */, new FadeOutTransition(), new FadeInTransition());
+			game.enterState(1 /* Choice */, new FadeOutTransition(), new FadeInTransition());
 		}
 	}
 

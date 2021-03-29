@@ -1,6 +1,8 @@
 package games.rogueLikeAVirgin;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -16,6 +18,7 @@ import app.AppLoader;
 import app.ui.Button;
 import app.ui.TGDComponent;
 import app.ui.TGDComponent.OnClickListener;
+import app.ui.TextField;
 
 import games.rogueLikeAVirgin.entity.Item;
 import games.rogueLikeAVirgin.entity.Player;
@@ -43,6 +46,7 @@ public class World extends BasicGameState {
 
 	private Image coeur,coin;
 	private Button jouer,atkUp,speedUp,delayUp,oneUp,rejouer,pauseMode, exit ;
+	private TextField textField;
 	private int atkCoin,speedCoin,delayCoin,oneCoin;
 	private boolean gameOn,gameOver;
 	private Audio saxGuy;
@@ -52,7 +56,7 @@ public class World extends BasicGameState {
 	private boolean scoreTime;
 	public String name;
 	private int pauseCompt;
-	private boolean pause,maj;
+	private boolean pause;
 	private StateBasedGame game;
 
 	public World(int ID) {
@@ -115,7 +119,7 @@ public class World extends BasicGameState {
 				if(pauseCompt==0) {
 					pause=false;
 				}else {
-					game.enterState(1 /* MainMenu */, new FadeInTransition(), new FadeOutTransition());
+					game.enterState(1 /* Choice */, new FadeInTransition(), new FadeOutTransition());
 				}
 
 			}});
@@ -130,7 +134,7 @@ public class World extends BasicGameState {
 
 			@Override
 			public void onClick(TGDComponent componenent) {
-				game.enterState(1 /* MainMenu */, new FadeInTransition(), new FadeOutTransition());
+				game.enterState(1 /* Choice */, new FadeInTransition(), new FadeOutTransition());
 			}});
 
 		atkUp = new Button("Puissance Up",container,780,570,TGDComponent.AUTOMATIC,30);
@@ -213,6 +217,10 @@ public class World extends BasicGameState {
 
 			}});
 
+		textField = new TextField(container, 870, 350, 150, TGDComponent.AUTOMATIC);
+		textField.setMaxNumberOfLetter(13);
+		textField.setUpperCaseLock(true);
+		textField.setPlaceHolder("Enter your name");
 	}
 
 	@Override
@@ -269,7 +277,6 @@ public class World extends BasicGameState {
 		delayCoin = 10;
 		oneCoin = 1;
 		scoreTime=false;
-		maj=false;
 		mainMusic.playAsMusic(1f, .3f, true);
 	}
 
@@ -345,8 +352,9 @@ public class World extends BasicGameState {
 				}
 			}
 		} else {
+			g.setColor(Color.white);
 			g.drawString("Score: "+score, 900, 320);
-			g.drawString("Enter your name: "+name,870,350);
+			textField.render(container, game, g);
 		}
 
 
@@ -389,6 +397,9 @@ public class World extends BasicGameState {
 					gameOn = false;
 				}
 			}
+		} else if (scoreTime) {
+			textField.update(container, game, delta);
+			textField.setHasFocus(true);
 		}
 
 
@@ -419,14 +430,30 @@ public class World extends BasicGameState {
 		return this.state;
 	}
 
+	private void save() {
+		String player = textField.getText();
+		if (player.length() == 0) {
+			return;
+		}
+		double count = this.score;
+		List<Score> scores = Loader.restoreScores();
+		int i = 0;
+		int li = scores.size();
+		while (i < li && scores.get(i).getCount() >= count) {
+			++i;
+		}
+		scores.add(i, new Score(player, count));
+		while (li >= 10) {
+			scores.remove(li);
+			--li;
+		}
+		Loader.saveScores(scores);
+	}
+
 	@Override
 	public void keyReleased(int key, char c) {
 		if (gameOn){
 			player.keyReleased(key,c);
-		}
-		if(scoreTime) {
-			if(key==Input.KEY_LSHIFT)
-				maj=false;
 		}
 	}
 
@@ -434,33 +461,12 @@ public class World extends BasicGameState {
 	@Override
 	public void keyPressed(int key, char c) {
 		if ((pause || gameOver) && key == Input.KEY_ESCAPE) {
-			game.enterState(1 /* MainMenu */, new FadeInTransition(), new FadeOutTransition());
+			game.enterState(1 /* Choice */, new FadeInTransition(), new FadeOutTransition());
 		}
 		if(scoreTime){
-			if(!maj && !(key==Input.KEY_LSHIFT &&!(key==Input.KEY_ENTER))) {
-				name+=c;
-				System.out.println(name);
-			}
-			else if(!(key==Input.KEY_LSHIFT &&!(key==Input.KEY_ENTER))){
-				System.out.println(name);
-				name+=(""+c).toUpperCase();
-			}
-			switch (key) {
-
-			case Input.KEY_BACK://.KEY_RETURN:
-				if (name.length()>=2) {
-					name=name.substring(0, name.length()-2);
-				}
-				break;
-			case Input.KEY_ENTER :
-				name=name.replace("'", "''");
-				name=name.substring(0, name.length()-1);
-
-				// Dao.addScore(name, score);
-				scoreTime=false;
-				break;
-			case Input.KEY_LSHIFT:
-				maj=true;
+			if (key == Input.KEY_ENTER) {
+				this.save();
+				scoreTime = false;
 			}
 		}else if(!pause) {
 			if (gameOn){
@@ -482,7 +488,7 @@ public class World extends BasicGameState {
 			}
 		} else {
 			if(pauseCompt==1 && key==Input.KEY_ENTER) {
-				game.enterState(1 /* MainMenu */,new FadeOutTransition(), new FadeInTransition());
+				game.enterState(1 /* Choice */,new FadeOutTransition(), new FadeInTransition());
 			}else if(key==Input.KEY_Z || key==Input.KEY_S) {
 				pauseCompt=1-pauseCompt;
 				if(pauseCompt==0) {

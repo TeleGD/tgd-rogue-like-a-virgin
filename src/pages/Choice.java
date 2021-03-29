@@ -23,9 +23,19 @@ public class Choice extends AppMenu {
 		this.setTitle("Choix");
 		this.setSubtitle("Sans sous-titre");
 		this.setMenu(Arrays.asList(new MenuItem[] {
-			new MenuItem("Test") {
+			new MenuItem("Rogue Like a Virgin") {
 				public void itemSelected() {
 					game.enterState(3, new FadeOutTransition(), new FadeInTransition());
+				}
+			},
+			new MenuItem("Scores") {
+				public void itemSelected() {
+					game.enterState(4, new FadeOutTransition(), new FadeInTransition());
+				}
+			},
+			new MenuItem("Credits") {
+				public void itemSelected() {
+					game.enterState(5, new FadeOutTransition(), new FadeInTransition());
 				}
 			},
 			new MenuItem("Retour") {
