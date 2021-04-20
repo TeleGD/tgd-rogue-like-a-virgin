@@ -54,7 +54,7 @@ public final class Main {
 				// this.addState(new pages.Pause(2));
 				this.addState(new games.rogueLikeAVirgin.World(3));
 				this.addState(new games.rogueLikeAVirgin.Leaderboard(4));
-				this.addState(new games.rogueLikeAVirgin.menus.CreditsMenu(5));
+				this.addState(new games.rogueLikeAVirgin.Credits(5));
 			}
 
 		};

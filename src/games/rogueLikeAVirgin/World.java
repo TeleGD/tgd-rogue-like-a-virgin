@@ -29,9 +29,6 @@ import games.rogueLikeAVirgin.map.Salle;
 
 public class World extends BasicGameState {
 
-	public static int longueur = 1280;
-	public static int hauteur = 720;
-
 	private int ID;
 	private int state;
 
@@ -527,4 +524,13 @@ public class World extends BasicGameState {
 			saxGuy.playAsSoundEffect(1, .3f, false);
 		}
 	}
+
+	public int getWidth() {
+		return this.map.getColonne() * 36;
+	}
+
+	public int getHeight() {
+		return this.map.getLigne() * 36;
+	}
+
 }

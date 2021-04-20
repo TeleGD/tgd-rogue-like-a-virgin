@@ -146,7 +146,7 @@ public abstract class Entity {
 		x += speedX*dt;
 		y += speedY*dt;
 		hitbox.setLocation(x, y);
-		if(x > World.longueur || y > World.hauteur || x < 0 || y < 0){
+		if(x + width > world.getWidth() || y + height > world.getHeight() || x < 0 || y < 0){
 			alreadyDead = true;
 		}
 	}
