@@ -3,5 +3,5 @@
 - Guillaume Teset (@gteset)
 - Nathan Barloy (@nathanBarloy)
 - Nicolas Bernardes (@nicorb)
-- Philippe Wang
 - Stéphane Rimlinger (@srimlinger)
+- Philippe Wang
